@@ -1,6 +1,9 @@
 package com.epam.jwd_final.tiger_bet.connection;
 
 
+import com.epam.jwd_final.tiger_bet.context.ApplicationContext;
+import com.epam.jwd_final.tiger_bet.properties.ConnectionPoolProperties;
+
 import java.sql.Connection;
 import java.util.ArrayDeque;
 import java.util.Deque;
