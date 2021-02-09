@@ -1,5 +1,8 @@
 package com.epam.jwd_final.tiger_bet.connection;
 
+import com.epam.jwd_final.tiger_bet.properties.DatabaseProperties;
+import com.epam.jwd_final.tiger_bet.util.PropertyLoader;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,7 +20,7 @@ public enum ConnectionPoolManager {
 
     void createListener() {
         Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
+        timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 ConnectionPool.getInstance().getIsShrinkable().set(ConnectionPoolManager.INSTANCE.isShrinkable());
@@ -25,8 +28,7 @@ public enum ConnectionPoolManager {
                     ConnectionPoolManager.INSTANCE.shrinkPool();
                 }
             }
-        };
-        timer.schedule(timerTask, 10_000, 10_000); // TODO read from properties
+        }, 10_000, 10_000); // TODO read from properties
     }
 
     Deque<ProxyConnection> createConnections(int extraConnectionsAmount) {
