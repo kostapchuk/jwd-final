@@ -1,5 +1,6 @@
 package com.epam.jwd_final.tiger_bet.connection;
 
+import com.epam.jwd_final.tiger_bet.context.ApplicationContext;
 import com.epam.jwd_final.tiger_bet.properties.DatabaseProperties;
 import com.epam.jwd_final.tiger_bet.util.PropertyLoader;
 
@@ -22,7 +23,7 @@ public enum ConnectionPoolManager {
     INSTANCE;
 
     private static final DatabaseProperties databaseProperties =
-            PropertyLoader.getInstance().loadDatabaseProperties();
+            ApplicationContext.getDatabaseProperties();
 
     void createListener() {
         Timer timer = new Timer();
