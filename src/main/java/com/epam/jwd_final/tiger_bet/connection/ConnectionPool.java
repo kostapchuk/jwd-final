@@ -32,7 +32,7 @@ public final class ConnectionPool {
     private static final AtomicBoolean initialized = new AtomicBoolean(false);
     private static final AtomicBoolean expandable = new AtomicBoolean(false);
     private static final AtomicBoolean shrinkable = new AtomicBoolean(false);
-    private static int counter = 0;
+    private static int counter;
 
     private final Deque<ProxyConnection> availableConnections;
     private final Deque<ProxyConnection> unavailableConnections;
@@ -40,6 +40,7 @@ public final class ConnectionPool {
     private ConnectionPool() {
         availableConnections = new ArrayDeque<>();
         unavailableConnections = new ArrayDeque<>();
+        counter = 0;
     }
 
     private static class ConnectionPoolHolder {
