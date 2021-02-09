@@ -1,5 +1,8 @@
 package com.epam.jwd_final.tiger_bet.connection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -20,6 +23,8 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 public class ProxyConnection implements Connection {
+
+    private static final Logger LOGGER = LogManager.getLogger(ProxyConnection.class);
 
     private final Connection realConnection;
 
@@ -76,7 +81,7 @@ public class ProxyConnection implements Connection {
         try {
             realConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace(); // TODO
+            LOGGER.error("Cannot close connection...");
         }
     }
 
