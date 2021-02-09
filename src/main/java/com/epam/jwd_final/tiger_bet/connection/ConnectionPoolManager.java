@@ -1,7 +1,10 @@
 package com.epam.jwd_final.tiger_bet.connection;
 
 import com.epam.jwd_final.tiger_bet.context.ApplicationContext;
+import com.epam.jwd_final.tiger_bet.exception.ConnectionException;
 import com.epam.jwd_final.tiger_bet.properties.DatabaseProperties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,11 +23,13 @@ import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.TIME_OUT;
 
 public final class ConnectionPoolManager {
 
-    private ConnectionPoolManager() {
-    }
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPoolManager.class);
 
     private static final DatabaseProperties databaseProperties =
             ApplicationContext.getDatabaseProperties();
+
+    private ConnectionPoolManager() {
+    }
 
     static void createListener() {
         Timer timer = new Timer();
@@ -49,7 +54,11 @@ public final class ConnectionPoolManager {
                         databaseProperties.getPassword());
                 newConnections.add(new ProxyConnection(connection));
             } catch (SQLException e) {
-                e.printStackTrace(); // todo: log
+                if (extraConnectionsAmount == INITIAL_POOL_SIZE) {
+                    throw new ConnectionException(e.getMessage(), e);
+                } else {
+                    LOGGER.error("Cannot create a connection...");
+                }
             }
         }
         return newConnections;
@@ -62,8 +71,8 @@ public final class ConnectionPoolManager {
     }
 
     static Deque<ProxyConnection> expandPool() {
+        LOGGER.debug("Expanding pool...");
         return createConnections(EXTRA_CONNECTIONS_AMOUNT);
-        // todo: log
     }
 
     static boolean isShrinkable() {
@@ -73,13 +82,12 @@ public final class ConnectionPoolManager {
     }
 
     static void shrinkPool() {
-        // todo: log
+        LOGGER.debug("Shrinking pool...");
         int shrinkSize = (int) Math.min(EXTRA_CONNECTIONS_AMOUNT, ConnectionPool.getInstance().getAllConnectionsAmount() * SHRINK_FACTOR);
         for (int i = 0; i < shrinkSize && ConnectionPool.getInstance().getAllConnectionsAmount() > INITIAL_POOL_SIZE; i++) {
             ProxyConnection proxyConnection = ConnectionPool.getInstance().getAvailableConnections().pollFirst();
             if (proxyConnection != null) {
                 proxyConnection.closeConnection();
-                // todo: log
             }
         }
     }
