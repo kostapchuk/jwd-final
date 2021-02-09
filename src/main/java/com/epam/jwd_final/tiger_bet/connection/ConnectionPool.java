@@ -2,6 +2,7 @@ package com.epam.jwd_final.tiger_bet.connection;
 
 
 import com.epam.jwd_final.tiger_bet.context.ApplicationContext;
+import com.epam.jwd_final.tiger_bet.exception.ConnectionPoolException;
 import com.epam.jwd_final.tiger_bet.properties.ConnectionPoolProperties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -82,8 +83,7 @@ public final class ConnectionPool {
             NOT_EMPTY.signal();
             return connection;
         } catch (InterruptedException e) {
-            // TODO throw new ConnectionPoolException(e);
-            throw new IllegalArgumentException();
+            throw new ConnectionPoolException(e.getMessage(), e);
         } finally {
             CONNECTIONS_LOCK.unlock();
         }
