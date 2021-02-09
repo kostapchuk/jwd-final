@@ -22,6 +22,7 @@ public final class ConnectionPool {
     static final int EXTRA_CONNECTIONS_AMOUNT = connectionPoolProperties.getExtraConnections();
     static final double LOAD_FACTOR = connectionPoolProperties.getLoadFactor();
     static final double SHRINK_FACTOR = connectionPoolProperties.getShrinkFactor();
+    static final int TIME_OUT = connectionPoolProperties.getConnectionTimeOut();
 
     private static final Lock INSTANCE_LOCK = new ReentrantLock();
     private static final Lock CONNECTIONS_LOCK = new ReentrantLock();

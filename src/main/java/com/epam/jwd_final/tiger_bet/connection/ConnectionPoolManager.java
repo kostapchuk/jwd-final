@@ -16,6 +16,7 @@ import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.INITIAL_POO
 import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.LOAD_FACTOR;
 import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.MAX_POOL_SIZE;
 import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.SHRINK_FACTOR;
+import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.TIME_OUT;
 
 public enum ConnectionPoolManager {
 
@@ -34,7 +35,7 @@ public enum ConnectionPoolManager {
                     ConnectionPoolManager.INSTANCE.shrinkPool();
                 }
             }
-        }, 10_000, 10_000); // TODO read from properties
+        }, TIME_OUT, TIME_OUT);
     }
 
     Deque<ProxyConnection> createConnections(int extraConnectionsAmount) {
