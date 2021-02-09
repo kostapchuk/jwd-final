@@ -2,7 +2,6 @@ package com.epam.jwd_final.tiger_bet.connection;
 
 import com.epam.jwd_final.tiger_bet.context.ApplicationContext;
 import com.epam.jwd_final.tiger_bet.properties.DatabaseProperties;
-import com.epam.jwd_final.tiger_bet.util.PropertyLoader;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
