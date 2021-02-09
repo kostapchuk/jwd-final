@@ -3,7 +3,6 @@ package com.epam.jwd_final.tiger_bet.util;
 import com.epam.jwd_final.tiger_bet.properties.ConnectionPoolProperties;
 import com.epam.jwd_final.tiger_bet.properties.DatabaseProperties;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -12,8 +11,8 @@ public class PropertyLoader {
 
     private static final Properties properties = new Properties();
 
-    private static final String DATABASE_PROPERTY_PATH = "src/main/resources/properties/database.properties";
-    private static final String CONNECTION_POOL_PROPERTY_PATH = "src/main/resources/properties/connection_pool.properties";
+    private static final String DATABASE_PROPERTY_PATH = "database.properties";
+    private static final String CONNECTION_POOL_PROPERTY_PATH = "connection_pool.properties";
 
     private static final String DB_URL_PROPERTY = "url";
     private static final String DB_USER_PROPERTY = "user";
@@ -30,7 +29,8 @@ public class PropertyLoader {
     }
 
     public DatabaseProperties loadDatabaseProperties() {
-        try (InputStream inputStream = new FileInputStream(DATABASE_PROPERTY_PATH)) {
+        try (InputStream inputStream = Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream(DATABASE_PROPERTY_PATH)) {
             properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace(); // TODO log
@@ -43,7 +43,8 @@ public class PropertyLoader {
     }
 
     public ConnectionPoolProperties loadConnectionPoolProperties() {
-        try (InputStream inputStream = new FileInputStream(CONNECTION_POOL_PROPERTY_PATH)) {
+        try (InputStream inputStream = Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream(CONNECTION_POOL_PROPERTY_PATH)) {
             properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace(); // TODO log
