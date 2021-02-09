@@ -11,6 +11,12 @@ import java.util.Deque;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.EXTRA_CONNECTIONS_AMOUNT;
+import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.INITIAL_POOL_SIZE;
+import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.LOAD_FACTOR;
+import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.MAX_POOL_SIZE;
+import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.SHRINK_FACTOR;
+
 public enum ConnectionPoolManager {
 
     INSTANCE;
