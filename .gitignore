@@ -4,4 +4,4 @@
 /target
 /logs
 /properties
-.properties
+*.properties
