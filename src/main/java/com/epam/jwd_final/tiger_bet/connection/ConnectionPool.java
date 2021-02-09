@@ -53,9 +53,9 @@ public final class ConnectionPool {
     }
 
     public static ConnectionPool getInstance() {
-        INSTANCE_LOCK.lock();
         if (!initialized.get()) {
             try {
+                INSTANCE_LOCK.lock();
                 if (!initialized.get()) {
                     ConnectionPoolHolder.instance.init();
                 }
@@ -67,8 +67,8 @@ public final class ConnectionPool {
     }
 
     public Connection retrieveConnection() {
-        CONNECTIONS_LOCK.lock();
         try {
+            CONNECTIONS_LOCK.lock();
             expandable.set(ConnectionPoolManager.isExpandable());
             if (expandable.get()) {
                 availableConnections.addAll(ConnectionPoolManager.expandPool());
@@ -90,8 +90,8 @@ public final class ConnectionPool {
     }
 
     public void returnConnection(Connection connection) {
-        CONNECTIONS_LOCK.lock();
         try {
+            CONNECTIONS_LOCK.lock();
             while (counter == 0) {
                 NOT_EMPTY.await();
             }
@@ -101,6 +101,7 @@ public final class ConnectionPool {
             }
             boolean result = availableConnections.add((ProxyConnection) connection) &&
                     unavailableConnections.remove(connection);
+            --counter;
             if (result) {
                 NOT_FULL.signal();
             }
@@ -115,7 +116,7 @@ public final class ConnectionPool {
         LOGGER.info("Initializing connection pool...");
         availableConnections.addAll(ConnectionPoolManager.createConnections(INITIAL_POOL_SIZE));
         initialized.set(true);
-        ConnectionPoolManager.createListener();
+//        ConnectionPoolManager.createListener();
     }
 
     public void destroy() {

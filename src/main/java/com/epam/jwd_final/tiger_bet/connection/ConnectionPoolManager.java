@@ -48,12 +48,13 @@ public final class ConnectionPoolManager {
         Deque<ProxyConnection> newConnections = new ArrayDeque<>(extraConnectionsAmount);
         for (int i = 0; i < extraConnectionsAmount; i++) {
             try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(
                         databaseProperties.getUrl(),
                         databaseProperties.getUser(),
                         databaseProperties.getPassword());
                 newConnections.add(new ProxyConnection(connection));
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 if (extraConnectionsAmount == INITIAL_POOL_SIZE) {
                     throw new ConnectionException(e.getMessage(), e);
                 } else {
