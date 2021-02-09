@@ -18,27 +18,28 @@ import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.MAX_POOL_SI
 import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.SHRINK_FACTOR;
 import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.TIME_OUT;
 
-public enum ConnectionPoolManager {
+public final class ConnectionPoolManager {
 
-    INSTANCE;
+    private ConnectionPoolManager() {
+    }
 
     private static final DatabaseProperties databaseProperties =
             ApplicationContext.getDatabaseProperties();
 
-    void createListener() {
+    static void createListener() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                ConnectionPool.getInstance().getIsShrinkable().set(ConnectionPoolManager.INSTANCE.isShrinkable());
+                ConnectionPool.getInstance().getIsShrinkable().set(ConnectionPoolManager.isShrinkable());
                 if (ConnectionPool.getInstance().getIsShrinkable().get()) {
-                    ConnectionPoolManager.INSTANCE.shrinkPool();
+                    ConnectionPoolManager.shrinkPool();
                 }
             }
         }, TIME_OUT, TIME_OUT);
     }
 
-    Deque<ProxyConnection> createConnections(int extraConnectionsAmount) {
+    static Deque<ProxyConnection> createConnections(int extraConnectionsAmount) {
         Deque<ProxyConnection> newConnections = new ArrayDeque<>(extraConnectionsAmount);
         for (int i = 0; i < extraConnectionsAmount; i++) {
             try {
@@ -54,24 +55,24 @@ public enum ConnectionPoolManager {
         return newConnections;
     }
 
-    boolean isExpandable() {
+    static boolean isExpandable() {
         return ConnectionPool.getInstance().getAllConnectionsAmount() * LOAD_FACTOR ==
                 ConnectionPool.getInstance().getUnavailableConnectionsAmount()
                 && ConnectionPool.getInstance().getAllConnectionsAmount() < MAX_POOL_SIZE;
     }
 
-    Deque<ProxyConnection> expandPool() {
+    static Deque<ProxyConnection> expandPool() {
         return createConnections(EXTRA_CONNECTIONS_AMOUNT);
         // todo: log
     }
 
-    boolean isShrinkable() {
+    static boolean isShrinkable() {
         return ConnectionPool.getInstance().getAllConnectionsAmount() * SHRINK_FACTOR <=
                 ConnectionPool.getInstance().getAvailableConnectionsAmount()
                 && INITIAL_POOL_SIZE < ConnectionPool.getInstance().getAllConnectionsAmount();
     }
 
-    void shrinkPool() {
+    static void shrinkPool() {
         // todo: log
         int shrinkSize = (int) Math.min(EXTRA_CONNECTIONS_AMOUNT, ConnectionPool.getInstance().getAllConnectionsAmount() * SHRINK_FACTOR);
         for (int i = 0; i < shrinkSize && ConnectionPool.getInstance().getAllConnectionsAmount() > INITIAL_POOL_SIZE; i++) {

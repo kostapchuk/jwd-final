@@ -69,9 +69,9 @@ public final class ConnectionPool {
     public Connection retrieveConnection() {
         CONNECTIONS_LOCK.lock();
         try {
-            expandable.set(ConnectionPoolManager.INSTANCE.isExpandable());
+            expandable.set(ConnectionPoolManager.isExpandable());
             if (expandable.get()) {
-                availableConnections.addAll(ConnectionPoolManager.INSTANCE.expandPool());
+                availableConnections.addAll(ConnectionPoolManager.expandPool());
             }
             while (counter == getAllConnectionsAmount()) {
                 NOT_FULL.await();
@@ -113,9 +113,9 @@ public final class ConnectionPool {
 
     private void init() {
         LOGGER.info("Initializing connection pool...");
-        availableConnections.addAll(ConnectionPoolManager.INSTANCE.createConnections(INITIAL_POOL_SIZE));
+        availableConnections.addAll(ConnectionPoolManager.createConnections(INITIAL_POOL_SIZE));
         initialized.set(true);
-        ConnectionPoolManager.INSTANCE.createListener();
+        ConnectionPoolManager.createListener();
     }
 
     public void destroy() {
