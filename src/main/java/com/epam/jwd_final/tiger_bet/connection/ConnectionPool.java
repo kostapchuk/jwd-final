@@ -3,6 +3,8 @@ package com.epam.jwd_final.tiger_bet.connection;
 
 import com.epam.jwd_final.tiger_bet.context.ApplicationContext;
 import com.epam.jwd_final.tiger_bet.properties.ConnectionPoolProperties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.ArrayDeque;
@@ -13,6 +15,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public final class ConnectionPool {
+
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
     private static final ConnectionPoolProperties connectionPoolProperties =
             ApplicationContext.getConnectionPoolProperties();
@@ -92,8 +96,8 @@ public final class ConnectionPool {
                 NOT_EMPTY.await();
             }
             if (connection == null || !unavailableConnections.contains((ProxyConnection) connection)) {
-                // TODO throw new ConnectionPoolException(e); // log its better
-                throw new IllegalArgumentException();
+                LOGGER.error("Cannot return connection. Connection is null or not a ProxyConnection");
+                return;
             }
             boolean result = availableConnections.add((ProxyConnection) connection) &&
                     unavailableConnections.remove(connection);
@@ -101,20 +105,21 @@ public final class ConnectionPool {
                 NOT_FULL.signal();
             }
         } catch (InterruptedException e) {
-            // TODO throw new ConnectionPoolException(e);
-            e.printStackTrace();
+            LOGGER.error("Cannot return connection. Thread was interrupted");
         } finally {
             CONNECTIONS_LOCK.unlock();
         }
     }
 
     private void init() {
+        LOGGER.info("Initializing connection pool...");
         availableConnections.addAll(ConnectionPoolManager.INSTANCE.createConnections(INITIAL_POOL_SIZE));
         initialized.set(true);
         ConnectionPoolManager.INSTANCE.createListener();
     }
 
     public void destroy() {
+        LOGGER.info("Destroying connection pool...");
         availableConnections.forEach(ProxyConnection::closeConnection);
         unavailableConnections.forEach(ProxyConnection::closeConnection);
     }
