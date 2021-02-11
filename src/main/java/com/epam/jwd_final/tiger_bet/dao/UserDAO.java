@@ -3,6 +3,8 @@ package com.epam.jwd_final.tiger_bet.dao;
 import com.epam.jwd_final.tiger_bet.connection.ConnectionPool;
 import com.epam.jwd_final.tiger_bet.domain.Role;
 import com.epam.jwd_final.tiger_bet.domain.User;
+import com.epam.jwd_final.tiger_bet.mapper.Mapper;
+import com.epam.jwd_final.tiger_bet.mapper.impl.UserMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

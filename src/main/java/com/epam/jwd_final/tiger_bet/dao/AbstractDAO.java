@@ -2,6 +2,7 @@ package com.epam.jwd_final.tiger_bet.dao;
 
 import com.epam.jwd_final.tiger_bet.connection.ConnectionPool;
 import com.epam.jwd_final.tiger_bet.domain.Entity;
+import com.epam.jwd_final.tiger_bet.mapper.Mapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

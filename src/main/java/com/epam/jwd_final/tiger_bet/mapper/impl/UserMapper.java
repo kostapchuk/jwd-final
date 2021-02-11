@@ -3,6 +3,7 @@ package com.epam.jwd_final.tiger_bet.mapper.impl;
 import com.epam.jwd_final.tiger_bet.domain.Role;
 import com.epam.jwd_final.tiger_bet.domain.User;
 import com.epam.jwd_final.tiger_bet.mapper.Mapper;
+import com.epam.jwd_final.tiger_bet.service.impl.UserService;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
