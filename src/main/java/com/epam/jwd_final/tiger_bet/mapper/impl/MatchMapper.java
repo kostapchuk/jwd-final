@@ -9,7 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-public class MatchMapper implements Mapper<Match> {
+public enum MatchMapper implements Mapper<Match> {
+
+    INSTANCE;
 
     @Override
     public Match mapFrom(ResultSet rs) throws SQLException {

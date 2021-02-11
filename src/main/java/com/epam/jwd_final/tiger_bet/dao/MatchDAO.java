@@ -3,6 +3,7 @@ package com.epam.jwd_final.tiger_bet.dao;
 import com.epam.jwd_final.tiger_bet.domain.Match;
 import com.epam.jwd_final.tiger_bet.domain.Result;
 import com.epam.jwd_final.tiger_bet.mapper.Mapper;
+import com.epam.jwd_final.tiger_bet.mapper.impl.MatchMapper;
 
 import java.time.LocalDateTime;
 
@@ -24,8 +25,11 @@ public class MatchDAO extends AbstractDAO<Match> {
         return null;
     }
 
+    // TODO add get all matches by date/sport type
+
+
     @Override
-    protected Mapper retrieveMapper() {
-        return null;
+    protected Mapper<Match> retrieveMapper() {
+        return MatchMapper.INSTANCE;
     }
 }
