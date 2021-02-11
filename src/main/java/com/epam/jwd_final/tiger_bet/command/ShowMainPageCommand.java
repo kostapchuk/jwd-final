@@ -5,7 +5,7 @@ public enum ShowMainPageCommand implements Command {
     INSTANCE;
 
     @Override
-    public void execute() {
-
+    public ResponseContext execute(RequestContext req) {
+        return null;
     }
 }
