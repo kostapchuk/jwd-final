@@ -12,11 +12,11 @@ public class BetMapper implements Mapper<Bet> {
 
     @Override
     public Bet mapFrom(ResultSet rs) throws SQLException {
-        int id = rs.getInt("id");
-        int userId = rs.getInt("user_id");
-        int multiplierId = rs.getInt("multiplier_id");
-        BigDecimal betMoney = rs.getBigDecimal("bet_money");
-        Result userResult = Result.resolveResultById(rs.getInt("user_result_type_id"));
+        final int id = rs.getInt("id");
+        final int userId = rs.getInt("user_id");
+        final int multiplierId = rs.getInt("multiplier_id");
+        final BigDecimal betMoney = rs.getBigDecimal("bet_money");
+        final Result userResult = Result.resolveResultById(rs.getInt("user_result_type_id"));
         return new Bet(id, userId, multiplierId, betMoney, userResult);
     }
 }
