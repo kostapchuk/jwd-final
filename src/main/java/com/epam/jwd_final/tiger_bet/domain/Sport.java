@@ -4,7 +4,7 @@ public enum Sport implements Entity {
 
     FOOTBALL(1);
 
-    private int id;
+    private final int id;
 
     Sport(int id) {
         this.id = id;
@@ -15,7 +15,7 @@ public enum Sport implements Entity {
         return id;
     }
 
-    public Sport resolveSportById(int id) {
+    public static Sport resolveSportById(int id) {
         Sport sport;
         switch (id) {
             case 1:
