@@ -12,6 +12,6 @@ public class MatchMapper implements Mapper<Match> {
     @Override
     public Match mapFrom(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
-        Sport sport = Sport.FOOTBALL.resolveSportById(rs.getInt("sport_type_id"));
+        Sport sport = Sport.resolveSportById(rs.getInt("sport_type_id"));
     }
 }

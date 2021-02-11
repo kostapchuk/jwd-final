@@ -4,9 +4,9 @@ public enum Sport implements Entity {
 
     FOOTBALL(1);
 
-    private final int id;
+    private final Integer id;
 
-    Sport(int id) {
+    Sport(Integer id) {
         this.id = id;
     }
 
