@@ -7,10 +7,12 @@ import com.epam.jwd_final.tiger_bet.factory.EntityFactory;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class MatchFactory implements EntityFactory<Match> {
+public enum MatchFactory implements EntityFactory<Match> {
+
+    INSTANCE;
 
     @Override
-    public Match create(Object... params) {
+    public Match create(Object ... params) {
         return new Match(
                 Integer.parseInt(String.valueOf(params[0])),
                 Sport.FOOTBALL.resolveSportById(Integer.parseInt(String.valueOf(params[1]))),
