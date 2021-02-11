@@ -13,6 +13,8 @@ import java.util.Optional;
 
 public abstract class AbstractDAO<T extends Entity> implements GeneralDAO<T> {
 
+    protected final ConnectionPool pool = ConnectionPool.getInstance();
+
     @Override
     public Optional<T> queryForSingleResult(String querySQL, List<Object> params) {
         List<T> result = query(querySQL, params);
