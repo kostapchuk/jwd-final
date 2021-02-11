@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDAO {
+public class UserDAO extends AbstractDAO<User> {
 
     private final ConnectionPool pool = ConnectionPool.getInstance();
 
@@ -18,18 +18,16 @@ public class UserDAO {
     public User getUserByID(int id) throws SQLException {
         Connection con = pool.retrieveConnection();
         PreparedStatement prepStatement = con.prepareStatement(GET_USER_BY_ID_QUERY);
-        pool.returnConnection(con);
         prepStatement.setInt(1, id);
         ResultSet resultSet = prepStatement.executeQuery();
         resultSet.next();
-        return new User(
-                resultSet.getInt("id"),
-                resultSet.getString("name"),
-                resultSet.getString("email"),
-                resultSet.getString("password"),
-                resultSet.getBigDecimal("balance"),
-                Role.resolveRoleById(resultSet.getInt("role"))
-        );
+        pool.returnConnection(con);
 
+        return UserMapper.INSTANCE.mapFrom(resultSet);
+    }
+
+    @Override
+    protected Mapper<User> retrieveMapper() {
+        return UserMapper.INSTANCE;
     }
 }
