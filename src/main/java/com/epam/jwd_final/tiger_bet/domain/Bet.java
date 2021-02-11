@@ -9,12 +9,14 @@ public class Bet extends AbstractEntity {
     private final User user;
     private final Multiplier multiplier;
     private final BigDecimal betMoney;
+    private final Result userResultType;
 
-    public Bet(Integer id, User user, Multiplier multiplier, BigDecimal betMoney) {
+    public Bet(Integer id, User user, Multiplier multiplier, BigDecimal betMoney, Result userResultType) {
         super(id);
         this.user = user;
         this.multiplier = multiplier;
         this.betMoney = betMoney;
+        this.userResultType = userResultType;
     }
 
     public User getUser() {
@@ -27,5 +29,9 @@ public class Bet extends AbstractEntity {
 
     public BigDecimal getBetMoney() {
         return betMoney;
+    }
+
+    public Result getUserResultType() {
+        return userResultType;
     }
 }
