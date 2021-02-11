@@ -6,6 +6,7 @@ import java.util.Objects;
 public class User extends AbstractEntity {
 
     private static final long serialVersionUID = 3489038301033270987L;
+
     private final String name;
     private final String email;
     private final String password;
