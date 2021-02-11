@@ -12,13 +12,13 @@ public enum UserFactory implements EntityFactory<User> {
 
     // TODO: wrap with try and return optional if exception????
     @Override
-    public User create(Object ... params) {
+    public User create(Object... params) {
         return new User(
-                Integer.parseInt(String.valueOf(params[1])),
+                Integer.parseInt(String.valueOf(params[0])),
                 (String) params[1],
-                (String) params[1],
-                (String) params[1],
-                new BigDecimal(String.valueOf(params[1])),
-                Role.resolveRoleById(Integer.parseInt(String.valueOf(params[1]))));
+                (String) params[2],
+                (String) params[3],
+                new BigDecimal(String.valueOf(params[4])),
+                Role.resolveRoleById(Integer.parseInt(String.valueOf(params[5]))));
     }
 }

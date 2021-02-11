@@ -20,7 +20,7 @@ public enum UserMapper implements Mapper<User> {
         final String email = rs.getString("email");
         final String password = rs.getString("password");
         final BigDecimal balance = rs.getBigDecimal("balance");
-        final Role role = Role.resolveRoleById(rs.getInt("role"));
-        return UserService.INSTANCE.createEntity(id, name, email, password, balance, role);
+        final int roleId = rs.getInt("role");
+        return UserService.INSTANCE.createEntity(id, name, email, password, balance, roleId);
     }
 }
