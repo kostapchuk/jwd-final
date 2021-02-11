@@ -6,25 +6,25 @@ public class Bet extends AbstractEntity {
 
     private static final long serialVersionUID = -5658905568435861545L;
 
-    private final User user;
-    private final Multiplier multiplier;
+    private final int userId;
+    private final int multiplierId;
     private final BigDecimal betMoney;
     private final Result userResultType;
 
-    public Bet(Integer id, User user, Multiplier multiplier, BigDecimal betMoney, Result userResultType) {
+    public Bet(Integer id, int userId, int multiplierId, BigDecimal betMoney, Result userResultType) {
         super(id);
-        this.user = user;
-        this.multiplier = multiplier;
+        this.userId = userId;
+        this.multiplierId = multiplierId;
         this.betMoney = betMoney;
         this.userResultType = userResultType;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public Multiplier getMultiplier() {
-        return multiplier;
+    public int getMultiplierId() {
+        return multiplierId;
     }
 
     public BigDecimal getBetMoney() {
