@@ -7,7 +7,7 @@ public enum JoinCommand implements Command {
     private static final ResponseContext JOIN_RESPONSE = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/WEB-INF/jsp/signin.jsp";
+            return "/WEB-INF/jsp/join.jsp";
         }
 
         @Override
