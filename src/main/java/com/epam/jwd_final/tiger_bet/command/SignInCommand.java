@@ -35,10 +35,7 @@ public enum SignInCommand implements Command {
         final String name = req.getParameter("name");
         final String email = req.getParameter("email");
         final String password = req.getParameter("password");
-        if (UserService.INSTANCE.signIn(name, email, password)) {
-            return ERROR_RESPONSE;
-        } else {
-            return WELCOME_RESPONSE;
-        }
+
+        return UserService.INSTANCE.signIn(name, email, password) ? WELCOME_RESPONSE : ERROR_RESPONSE;
     }
 }
