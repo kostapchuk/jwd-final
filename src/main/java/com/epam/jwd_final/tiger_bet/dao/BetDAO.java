@@ -3,6 +3,7 @@ package com.epam.jwd_final.tiger_bet.dao;
 import com.epam.jwd_final.tiger_bet.domain.Bet;
 import com.epam.jwd_final.tiger_bet.domain.Result;
 import com.epam.jwd_final.tiger_bet.mapper.Mapper;
+import com.epam.jwd_final.tiger_bet.mapper.impl.BetMapper;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 public class BetDAO extends AbstractDAO<Bet> {
 
-    private static final String RETRIEVE_ALL_BETS_BY_USER_ID_QUERY = "select * from bet where id = ?";
+    private static final String RETRIEVE_ALL_BETS_BY_USER_ID_QUERY = "select * from bet where user_id = ?";
     private static final String RETRIEVE_BET_MONEY_BY_USER_ID_MULTIPLIER_ID_QUERY =
             "select * from bet where user_id = ? and multiplier_id = ?";
     private static final String RETRIEVE_USER_RESULT_BY_USER_ID_MULTIPLIER_ID_QUERY =
@@ -46,6 +47,6 @@ public class BetDAO extends AbstractDAO<Bet> {
 
     @Override
     protected Mapper<Bet> retrieveMapper() {
-        return null;
+        return BetMapper.INSTANCE;
     }
 }
