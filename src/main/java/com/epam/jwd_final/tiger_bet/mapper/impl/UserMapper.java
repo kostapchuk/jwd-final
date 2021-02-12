@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public enum UserMapper implements Mapper<User> {
+public enum UserMapper implements Mapper<ResultSet, User> {
 
     INSTANCE;
 
@@ -21,6 +21,6 @@ public enum UserMapper implements Mapper<User> {
         final String password = rs.getString("password");
         final BigDecimal balance = rs.getBigDecimal("balance");
         final int roleId = rs.getInt("role");
-        return UserService.INSTANCE.createEntity(id, name, email, password, balance, roleId);
+        return UserService.INSTANCE.createUser(name, email, password, balance, Role.resolveRoleById(roleId));
     }
 }

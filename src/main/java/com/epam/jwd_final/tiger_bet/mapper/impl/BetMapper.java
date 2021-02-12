@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public enum BetMapper implements Mapper<Bet> {
+public enum BetMapper implements Mapper<ResultSet, Bet> {
 
     INSTANCE;
 
