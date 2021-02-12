@@ -6,7 +6,7 @@ public class WrappingRequestContext implements RequestContext {
 
     private final HttpServletRequest request;
 
-    public WrappingRequestContext(HttpServletRequest request) {
+    private WrappingRequestContext(HttpServletRequest request) {
         this.request = request;
     }
 
