@@ -3,8 +3,6 @@ package com.epam.jwd_final.tiger_bet.controller;
 import com.epam.jwd_final.tiger_bet.command.Command;
 import com.epam.jwd_final.tiger_bet.command.ResponseContext;
 import com.epam.jwd_final.tiger_bet.command.WrappingRequestContext;
-import com.epam.jwd_final.tiger_bet.dao.UserDAO;
-import com.epam.jwd_final.tiger_bet.domain.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,9 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
-@WebServlet("/user")
+@WebServlet("/controller")
 public class Controller extends HttpServlet {
 
     private static final String COMMAND_PARAMETER_NAME = "command";

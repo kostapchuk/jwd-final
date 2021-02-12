@@ -11,6 +11,6 @@
     <title>Index</title>
 </head>
 <body>
-<jsp:forward page="/user"/>
+<jsp:forward page="/controller"/>
 </body>
 </html>
