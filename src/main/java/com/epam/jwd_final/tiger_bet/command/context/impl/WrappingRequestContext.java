@@ -3,6 +3,7 @@ package com.epam.jwd_final.tiger_bet.command.context.impl;
 import com.epam.jwd_final.tiger_bet.command.context.RequestContext;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class WrappingRequestContext implements RequestContext {
 
@@ -18,8 +19,22 @@ public class WrappingRequestContext implements RequestContext {
     }
 
     @Override
-    public String getParameter(String name) {
-        return this.request.getParameter(name);
+    public Object getAttribute(String name) {
+        return request.getAttribute(name);
+    }
+
+    @Override
+    public void invalidateSession() {
+        final HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+    }
+
+    @Override
+    public void setSessionAttribute(String name, Object obj) {
+        final HttpSession session = request.getSession();
+        session.setAttribute(name, obj);
     }
 
     public static RequestContext of(HttpServletRequest request) {
