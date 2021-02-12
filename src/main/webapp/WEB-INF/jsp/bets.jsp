@@ -16,7 +16,7 @@
 <c:if test="${not empty requestScope.bets}">
     <h2>Columns</h2>
     <c:forEach var="bet" items="${requestScope.bets}">
-        <li>${bet.id}</li>
+        <li>${bet.betMoney}</li>
     </c:forEach>
 </c:if>
 </body>

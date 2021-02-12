@@ -12,6 +12,6 @@
     <title>Main page</title>
 </head>
 <body>
-<a href="<c:url value="/user?command=show_bets"/>"></a>
+<a href="<c:url value="/user?command=show_all_bets"/>"></a>
 </body>
 </html>
