@@ -16,6 +16,7 @@ import java.util.Optional;
 public class UserDAO extends AbstractDAO<User> {
 
     private static final String RETRIEVE_USER_BY_ID_QUERY = "select * from user where id = ?";
+    private static final String RETRIEVE_USER_BY_EMAIL_QUERY = "select * from user where email = ?";
     private static final String RETRIEVE_ALL_EMAILS = "select email from user";
     private static final String RETRIEVE_ALL_NAMES = "select name from user";
     private static final String INSERT_USER_QUERY = "insert into user (name, email, password) values (?, ?, ?)";
@@ -30,6 +31,10 @@ public class UserDAO extends AbstractDAO<User> {
 
     public List<String> retrieveAllNames() {
         return retrieveAll(RETRIEVE_ALL_NAMES, "name");
+    }
+
+    public Optional<User> retrieveUserByEmail(String email) {
+        return queryForSingleResult(RETRIEVE_USER_BY_EMAIL_QUERY, Collections.singletonList(email));
     }
 
     public boolean saveUser(User user) {
