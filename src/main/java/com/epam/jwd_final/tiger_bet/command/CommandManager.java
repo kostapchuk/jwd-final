@@ -3,6 +3,7 @@ package com.epam.jwd_final.tiger_bet.command;
 public enum CommandManager {
     LOGIN(LoginCommand.INSTANCE),
     SHOW_MAIN_PAGE(ShowMainPageCommand.INSTANCE),
+    SHOW_ALL_BETS(ShowAllBetsCommand.INSTANCE),
     DEFAULT(ShowMainPageCommand.INSTANCE);
 
     private final Command command;
