@@ -15,6 +15,11 @@ public class WrappingRequestContext implements RequestContext {
         request.setAttribute(name, obj);
     }
 
+    @Override
+    public String getParameter(String name) {
+        return this.request.getParameter(name);
+    }
+
     public static RequestContext of(HttpServletRequest request) {
         return new WrappingRequestContext(request);
     }
