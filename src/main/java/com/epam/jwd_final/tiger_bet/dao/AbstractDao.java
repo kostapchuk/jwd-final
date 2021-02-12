@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractDAO<T extends Entity> implements GeneralDAO<T> {
+public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
 
     @Override
     public Optional<T> queryForSingleResult(String querySQL, List<Object> params) {
@@ -52,5 +52,4 @@ public abstract class AbstractDAO<T extends Entity> implements GeneralDAO<T> {
         return preparedStatement;
     }
 
-    protected abstract Mapper<ResultSet, T> retrieveMapper();
 }
