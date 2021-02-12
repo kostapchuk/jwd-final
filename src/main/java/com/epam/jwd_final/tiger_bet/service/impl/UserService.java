@@ -3,11 +3,10 @@ package com.epam.jwd_final.tiger_bet.service.impl;
 import com.epam.jwd_final.tiger_bet.dao.UserDAO;
 import com.epam.jwd_final.tiger_bet.domain.Role;
 import com.epam.jwd_final.tiger_bet.domain.User;
-import com.epam.jwd_final.tiger_bet.factory.impl.UserFactory;
-import com.epam.jwd_final.tiger_bet.service.EntityService;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public enum UserService {
 
@@ -25,6 +24,15 @@ public enum UserService {
 
     public boolean saveUser(User user) {
         return USER_DAO.saveUser(user);
+    }
+
+    public boolean logIn(String email, String password) {
+        final Optional<User> optionalUser = userDAO.retrieveUserByEmail(email);
+        boolean passwordEquality = false;
+        if (optionalUser.isPresent()) {
+            passwordEquality = DigestUtils.md5Hex(password).equals(optionalUser.get().getPassword());
+        }
+        return userDAO.retrieveAllEmails().contains(email) && passwordEquality;
     }
 
     public boolean signUp(String name, String email, String password) {
