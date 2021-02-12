@@ -1,4 +1,4 @@
-package com.epam.jwd_final.tiger_bet.command;
+package com.epam.jwd_final.tiger_bet.command.context;
 
 public interface ResponseContext {
 
