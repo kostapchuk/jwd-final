@@ -14,5 +14,6 @@
 <body>
 <a href="<c:url value="/controller?command=show_all_bets"/>"></a>
 <a href="<c:url value="/controller?command=join"/>">sign up</a>
+<a href="<c:url value="/controller?command=log_in"/>">log in</a>
 </body>
 </html>
