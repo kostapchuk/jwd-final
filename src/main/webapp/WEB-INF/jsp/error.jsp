@@ -11,6 +11,6 @@
     <title>ERROR</title>
 </head>
 <body>
-<h1>Cannot sign you in. Account with such name and email have already existed</h1>
+<h1>Cannot sign you in. Account with such name and/or email have already existed</h1>
 </body>
 </html>
