@@ -13,5 +13,6 @@
 </head>
 <body>
 <a href="<c:url value="/user?command=show_all_bets"/>"></a>
+<a href="<c:url value="/user?command=join"/>">sign in</a>
 </body>
 </html>
