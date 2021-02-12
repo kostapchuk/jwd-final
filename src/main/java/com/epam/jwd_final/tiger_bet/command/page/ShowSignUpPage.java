@@ -1,16 +1,17 @@
-package com.epam.jwd_final.tiger_bet.command;
+package com.epam.jwd_final.tiger_bet.command.page;
 
+import com.epam.jwd_final.tiger_bet.command.Command;
 import com.epam.jwd_final.tiger_bet.command.context.RequestContext;
 import com.epam.jwd_final.tiger_bet.command.context.ResponseContext;
 
-public enum ShowMainPageCommand implements Command {
+public enum ShowSignUpPage implements Command {
 
     INSTANCE;
 
-    private static final ResponseContext MAIN_PAGE_RESPONSE = new ResponseContext() {
+    private static final ResponseContext SIGNUP_RESPONSE = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/WEB-INF/jsp/main.jsp";
+            return "/WEB-INF/jsp/signup.jsp";
         }
 
         @Override
@@ -21,6 +22,6 @@ public enum ShowMainPageCommand implements Command {
 
     @Override
     public ResponseContext execute(RequestContext req) {
-        return MAIN_PAGE_RESPONSE;
+        return SIGNUP_RESPONSE;
     }
 }

@@ -1,16 +1,17 @@
-package com.epam.jwd_final.tiger_bet.command;
+package com.epam.jwd_final.tiger_bet.command.page;
 
+import com.epam.jwd_final.tiger_bet.command.Command;
 import com.epam.jwd_final.tiger_bet.command.context.RequestContext;
 import com.epam.jwd_final.tiger_bet.command.context.ResponseContext;
 
-public enum JoinCommand implements Command {
+public enum ShowMainPage implements Command {
 
     INSTANCE;
 
-    private static final ResponseContext JOIN_RESPONSE = new ResponseContext() {
+    private static final ResponseContext MAIN_PAGE_RESPONSE = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/WEB-INF/jsp/join.jsp";
+            return "/WEB-INF/jsp/main.jsp";
         }
 
         @Override
@@ -21,6 +22,6 @@ public enum JoinCommand implements Command {
 
     @Override
     public ResponseContext execute(RequestContext req) {
-        return JOIN_RESPONSE;
+        return MAIN_PAGE_RESPONSE;
     }
 }

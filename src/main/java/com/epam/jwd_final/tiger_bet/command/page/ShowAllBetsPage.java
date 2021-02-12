@@ -1,10 +1,11 @@
-package com.epam.jwd_final.tiger_bet.command;
+package com.epam.jwd_final.tiger_bet.command.page;
 
+import com.epam.jwd_final.tiger_bet.command.Command;
 import com.epam.jwd_final.tiger_bet.command.context.RequestContext;
 import com.epam.jwd_final.tiger_bet.command.context.ResponseContext;
 import com.epam.jwd_final.tiger_bet.dao.BetDAO;
 
-public enum ShowAllBetsCommand implements Command {
+public enum ShowAllBetsPage implements Command {
 
     INSTANCE;
 
