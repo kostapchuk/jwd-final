@@ -12,10 +12,10 @@
 </head>
 <body>
     <h2>Create your account</h2>
-    <form action="${pageContext.request.contextPath}/user?command=show_all_bets" method="post">
-        <p>Name: <input type="text" name="username"></p>
-        <p>Email: <input type="text" name="email"></p>
-        <p>Password: <input type="text" name="password"></p>
+    <form action="${pageContext.request.contextPath}/user?command=sign_in" method="post">
+        <p>Name: <input type="text" name="name" required></p>
+        <p>Email: <input type="text" name="email" required></p>
+        <p>Password: <input type="text" name="password" required></p>
         <input type="submit" value="Submit">
     </form>
 
