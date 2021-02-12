@@ -27,7 +27,7 @@ public enum UserService {
         return USER_DAO.saveUser(user);
     }
 
-    public boolean signIn(String name, String email, String password) {
+    public boolean signUp(String name, String email, String password) {
         final String md5Password = DigestUtils.md5Hex(password);
         if (!isExist(name, email)) {
             return saveUser(createUser(name, email, md5Password, null, null));

@@ -5,7 +5,7 @@ public enum CommandManager {
     SHOW_MAIN_PAGE(ShowMainPageCommand.INSTANCE),
     SHOW_ALL_BETS(ShowAllBetsCommand.INSTANCE),
     JOIN(JoinCommand.INSTANCE),
-    SIGN_IN(SignInCommand.INSTANCE),
+    SIGN_UP(SignUpCommand.INSTANCE),
     DEFAULT(ShowMainPageCommand.INSTANCE);
 
     private final Command command;

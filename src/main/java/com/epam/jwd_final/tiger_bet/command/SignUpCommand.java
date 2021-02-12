@@ -2,7 +2,7 @@ package com.epam.jwd_final.tiger_bet.command;
 
 import com.epam.jwd_final.tiger_bet.service.impl.UserService;
 
-public enum SignInCommand implements Command {
+public enum SignUpCommand implements Command {
 
     INSTANCE;
 
@@ -36,6 +36,6 @@ public enum SignInCommand implements Command {
         final String email = req.getParameter("email");
         final String password = req.getParameter("password");
 
-        return UserService.INSTANCE.signIn(name, email, password) ? WELCOME_RESPONSE : ERROR_RESPONSE;
+        return UserService.INSTANCE.signUp(name, email, password) ? WELCOME_RESPONSE : ERROR_RESPONSE;
     }
 }
