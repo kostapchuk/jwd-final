@@ -22,6 +22,10 @@ public class User extends AbstractEntity {
         this.role = role;
     }
 
+    public User(String name, String email, String password, BigDecimal balance, Role role) {
+        this(null, name, email, password, balance, role);
+    }
+
     public String getName() {
         return name;
     }
