@@ -14,11 +14,10 @@ public enum UserFactory implements EntityFactory<User> {
     @Override
     public User create(Object... params) {
         return new User(
-                Integer.parseInt(String.valueOf(params[0])),
+                (String) params[0],
                 (String) params[1],
                 (String) params[2],
-                (String) params[3],
-                new BigDecimal(String.valueOf(params[4])),
-                Role.resolveRoleById(Integer.parseInt(String.valueOf(params[5]))));
+                new BigDecimal(String.valueOf(params[3])),
+                Role.resolveRoleById(Integer.parseInt(String.valueOf(params[4]))));
     }
 }
