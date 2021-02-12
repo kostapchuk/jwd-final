@@ -3,15 +3,21 @@
   Created by IntelliJ IDEA.
   User: xfase
   Date: 2/11/2021
-  Time: 1:12 PM
+  Time: 10:07 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Main page</title>
+    <title>Bets</title>
 </head>
 <body>
-<a href="<c:url value="/user?command=show_bets"/>"></a>
+<h2>Bets list</h2>
+<c:if test="${not empty requestScope.bets}">
+    <h2>Columns</h2>
+    <c:forEach var="bet" items="${requestScope.bets}">
+        <li>${bet.id}</li>
+    </c:forEach>
+</c:if>
 </body>
 </html>
