@@ -6,6 +6,7 @@ import com.epam.jwd_final.tiger_bet.mapper.Mapper;
 import com.epam.jwd_final.tiger_bet.mapper.impl.BetMapper;
 
 import java.math.BigDecimal;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +47,7 @@ public class BetDAO extends AbstractDAO<Bet> {
     }
 
     @Override
-    protected Mapper<Bet> retrieveMapper() {
+    protected Mapper<ResultSet, Bet> retrieveMapper() {
         return BetMapper.INSTANCE;
     }
 }
