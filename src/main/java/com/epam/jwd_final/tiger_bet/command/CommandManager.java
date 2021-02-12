@@ -6,6 +6,7 @@ public enum CommandManager {
     SHOW_ALL_BETS(ShowAllBetsCommand.INSTANCE),
     JOIN(JoinCommand.INSTANCE),
     SIGN_UP(SignUpCommand.INSTANCE),
+    SHOW_ALL_MATCHES(ShowAllMatchesCommand.INSTANCE),
     DEFAULT(ShowMainPageCommand.INSTANCE);
 
     private final Command command;
