@@ -13,8 +13,6 @@ import java.util.Optional;
 
 public abstract class AbstractDAO<T extends Entity> implements GeneralDAO<T> {
 
-    protected final ConnectionPool pool = ConnectionPool.getInstance();
-
     @Override
     public Optional<T> queryForSingleResult(String querySQL, List<Object> params) {
         List<T> result = query(querySQL, params);
@@ -31,7 +29,7 @@ public abstract class AbstractDAO<T extends Entity> implements GeneralDAO<T> {
         try {
             PreparedStatement preparedStatement = prepareStatementForDeleteOrSelectQuery(querySQL, params);
             ResultSet resultSet = preparedStatement.executeQuery();
-            Mapper<T> mapper = retrieveMapper();
+            Mapper<ResultSet, T> mapper = retrieveMapper();
             while (resultSet.next()) {
                 T item = mapper.mapFrom(resultSet);
                 objects.add(item);
@@ -46,7 +44,7 @@ public abstract class AbstractDAO<T extends Entity> implements GeneralDAO<T> {
     private PreparedStatement prepareStatementForDeleteOrSelectQuery(String querySQL, List<Object> parameters)
             throws SQLException {
         PreparedStatement preparedStatement =
-                ConnectionPool.getInstance().retrieveConnection().prepareStatement(querySQL);
+                ConnectionPool.getInstance().retrieveConnection().prepareStatement(querySQL); // TODO return connection
         int length = parameters.size();
         for (int i = 0; i < length; i++) {
             preparedStatement.setString(i + 1, String.valueOf(parameters.get(i)));
@@ -54,5 +52,5 @@ public abstract class AbstractDAO<T extends Entity> implements GeneralDAO<T> {
         return preparedStatement;
     }
 
-    protected abstract Mapper<T> retrieveMapper();
+    protected abstract Mapper<ResultSet, T> retrieveMapper();
 }
