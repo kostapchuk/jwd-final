@@ -4,6 +4,7 @@ import com.epam.jwd_final.tiger_bet.domain.Match;
 import com.epam.jwd_final.tiger_bet.mapper.Mapper;
 import com.epam.jwd_final.tiger_bet.mapper.impl.MatchMapper;
 
+import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +35,7 @@ public class MatchDAO extends AbstractDAO<Match> {
 
 
     @Override
-    protected Mapper<Match> retrieveMapper() {
+    protected Mapper<ResultSet, Match> retrieveMapper() {
         return MatchMapper.INSTANCE;
     }
 }
