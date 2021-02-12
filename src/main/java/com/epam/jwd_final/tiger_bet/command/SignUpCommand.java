@@ -20,24 +20,12 @@ public enum SignUpCommand implements Command {
         }
     };
 
-    private static final ResponseContext ERROR_RESPONSE = new ResponseContext() {
-        @Override
-        public String getPage() {
-            return "/WEB-INF/jsp/error.jsp";
-        }
-
-        @Override
-        public boolean isRedirect() {
-            return false;
-        }
-    };
-
     @Override
     public ResponseContext execute(RequestContext req) {
         final String name = req.getParameter("name");
         final String email = req.getParameter("email");
         final String password = req.getParameter("password");
 
-        return UserService.INSTANCE.signUp(name, email, password) ? WELCOME_RESPONSE : ERROR_RESPONSE;
+        return UserService.INSTANCE.signUp(name, email, password) ? WELCOME_RESPONSE : new ErrorResponse();
     }
 }
