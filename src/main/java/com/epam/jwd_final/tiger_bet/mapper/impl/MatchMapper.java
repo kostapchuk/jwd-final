@@ -1,13 +1,10 @@
 package com.epam.jwd_final.tiger_bet.mapper.impl;
 
 import com.epam.jwd_final.tiger_bet.domain.Match;
-import com.epam.jwd_final.tiger_bet.domain.Sport;
 import com.epam.jwd_final.tiger_bet.mapper.Mapper;
-import com.epam.jwd_final.tiger_bet.service.impl.MatchService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 public enum MatchMapper implements Mapper<ResultSet, Match> {
 
