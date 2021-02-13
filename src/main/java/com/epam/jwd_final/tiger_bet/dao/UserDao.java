@@ -21,6 +21,10 @@ public class UserDao extends AbstractDao<User> {
 
     private static final String SAVE_USER_SQL =
             "insert into user (name, password) values (?, ?)";
+    public static final String USER_NAME_COLUMN = "name";
+    public static final String USER_PASSWORD_COLUMN = "password";
+    public static final String USER_BALANCE_COLUMN = "balance";
+    public static final String USER_ROLE_COLUMN = "role";
 
     public Optional<User> findByName(String name) {
         try {
@@ -56,10 +60,10 @@ public class UserDao extends AbstractDao<User> {
     }
 
     private User convertToUser(ResultSet rs) throws SQLException {
-        final String name = rs.getString("name");
-        final String password = rs.getString("password");
-        final BigDecimal balance = rs.getBigDecimal("balance");
-        final int roleId = rs.getInt("role");
+        final String name = rs.getString(USER_NAME_COLUMN);
+        final String password = rs.getString(USER_PASSWORD_COLUMN);
+        final BigDecimal balance = rs.getBigDecimal(USER_BALANCE_COLUMN);
+        final int roleId = rs.getInt(USER_ROLE_COLUMN);
         return new User(name, password, balance, Role.resolveRoleById(roleId));
     }
 }
