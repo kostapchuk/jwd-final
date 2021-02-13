@@ -2,7 +2,6 @@ package com.epam.jwd_final.tiger_bet.dao;
 
 import com.epam.jwd_final.tiger_bet.connection.ConnectionPool;
 import com.epam.jwd_final.tiger_bet.domain.Entity;
-import com.epam.jwd_final.tiger_bet.mapper.Mapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,11 +28,11 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
         try {
             PreparedStatement preparedStatement = prepareStatementForDeleteOrSelectQuery(querySQL, params);
             ResultSet resultSet = preparedStatement.executeQuery();
-            Mapper<ResultSet, T> mapper = retrieveMapper();
-            while (resultSet.next()) {
-                T item = mapper.mapFrom(resultSet);
-                objects.add(item);
-            }
+//            Mapper<ResultSet, T> mapper = retrieveMapper();
+//            while (resultSet.next()) {
+//                T item = mapper.mapFrom(resultSet);
+//                objects.add(item);
+//            }
         } catch (SQLException e) {
             throw new IllegalArgumentException();
         }

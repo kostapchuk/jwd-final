@@ -24,6 +24,11 @@ public class WrappingRequestContext implements RequestContext {
     }
 
     @Override
+    public Object getParameter(String name) {
+        return request.getParameter(name);
+    }
+
+    @Override
     public void invalidateSession() {
         final HttpSession session = request.getSession(false);
         if (session != null) {

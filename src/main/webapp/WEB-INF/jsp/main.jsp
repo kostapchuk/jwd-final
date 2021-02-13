@@ -13,7 +13,7 @@
 </head>
 <body>
 <a href="<c:url value="/controller?command=show_all_bets"/>"></a>
-<a href="<c:url value="/controller?command=join"/>">sign up</a>
-<a href="<c:url value="/controller?command=log_in"/>">log in</a>
+<a href="<c:url value="/controller?command=show_signup_page"/>">sign up</a>
+<a href="<c:url value="/controller?command=show_login_page"/>">log in</a>
 </body>
 </html>

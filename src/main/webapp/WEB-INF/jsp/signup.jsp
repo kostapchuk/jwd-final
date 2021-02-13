@@ -12,10 +12,9 @@
 </head>
 <body>
     <h2>Create your account</h2>
-    <form action="${pageContext.request.contextPath}/controller?command=sign_up" method="post">
-        <p>Name: <input type="text" name="name" required></p>
-        <p>Email: <input type="text" name="email" required></p>
-        <p>Password: <input type="text" name="password" required></p>
+    <form action="${pageContext.request.contextPath}/controller?command=signup" method="post">
+        <p>Name: <input type="text" name="userName" required></p>
+        <p>Password: <input type="password" name="userPassword" required></p>
         <input type="submit" value="Submit">
     </form>
 

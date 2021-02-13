@@ -8,30 +8,28 @@ public class User extends AbstractEntity {
     private static final long serialVersionUID = 3489038301033270987L;
 
     private final String name;
-    private final String email;
     private final String password;
     private final BigDecimal balance;
     private final Role role;
 
-    public User(Integer id, String name, String email, String password, BigDecimal balance, Role role) {
+    public User(Integer id, String name, String password, BigDecimal balance, Role role) {
         super(id);
         this.name = name;
-        this.email = email;
         this.password = password;
         this.balance = balance;
         this.role = role;
     }
 
-    public User(String name, String email, String password, BigDecimal balance, Role role) {
-        this(null, name, email, password, balance, role);
+    public User(String name, String password, BigDecimal balance, Role role) {
+        this(null, name, password, balance, role);
+    }
+
+    public User(String name, String password) {
+        this(name, password, new BigDecimal("0.0"), Role.CLIENT);
     }
 
     public String getName() {
         return name;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public String getPassword() {
@@ -51,7 +49,6 @@ public class User extends AbstractEntity {
         return "User{" +
                 "id='" + getId() + '\'' +
                 ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", balance=" + balance +
                 ", role=" + role +
@@ -64,7 +61,6 @@ public class User extends AbstractEntity {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(name, user.name) &&
-                Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(balance, user.balance) &&
                 role == user.role;
@@ -72,6 +68,6 @@ public class User extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, email, password, balance, role);
+        return Objects.hash(name, password, balance, role);
     }
 }

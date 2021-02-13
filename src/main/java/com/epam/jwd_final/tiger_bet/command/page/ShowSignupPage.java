@@ -4,15 +4,14 @@ import com.epam.jwd_final.tiger_bet.command.Command;
 import com.epam.jwd_final.tiger_bet.command.context.RequestContext;
 import com.epam.jwd_final.tiger_bet.command.context.ResponseContext;
 
-public enum ShowErrorPage implements Command {
+public enum ShowSignupPage implements Command {
 
     INSTANCE;
 
-
-    public static final ResponseContext ERROR_PAGE_RESPONSE = new ResponseContext() {
+    public static final ResponseContext SIGNUP_PAGE_RESPONSE = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/WEB-INF/jsp/error.jsp";
+            return "/WEB-INF/jsp/signup.jsp";
         }
 
         @Override
@@ -23,6 +22,6 @@ public enum ShowErrorPage implements Command {
 
     @Override
     public ResponseContext execute(RequestContext req) {
-        return ERROR_PAGE_RESPONSE;
+        return SIGNUP_PAGE_RESPONSE;
     }
 }
