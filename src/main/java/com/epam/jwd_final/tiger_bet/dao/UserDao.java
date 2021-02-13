@@ -50,7 +50,7 @@ public class UserDao extends AbstractDao<User> {
                 return true;
             }
         } catch (SQLException e) {
-            LOGGER.info("User with such name exists: " + user.getName());
+            LOGGER.info("Cannot save user with the name: " + user.getName());
         }
         return false;
     }
