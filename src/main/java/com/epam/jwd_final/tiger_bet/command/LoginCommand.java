@@ -16,22 +16,25 @@ public enum LoginCommand implements Command {
 
     private final UserService userService;
 
+    public static final String USER_NAME_PARAMETER = "userName";
+    public static final String USER_PASSWORD_PARAMETER = "userPassword";
+
     LoginCommand() {
         this.userService = new UserService(new UserDao());
     }
 
     @Override
     public ResponseContext execute(RequestContext req) {
-        final String name = String.valueOf(req.getParameter("userName"));
-        final String password = String.valueOf(req.getParameter("userPassword"));
+        final String name = String.valueOf(req.getParameter(USER_NAME_PARAMETER));
+        final String password = String.valueOf(req.getParameter(USER_PASSWORD_PARAMETER));
         final Optional<UserDto> userDto = userService.login(name, password);
         ResponseContext result;
         if (userDto.isPresent()) {
-            req.setAttribute("userName", name);
-            result = ShowMainPage.INSTANCE.execute(req);
+            req.setAttribute(USER_NAME_PARAMETER, name);
+            result = ShowMainPage.INSTANCE.execute(req); // TODO: redirect
         } else {
             req.setAttribute("errorMessage", "invalid credentials");
-            result = ShowLoginPage.INSTANCE.execute(req);
+            result = ShowLoginPage.INSTANCE.execute(req); // TODO: forward
         }
         return result;
     }
