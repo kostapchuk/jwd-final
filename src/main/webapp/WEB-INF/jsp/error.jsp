@@ -11,6 +11,6 @@
     <title>ERROR</title>
 </head>
 <body>
-<h1>Cannot sign you up. Account with such name and exists</h1>
+    <h1>Cannot sign you up. Account with such name exists</h1>
 </body>
 </html>
