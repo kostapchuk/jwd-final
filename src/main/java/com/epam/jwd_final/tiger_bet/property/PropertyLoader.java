@@ -1,8 +1,5 @@
-package com.epam.jwd_final.tiger_bet.util;
+package com.epam.jwd_final.tiger_bet.property;
 
-import com.epam.jwd_final.tiger_bet.connection.ConnectionPoolManager;
-import com.epam.jwd_final.tiger_bet.properties.ConnectionPoolProperties;
-import com.epam.jwd_final.tiger_bet.properties.DatabaseProperties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,28 +30,28 @@ public final class PropertyLoader {
     private PropertyLoader() {
     }
 
-    public DatabaseProperties loadDatabaseProperties() {
+    public DatabaseProperty loadDatabaseProperties() {
         try (InputStream inputStream = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(DATABASE_PROPERTY_FILE_NAME)) {
             properties.load(inputStream);
         } catch (IOException e) {
             throw new IllegalStateException("Cannot read database property file");
         }
-        return new DatabaseProperties(
+        return new DatabaseProperty(
                 properties.getProperty(DB_URL_PROPERTY),
                 properties.getProperty(DB_USER_PROPERTY),
                 properties.getProperty(DB_PASSWORD_PROPERTY)
         );
     }
 
-    public ConnectionPoolProperties loadConnectionPoolProperties() {
+    public ConnectionPoolProperty loadConnectionPoolProperties() {
         try (InputStream inputStream = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(CONNECTION_POOL_PROPERTY_FILE_NAME)) {
             properties.load(inputStream);
         } catch (IOException e) {
             throw new IllegalStateException("Cannot read connection pool property file");
         }
-        return new ConnectionPoolProperties(
+        return new ConnectionPoolProperty(
                 Integer.parseInt(properties.getProperty(POOL_MAX_SIZE_PROPERTY)),
                 Integer.parseInt(properties.getProperty(POOL_INITIAL_SIZE_PROPERTY)),
                 Integer.parseInt(properties.getProperty(POOL_EXTRA_CONNECTIONS_AMOUNT_PROPERTY)),

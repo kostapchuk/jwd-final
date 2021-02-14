@@ -1,12 +1,12 @@
-package com.epam.jwd_final.tiger_bet.properties;
+package com.epam.jwd_final.tiger_bet.property;
 
-public class DatabaseProperties {
+public class DatabaseProperty {
 
     private final String url;
     private final String user;
     private final String password;
 
-    public DatabaseProperties(String url, String user, String password) {
+    public DatabaseProperty(String url, String user, String password) {
         this.url = url;
         this.user = user;
         this.password = password;

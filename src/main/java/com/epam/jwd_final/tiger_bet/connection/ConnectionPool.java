@@ -3,8 +3,8 @@ package com.epam.jwd_final.tiger_bet.connection;
 
 import com.epam.jwd_final.tiger_bet.context.ApplicationContext;
 import com.epam.jwd_final.tiger_bet.exception.ConnectionPoolException;
-import com.epam.jwd_final.tiger_bet.properties.ConnectionPoolProperties;
-import com.epam.jwd_final.tiger_bet.properties.DatabaseProperties;
+import com.epam.jwd_final.tiger_bet.property.ConnectionPoolProperty;
+import com.epam.jwd_final.tiger_bet.property.DatabaseProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,10 +24,10 @@ public final class ConnectionPool {
 
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
-    private static final ConnectionPoolProperties connectionPoolProperties =
+    private static final ConnectionPoolProperty connectionPoolProperties =
             ApplicationContext.getConnectionPoolProperties();
 
-    private static final DatabaseProperties databaseProperties =
+    private static final DatabaseProperty databaseProperties =
             ApplicationContext.getDatabaseProperties();
 
     static final int INITIAL_POOL_SIZE = connectionPoolProperties.getInitialConnections();

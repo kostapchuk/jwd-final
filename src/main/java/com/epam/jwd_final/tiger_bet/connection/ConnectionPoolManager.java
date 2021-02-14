@@ -2,7 +2,7 @@ package com.epam.jwd_final.tiger_bet.connection;
 
 import com.epam.jwd_final.tiger_bet.context.ApplicationContext;
 import com.epam.jwd_final.tiger_bet.exception.ConnectionException;
-import com.epam.jwd_final.tiger_bet.properties.DatabaseProperties;
+import com.epam.jwd_final.tiger_bet.property.DatabaseProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +25,7 @@ public final class ConnectionPoolManager {
 
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPoolManager.class);
 
-    private static final DatabaseProperties databaseProperties =
+    private static final DatabaseProperty databaseProperties =
             ApplicationContext.getDatabaseProperties();
 
     private ConnectionPoolManager() {

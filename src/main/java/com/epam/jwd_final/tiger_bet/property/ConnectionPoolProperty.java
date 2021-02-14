@@ -1,6 +1,6 @@
-package com.epam.jwd_final.tiger_bet.properties;
+package com.epam.jwd_final.tiger_bet.property;
 
-public class ConnectionPoolProperties {
+public class ConnectionPoolProperty {
 
     private final int maxConnections;
     private final int initialConnections;
@@ -9,12 +9,12 @@ public class ConnectionPoolProperties {
     private final double shrinkFactor;
     private final int connectionTimeOut;
 
-    public ConnectionPoolProperties(int maxConnections,
-                                    int initialConnections,
-                                    int extraConnections,
-                                    double loadFactor,
-                                    double shrinkFactor,
-                                    int connectionTimeOut) {
+    public ConnectionPoolProperty(int maxConnections,
+                                  int initialConnections,
+                                  int extraConnections,
+                                  double loadFactor,
+                                  double shrinkFactor,
+                                  int connectionTimeOut) {
         this.maxConnections = maxConnections;
         this.initialConnections = initialConnections;
         this.extraConnections = extraConnections;
