@@ -15,6 +15,7 @@ public class UserService implements GeneralService<User> {
     private final UserDao userDao;
 
     private static final String DUMMY_PASSWORD = "defaultPwd";
+    private static final String HASHED_DUMMY_PASSWORD = BCrypt.hashpw(DUMMY_PASSWORD, BCrypt.gensalt());
 
     public UserService(UserDao userDao) {
         this.userDao = userDao;
@@ -28,7 +29,7 @@ public class UserService implements GeneralService<User> {
     public Optional<UserDto> login(String name, String password) {
         final Optional<User> user = userDao.findByName(name);
         if (!user.isPresent()) {
-            BCrypt.checkpw(password, DUMMY_PASSWORD); //to prevent timing attack
+            BCrypt.checkpw(password, HASHED_DUMMY_PASSWORD); //to prevent timing attack
             return Optional.empty();
         }
         final String realPassword = user.get().getPassword();
