@@ -116,7 +116,7 @@ public final class ConnectionPool {
         LOGGER.info("Initializing connection pool...");
         availableConnections.addAll(ConnectionPoolManager.createConnections(INITIAL_POOL_SIZE));
         initialized.set(true);
-//        ConnectionPoolManager.createListener();
+        ConnectionPoolManager.createListener();
     }
 
     public void destroy() {
