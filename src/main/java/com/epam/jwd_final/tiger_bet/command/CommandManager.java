@@ -1,5 +1,6 @@
 package com.epam.jwd_final.tiger_bet.command;
 
+import com.epam.jwd_final.tiger_bet.command.page.ShowAllMatchesPage;
 import com.epam.jwd_final.tiger_bet.command.page.ShowErrorPage;
 import com.epam.jwd_final.tiger_bet.command.page.ShowLoginPage;
 import com.epam.jwd_final.tiger_bet.command.page.ShowMainPage;
@@ -12,6 +13,7 @@ public enum CommandManager {
     SHOW_MAIN_PAGE(ShowMainPage.INSTANCE),
     SHOW_LOGIN_PAGE(ShowLoginPage.INSTANCE),
     SHOW_SIGNUP_PAGE(ShowSignupPage.INSTANCE),
+    SHOW_ALL_MATCHES_PAGE(ShowAllMatchesPage.INSTANCE),
     SHOW_ERROR_PAGE(ShowErrorPage.INSTANCE),
     DEFAULT(ShowMainPage.INSTANCE);
 

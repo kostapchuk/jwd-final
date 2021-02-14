@@ -16,5 +16,6 @@
 <a href="<c:url value="/controller?command=show_signup_page"/>">sign up</a><br>
 <a href="<c:url value="/controller?command=show_login_page"/>">log in</a><br>
 <a href="<c:url value="/controller?command=logout"/>">log out</a><br>
+<a href="<c:url value="/controller?command=show_all_matches_page"/>">all matches</a><br>
 </body>
 </html>

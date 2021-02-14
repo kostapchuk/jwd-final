@@ -2,9 +2,7 @@ package com.epam.jwd_final.tiger_bet.domain;
 
 import java.time.LocalDateTime;
 
-public class Match extends AbstractEntity {
-
-    private static final long serialVersionUID = -1407601691624011922L;
+public class MatchDto {
 
     private final Sport sportType;
     private final LocalDateTime start;
@@ -12,17 +10,12 @@ public class Match extends AbstractEntity {
     private final String secondTeam;
     private final Status status;
 
-    public Match(Integer id, Sport sportType, LocalDateTime start, String firstTeam, String secondTeam, Status status) {
-        super(id);
+    public MatchDto(Sport sportType, LocalDateTime start, String firstTeam, String secondTeam, Status status) {
         this.sportType = sportType;
         this.start = start;
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
-        this.status= status;
-    }
-
-    public Match(Sport sportType, LocalDateTime start, String firstTeam, String secondTeam, Status status) {
-        this(null, sportType, start, firstTeam, secondTeam, status);
+        this.status = status;
     }
 
     public Sport getSportType() {
