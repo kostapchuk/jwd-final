@@ -4,7 +4,7 @@ import com.epam.jwd_final.tiger_bet.command.Command;
 import com.epam.jwd_final.tiger_bet.command.RequestContext;
 import com.epam.jwd_final.tiger_bet.command.ResponseContext;
 import com.epam.jwd_final.tiger_bet.dao.MatchDao;
-import com.epam.jwd_final.tiger_bet.service.impl.MatchService;
+import com.epam.jwd_final.tiger_bet.service.impl.MatchServiceImpl;
 
 import java.util.Collections;
 
@@ -14,10 +14,10 @@ public enum ShowAllMatchesPage implements Command {
 
     public static final String MATCHES_PARAMETER = "matches";
 
-    private final MatchService matchService;
+    private final MatchServiceImpl matchService;
 
     ShowAllMatchesPage() {
-        this.matchService = new MatchService(new MatchDao());
+        this.matchService = new MatchServiceImpl(new MatchDao());
     }
 
     public static final ResponseContext ALL_MATCHES_PAGE_RESPONSE = new ResponseContext() {

@@ -4,7 +4,7 @@ import com.epam.jwd_final.tiger_bet.command.page.ShowLoginPage;
 import com.epam.jwd_final.tiger_bet.command.page.ShowMainPage;
 import com.epam.jwd_final.tiger_bet.dao.UserDao;
 import com.epam.jwd_final.tiger_bet.domain.UserDto;
-import com.epam.jwd_final.tiger_bet.service.impl.UserService;
+import com.epam.jwd_final.tiger_bet.service.impl.UserServiceImpl;
 
 import java.util.Optional;
 
@@ -12,13 +12,13 @@ public enum LoginCommand implements Command {
 
     INSTANCE;
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     public static final String USER_NAME_PARAMETER = "userName";
     public static final String USER_PASSWORD_PARAMETER = "userPassword";
 
     LoginCommand() {
-        this.userService = new UserService(new UserDao());
+        this.userService = new UserServiceImpl(new UserDao());
     }
 
     @Override

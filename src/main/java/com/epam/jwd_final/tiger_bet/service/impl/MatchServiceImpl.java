@@ -10,11 +10,11 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-public class MatchService {
+public class MatchServiceImpl {
 
     private final MatchDao matchDao;
 
-    public MatchService(MatchDao matchDao) {
+    public MatchServiceImpl(MatchDao matchDao) {
         this.matchDao = matchDao;
     }
 
