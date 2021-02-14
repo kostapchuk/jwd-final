@@ -2,6 +2,13 @@ package com.epam.jwd_final.tiger_bet.property;
 
 public class ConnectionPoolProperty {
 
+    static final String POOL_MAX_SIZE_PROPERTY = "maxPoolSize";
+    static final String POOL_INITIAL_SIZE_PROPERTY = "initialPoolSize";
+    static final String POOL_EXTRA_CONNECTIONS_AMOUNT_PROPERTY = "extraConnectionAmount";
+    static final String POOL_LOAD_FACTOR_PROPERTY = "loadFactor";
+    static final String POOL_SHRINK_FACTOR_PROPERTY = "shrinkFactor";
+    static final String POOL_CONNECTION_TIME_OUT_PROPERTY = "connectionTimeOut";
+
     private final int maxConnections;
     private final int initialConnections;
     private final int extraConnections;
