@@ -4,12 +4,17 @@ package com.epam.jwd_final.tiger_bet.connection;
 import com.epam.jwd_final.tiger_bet.context.ApplicationContext;
 import com.epam.jwd_final.tiger_bet.exception.ConnectionPoolException;
 import com.epam.jwd_final.tiger_bet.properties.ConnectionPoolProperties;
+import com.epam.jwd_final.tiger_bet.properties.DatabaseProperties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Enumeration;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -21,6 +26,9 @@ public final class ConnectionPool {
 
     private static final ConnectionPoolProperties connectionPoolProperties =
             ApplicationContext.getConnectionPoolProperties();
+
+    private static final DatabaseProperties databaseProperties =
+            ApplicationContext.getDatabaseProperties();
 
     static final int INITIAL_POOL_SIZE = connectionPoolProperties.getInitialConnections();
     static final int MAX_POOL_SIZE = connectionPoolProperties.getMaxConnections();
@@ -114,6 +122,7 @@ public final class ConnectionPool {
 
     private void init() {
         LOGGER.info("Initializing connection pool...");
+        registerDrivers();
         availableConnections.addAll(ConnectionPoolManager.createConnections(INITIAL_POOL_SIZE));
         initialized.set(true);
         ConnectionPoolManager.createListener();
@@ -123,6 +132,28 @@ public final class ConnectionPool {
         LOGGER.info("Destroying connection pool...");
         availableConnections.forEach(ProxyConnection::closeConnection);
         unavailableConnections.forEach(ProxyConnection::closeConnection);
+        deregisterDrivers();
+    }
+
+    private static void registerDrivers() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            DriverManager.registerDriver(DriverManager.getDriver(databaseProperties.getUrl()));
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.error("Cannot register drivers");
+        }
+    }
+
+
+    private static void deregisterDrivers() {
+        Enumeration<Driver> drivers = DriverManager.getDrivers();
+        while (drivers.hasMoreElements()) {
+            try {
+                DriverManager.deregisterDriver(drivers.nextElement());
+            } catch (SQLException e) {
+                LOGGER.error("Cannot deregister drivers");
+            }
+        }
     }
 
     Deque<ProxyConnection> getAvailableConnections() {
