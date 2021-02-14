@@ -1,7 +1,5 @@
 package com.epam.jwd_final.tiger_bet.command;
 
-import com.epam.jwd_final.tiger_bet.command.context.RequestContext;
-import com.epam.jwd_final.tiger_bet.command.context.ResponseContext;
 import com.epam.jwd_final.tiger_bet.command.page.ShowLoginPage;
 import com.epam.jwd_final.tiger_bet.command.page.ShowMainPage;
 import com.epam.jwd_final.tiger_bet.dao.UserDao;

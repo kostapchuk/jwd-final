@@ -1,18 +1,23 @@
 package com.epam.jwd_final.tiger_bet.util;
 
+import com.epam.jwd_final.tiger_bet.connection.ConnectionPoolManager;
 import com.epam.jwd_final.tiger_bet.properties.ConnectionPoolProperties;
 import com.epam.jwd_final.tiger_bet.properties.DatabaseProperties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class PropertyLoader {
+public final class PropertyLoader {
+
+    private static final Logger LOGGER = LogManager.getLogger(PropertyLoader.class);
 
     private static final Properties properties = new Properties();
 
-    private static final String DATABASE_PROPERTY_PATH = "database.properties";
-    private static final String CONNECTION_POOL_PROPERTY_PATH = "connection_pool.properties";
+    private static final String DATABASE_PROPERTY_FILE_NAME = "database.properties";
+    private static final String CONNECTION_POOL_PROPERTY_FILE_NAME = "connection_pool.properties";
 
     private static final String DB_URL_PROPERTY = "url";
     private static final String DB_USER_PROPERTY = "user";
@@ -30,10 +35,10 @@ public class PropertyLoader {
 
     public DatabaseProperties loadDatabaseProperties() {
         try (InputStream inputStream = Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream(DATABASE_PROPERTY_PATH)) {
+                .getResourceAsStream(DATABASE_PROPERTY_FILE_NAME)) {
             properties.load(inputStream);
         } catch (IOException e) {
-            e.printStackTrace(); // TODO log
+            throw new IllegalStateException("Cannot read database property file");
         }
         return new DatabaseProperties(
                 properties.getProperty(DB_URL_PROPERTY),
@@ -44,10 +49,10 @@ public class PropertyLoader {
 
     public ConnectionPoolProperties loadConnectionPoolProperties() {
         try (InputStream inputStream = Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream(CONNECTION_POOL_PROPERTY_PATH)) {
+                .getResourceAsStream(CONNECTION_POOL_PROPERTY_FILE_NAME)) {
             properties.load(inputStream);
         } catch (IOException e) {
-            e.printStackTrace(); // TODO log
+            throw new IllegalStateException("Cannot read connection pool property file");
         }
         return new ConnectionPoolProperties(
                 Integer.parseInt(properties.getProperty(POOL_MAX_SIZE_PROPERTY)),

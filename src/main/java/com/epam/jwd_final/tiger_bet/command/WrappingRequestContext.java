@@ -1,6 +1,4 @@
-package com.epam.jwd_final.tiger_bet.command.context.impl;
-
-import com.epam.jwd_final.tiger_bet.command.context.RequestContext;
+package com.epam.jwd_final.tiger_bet.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

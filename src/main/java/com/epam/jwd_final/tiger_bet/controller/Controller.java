@@ -1,8 +1,8 @@
 package com.epam.jwd_final.tiger_bet.controller;
 
 import com.epam.jwd_final.tiger_bet.command.Command;
-import com.epam.jwd_final.tiger_bet.command.context.ResponseContext;
-import com.epam.jwd_final.tiger_bet.command.context.impl.WrappingRequestContext;
+import com.epam.jwd_final.tiger_bet.command.ResponseContext;
+import com.epam.jwd_final.tiger_bet.command.WrappingRequestContext;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

@@ -1,8 +1,8 @@
 package com.epam.jwd_final.tiger_bet.command.page;
 
 import com.epam.jwd_final.tiger_bet.command.Command;
-import com.epam.jwd_final.tiger_bet.command.context.RequestContext;
-import com.epam.jwd_final.tiger_bet.command.context.ResponseContext;
+import com.epam.jwd_final.tiger_bet.command.RequestContext;
+import com.epam.jwd_final.tiger_bet.command.ResponseContext;
 
 public enum ShowErrorPage implements Command {
 
