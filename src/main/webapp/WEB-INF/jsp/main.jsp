@@ -12,7 +12,7 @@
     <title>Main page</title>
 </head>
 <body>
-<a href="<c:url value="/controller?command=show_all_bets"/>"></a><br>
+<a href="<c:url value="/controller?command=show_all_bets_page"/>">all bets</a><br>
 <a href="<c:url value="/controller?command=show_signup_page"/>">sign up</a><br>
 <a href="<c:url value="/controller?command=show_login_page"/>">log in</a><br>
 <a href="<c:url value="/controller?command=logout"/>">log out</a><br>

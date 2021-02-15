@@ -6,7 +6,6 @@ import com.epam.jwd_final.tiger_bet.domain.UserDto;
 import com.epam.jwd_final.tiger_bet.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 
-import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -20,6 +19,7 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
+    @Override
     public Optional<UserDto> login(String name, String password) {
         final Optional<User> user = userDao.findByName(name);
         if (!user.isPresent()) {
@@ -34,10 +34,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public boolean save(User user) {
         return userDao.save(user);
     }
 
+    @Override
     public boolean signup(String name, String password) {
         return save(new User(
                 name,
@@ -46,6 +48,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserDto convertToDto(User user) {
-        return new UserDto(user.getName());
+        return new UserDto(user.getName(), user.getRole().name());
     }
 }

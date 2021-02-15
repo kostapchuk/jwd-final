@@ -24,15 +24,12 @@ public class TeamDao {
             final ResultSet rs = preparedStatement.executeQuery();
             rs.next();
             if (rs.isFirst()) {
-                return Optional.of(convertToString(rs));
+                return Optional.of(rs.getString(NAME_COLUMN));
             }
         } catch (SQLException e) {
             LOGGER.info("Something went wrong while finding team by id: " + id);
         }
         return Optional.empty();
-    }
 
-    private String convertToString(ResultSet rs) throws SQLException {
-        return rs.getString(NAME_COLUMN);
     }
 }

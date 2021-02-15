@@ -8,7 +8,8 @@ public enum ShowLoginPage implements Command {
 
     INSTANCE;
 
-    public static final ResponseContext LOGIN_PAGE_RESPONSE = new ResponseContext() {
+    private static final ResponseContext LOGIN_PAGE_RESPONSE = new ResponseContext() {
+
         @Override
         public String getPage() {
             return "/WEB-INF/jsp/login.jsp";

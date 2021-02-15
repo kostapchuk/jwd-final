@@ -8,7 +8,8 @@ public enum ShowSignupPage implements Command {
 
     INSTANCE;
 
-    public static final ResponseContext SIGNUP_PAGE_RESPONSE = new ResponseContext() {
+    private static final ResponseContext SIGNUP_PAGE_RESPONSE = new ResponseContext() {
+
         @Override
         public String getPage() {
             return "/WEB-INF/jsp/signup.jsp";

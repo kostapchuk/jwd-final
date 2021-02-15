@@ -8,8 +8,8 @@ public enum ShowErrorPage implements Command {
 
     INSTANCE;
 
+    private static final ResponseContext ERROR_PAGE_RESPONSE = new ResponseContext() {
 
-    public static final ResponseContext ERROR_PAGE_RESPONSE = new ResponseContext() {
         @Override
         public String getPage() {
             return "/WEB-INF/jsp/error.jsp";

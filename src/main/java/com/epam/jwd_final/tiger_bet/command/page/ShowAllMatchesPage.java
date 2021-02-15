@@ -20,7 +20,8 @@ public enum ShowAllMatchesPage implements Command {
         this.matchService = new MatchServiceImpl(new MatchDao());
     }
 
-    public static final ResponseContext ALL_MATCHES_PAGE_RESPONSE = new ResponseContext() {
+    private static final ResponseContext ALL_MATCHES_PAGE_RESPONSE = new ResponseContext() {
+
         @Override
         public String getPage() {
             return "/WEB-INF/jsp/allmatches.jsp";

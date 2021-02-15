@@ -9,6 +9,7 @@ public enum ShowMainPage implements Command {
     INSTANCE;
 
     private static final ResponseContext MAIN_PAGE_RESPONSE = new ResponseContext() {
+
         @Override
         public String getPage() {
             return "/WEB-INF/jsp/main.jsp";

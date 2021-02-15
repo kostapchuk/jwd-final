@@ -36,8 +36,13 @@ public class WrappingRequestContext implements RequestContext {
 
     @Override
     public void setSessionAttribute(String name, Object obj) {
-        final HttpSession session = request.getSession();
+        final HttpSession session = request.getSession(true);
         session.setAttribute(name, obj);
+    }
+
+    @Override
+    public HttpSession getSession() {
+        return request.getSession(false);
     }
 
     public static RequestContext of(HttpServletRequest request) {

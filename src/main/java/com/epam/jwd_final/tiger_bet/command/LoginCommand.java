@@ -12,10 +12,11 @@ public enum LoginCommand implements Command {
 
     INSTANCE;
 
-    private final UserServiceImpl userService;
-
+    public static final String USER_ROLE_ATTRIBUTE = "userRole";
     public static final String USER_NAME_PARAMETER = "userName";
     public static final String USER_PASSWORD_PARAMETER = "userPassword";
+
+    private final UserServiceImpl userService;
 
     LoginCommand() {
         this.userService = new UserServiceImpl(new UserDao());
@@ -28,10 +29,11 @@ public enum LoginCommand implements Command {
         final Optional<UserDto> userDto = userService.login(name, password);
         ResponseContext result;
         if (userDto.isPresent()) {
-            req.setAttribute(USER_NAME_PARAMETER, name);
+            req.setSessionAttribute(USER_NAME_PARAMETER, name);
+            req.setSessionAttribute(USER_ROLE_ATTRIBUTE, userDto.get().getRole());
             result = ShowMainPage.INSTANCE.execute(req); // TODO: redirect
         } else {
-            req.setAttribute("errorMessage", "invalid credentials");
+            req.setSessionAttribute("errorMessage", "invalid credentials");
             result = ShowLoginPage.INSTANCE.execute(req); // TODO: forward
         }
         return result;

@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface GeneralDao<T extends Entity> {
 
-    Optional<T> queryForSingleResult(String query, List<Object> params);
+    Optional<T> querySelectForSingleResult(String query, List<Object> params);
 
-    List<T> query(String query, List<Object> params);
+    Optional<List<T>> querySelect(String query, List<Object> params);
 
 }
