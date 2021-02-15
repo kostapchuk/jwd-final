@@ -12,7 +12,7 @@ public final class ApplicationContext {
     private static final DatabaseProperty databaseProperties =
             PropertyLoader.getInstance().loadDatabaseProperties();
 
-    private ApplicationContext(){
+    private ApplicationContext() {
     }
 
     public static ConnectionPoolProperty getConnectionPoolProperties() {

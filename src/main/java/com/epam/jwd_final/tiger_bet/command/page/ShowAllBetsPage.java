@@ -8,7 +8,6 @@ import com.epam.jwd_final.tiger_bet.dao.UserDao;
 import com.epam.jwd_final.tiger_bet.domain.BetDto;
 import com.epam.jwd_final.tiger_bet.service.impl.BetServiceImpl;
 
-import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
 

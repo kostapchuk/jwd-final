@@ -2,8 +2,8 @@ package com.epam.jwd_final.tiger_bet.dao;
 
 import com.epam.jwd_final.tiger_bet.domain.AbstractEntity;
 import com.epam.jwd_final.tiger_bet.domain.Bet;
-import com.epam.jwd_final.tiger_bet.mapper.impl.BetModelMapper;
 import com.epam.jwd_final.tiger_bet.mapper.ModelMapper;
+import com.epam.jwd_final.tiger_bet.mapper.impl.BetModelMapper;
 
 import java.util.Collections;
 import java.util.List;

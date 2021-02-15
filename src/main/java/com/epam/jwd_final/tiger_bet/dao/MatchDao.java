@@ -2,8 +2,8 @@ package com.epam.jwd_final.tiger_bet.dao;
 
 import com.epam.jwd_final.tiger_bet.domain.Match;
 import com.epam.jwd_final.tiger_bet.domain.Status;
-import com.epam.jwd_final.tiger_bet.mapper.impl.MatchModelMapper;
 import com.epam.jwd_final.tiger_bet.mapper.ModelMapper;
+import com.epam.jwd_final.tiger_bet.mapper.impl.MatchModelMapper;
 
 import java.util.Collections;
 import java.util.List;

@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface UserService {
 
     Optional<UserDto> login(String name, String password);
+
     boolean save(User user);
+
     boolean signup(String name, String password);
 }
