@@ -47,6 +47,24 @@ public class UserServiceImpl implements UserService {
         ));
     }
 
+    @Override
+    public boolean updateRole(String userName) {
+        final Optional<User> userOptional = userDao.findByName(userName);
+        if (userOptional.isPresent()) {
+            return userDao.updateRole(userOptional.get());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean rollbackRole(String userName) {
+        final Optional<User> userOptional = userDao.findByName(userName);
+        if (userOptional.isPresent()) {
+            return userDao.rollbackRole(userOptional.get());
+        }
+        return false;
+    }
+
     private UserDto convertToDto(User user) {
         return new UserDto(user.getName(), user.getRole().name());
     }

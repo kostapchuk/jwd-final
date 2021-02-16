@@ -12,9 +12,9 @@ public enum LoginCommand implements Command {
 
     INSTANCE;
 
-    public static final String USER_ROLE_ATTRIBUTE = "userRole";
-    public static final String USER_NAME_PARAMETER = "userName";
-    public static final String USER_PASSWORD_PARAMETER = "userPassword";
+    private static final String USER_ROLE_ATTRIBUTE = "userRole";
+    private static final String USER_NAME_PARAMETER = "userName";
+    private static final String USER_PASSWORD_PARAMETER = "userPassword";
 
     private final UserServiceImpl userService;
 

@@ -12,4 +12,8 @@ public interface UserService {
     boolean save(User user);
 
     boolean signup(String name, String password);
+
+    boolean updateRole(String userName);
+
+    boolean rollbackRole(String userName);
 }

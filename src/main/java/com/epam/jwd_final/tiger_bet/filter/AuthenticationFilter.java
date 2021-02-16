@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter()
+@WebFilter(urlPatterns = {})
 public class AuthenticationFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -25,18 +25,21 @@ public class AuthenticationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        final String requestURI = httpServletRequest.getRequestURI();
         HttpSession session = httpServletRequest.getSession(false);
         // check existence of user
+        RequestDispatcher requestDispatcher;
         if (session != null) {
             final String roleName = String.valueOf(session.getAttribute("roleName"));
-            RequestDispatcher requestDispatcher;
             if (Role.ADMIN.name().equals(roleName.toUpperCase())) {
                 requestDispatcher = servletRequest.getRequestDispatcher("/WEB-INF/jsp/admin.jsp");
             } else {
-                requestDispatcher = servletRequest.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
+                requestDispatcher = servletRequest.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
             }
-            requestDispatcher.forward(servletRequest, servletResponse);
+        } else {
+            requestDispatcher = servletRequest.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
         }
+        requestDispatcher.forward(servletRequest, servletResponse);
     }
 
     @Override
