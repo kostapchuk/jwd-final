@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface MatchService {
 
     Optional<List<MatchDto>> findAllUnfinishedMatches();
+
+    void createMatch(String sportType, String startTime, String firstTeam, String secondTeam);
 }

@@ -29,6 +29,11 @@ public class MatchServiceImpl implements MatchService {
                 );
     }
 
+    @Override
+    public void createMatch(String sportType, String startTime, String firstTeam, String secondTeam) {
+        matchDao.insertMatch(sportType, startTime, firstTeam, secondTeam);
+    }
+
     private MatchDto convertToDto(Match match) {
         return new MatchDto(
                 match.getSportType(),
