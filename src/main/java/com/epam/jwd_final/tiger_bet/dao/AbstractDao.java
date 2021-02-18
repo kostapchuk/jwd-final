@@ -56,7 +56,7 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
                 return Optional.empty();
             }
         } catch (SQLException e) {
-            LOGGER.error("Cannot execute custom select query...");
+            LOGGER.error("Cannot execute custom select query. " + e.getMessage());
         }
         return Optional.of(objects);
     }

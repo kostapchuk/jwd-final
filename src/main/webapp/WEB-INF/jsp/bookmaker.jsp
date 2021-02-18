@@ -18,7 +18,7 @@
         <p>Second team: <input type="text" name="secondTeam" required></p>
         <p>First team coefficient: <input type="number" step="0.01" name="firstTeamCoefficient" required></p>
         <p>Second team coefficient: <input type="number" step="0.01" name="secondTeamCoefficient" required></p>
-        <p>Draw coefficient: <input type="number" name="drawTeamCoefficient" required></p>
+        <p>Draw coefficient: <input type="number" step="0.01" name="drawCoefficient" required></p>
         <input type="submit" value="Create match" />
     </form>
 </body>

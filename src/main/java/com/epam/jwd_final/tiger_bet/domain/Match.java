@@ -30,6 +30,10 @@ public class Match extends AbstractEntity {
         this(null, sportType, start, firstTeam, secondTeam, status, resultType);
     }
 
+    public Match(Sport sportType, LocalDateTime start, String firstTeam, String secondTeam) {
+        this(null, sportType, start, firstTeam, secondTeam, null, null);
+    }
+
     public Sport getSportType() {
         return sportType;
     }

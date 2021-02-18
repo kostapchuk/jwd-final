@@ -4,6 +4,7 @@ import com.epam.jwd_final.tiger_bet.command.Command;
 import com.epam.jwd_final.tiger_bet.command.RequestContext;
 import com.epam.jwd_final.tiger_bet.command.ResponseContext;
 import com.epam.jwd_final.tiger_bet.dao.MatchDao;
+import com.epam.jwd_final.tiger_bet.dao.TeamDao;
 import com.epam.jwd_final.tiger_bet.service.impl.MatchServiceImpl;
 
 import java.util.Collections;
@@ -17,7 +18,7 @@ public enum ShowAllMatchesPage implements Command {
     private final MatchServiceImpl matchService;
 
     ShowAllMatchesPage() {
-        this.matchService = new MatchServiceImpl(new MatchDao());
+        this.matchService = new MatchServiceImpl(new MatchDao(), new TeamDao());
     }
 
     private static final ResponseContext ALL_MATCHES_PAGE_RESPONSE = new ResponseContext() {

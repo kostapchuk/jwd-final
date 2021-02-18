@@ -1,7 +1,9 @@
 package com.epam.jwd_final.tiger_bet.service;
 
+import com.epam.jwd_final.tiger_bet.domain.Match;
 import com.epam.jwd_final.tiger_bet.domain.MatchDto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,5 +11,9 @@ public interface MatchService {
 
     Optional<List<MatchDto>> findAllUnfinishedMatches();
 
-    void createMatch(String sportType, String startTime, String firstTeam, String secondTeam);
+    Match createMatch(String sportType, String startTime, String firstTeam, String secondTeam);
+
+    boolean saveMatch(Match match);
+
+    int findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime start, String firstTeam, String secondTeam);
 }

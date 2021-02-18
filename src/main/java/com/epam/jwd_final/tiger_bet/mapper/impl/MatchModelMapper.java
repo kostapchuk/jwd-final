@@ -19,11 +19,13 @@ public class MatchModelMapper implements ModelMapper<Match> {
     public static final String STATUS_ID_COLUMN = "status_id";
     public static final String START_COLUMN = "start";
     public static final String RESULT_TYPE_ID_COLUMN = "result_type_id";
+    private static final String ID_COLUMN = "id";
 
     private final TeamDao teamDao = new TeamDao();
 
     @Override
     public Match mapToEntity(ResultSet rs) throws SQLException {
+        final int id = rs.getInt(ID_COLUMN);
         final int sportTypeId = rs.getInt(SPORT_TYPE_ID_COLUMN);
         final LocalDateTime startTime = rs.getTimestamp(START_COLUMN).toLocalDateTime();
         final int firstTeamId = rs.getInt(FIRST_TEAM_ID_COLUMN);
@@ -31,6 +33,7 @@ public class MatchModelMapper implements ModelMapper<Match> {
         final int statusId = rs.getInt(STATUS_ID_COLUMN);
         final int resultTypeId = rs.getInt(RESULT_TYPE_ID_COLUMN);
         return new Match(
+                id,
                 Sport.resolveSportById(sportTypeId),
                 startTime,
                 teamDao.findTeamById(firstTeamId).orElse("No team"), // TODO: throw exception
