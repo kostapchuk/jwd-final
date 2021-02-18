@@ -15,7 +15,7 @@ import java.util.Optional;
 public class MatchDao extends AbstractDao<Match> {
 
     private static final String FIND_ALL_MATCHES_BY_STATUS_SQL =
-            "select sport_type_id, start, first_team_id, second_team_id, status_id, result_type_id from `match` where status_id = ?";
+            "select id, sport_type_id, start, first_team_id, second_team_id, status_id, result_type_id from `match` where status_id = ?";
 
     private static final String SAVE_MATCH_SQL =
             "insert into `match`(sport_type_id, start, first_team_id, second_team_id) values(?, ?, ?, ?)";

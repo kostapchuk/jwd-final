@@ -6,6 +6,7 @@ import com.epam.jwd_final.tiger_bet.mapper.ModelMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -63,13 +64,19 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
 
     PreparedStatement makeStatementPrepared(String querySQL, List<Object> parameters)
             throws SQLException {
-        PreparedStatement preparedStatement =
-                ConnectionPool.getInstance().retrieveConnection().prepareStatement(querySQL); // TODO return connection
-        int length = parameters.size();
-        for (int i = 0; i < length; i++) {
-            preparedStatement.setString(i + 1, String.valueOf(parameters.get(i)));
+        final Connection connection = ConnectionPool.getInstance().retrieveConnection();
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(querySQL); // TODO return connection
+            int length = parameters.size();
+            for (int i = 0; i < length; i++) {
+                preparedStatement.setString(i + 1, String.valueOf(parameters.get(i)));
+            }
+            return preparedStatement;
         }
-        return preparedStatement;
+        finally {
+            ConnectionPool.getInstance().returnConnection(connection);
+        }
     }
 
     protected abstract ModelMapper<T> retrieveModelMapper();

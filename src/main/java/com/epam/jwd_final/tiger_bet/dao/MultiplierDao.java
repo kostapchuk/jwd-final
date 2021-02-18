@@ -27,6 +27,6 @@ public class MultiplierDao extends AbstractDao<Multiplier> {
 
     @Override
     protected ModelMapper<Multiplier> retrieveModelMapper() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }
