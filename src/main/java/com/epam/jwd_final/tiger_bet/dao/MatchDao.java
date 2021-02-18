@@ -1,6 +1,7 @@
 package com.epam.jwd_final.tiger_bet.dao;
 
 import com.epam.jwd_final.tiger_bet.domain.Match;
+import com.epam.jwd_final.tiger_bet.domain.Result;
 import com.epam.jwd_final.tiger_bet.domain.Sport;
 import com.epam.jwd_final.tiger_bet.domain.Status;
 import com.epam.jwd_final.tiger_bet.mapper.ModelMapper;
@@ -22,6 +23,7 @@ public class MatchDao extends AbstractDao<Match> {
 
     private static final String FIND_MATCH_ID_BY_START_FIRST_TEAM_SECOND_TEAM_SQL =
             "select id, sport_type_id, start, first_team_id, second_team_id, status_id, result_type_id from `match` where start = ? and first_team_id = ? and second_team_id = ?";
+    private static final String UPDATE_RESULT_TYPE_SQL = "update `match` set result_type_id = ? where id = ?";
 
     private final TeamDao teamDao = new TeamDao();
 
@@ -45,6 +47,13 @@ public class MatchDao extends AbstractDao<Match> {
                 firstTeam,
                 secondTeam
         );
+    }
+
+    public boolean updateResult(int matchId, Result result) {
+        List<Object> params = new ArrayList<>();
+        params.add(result.getId());
+        params.add(matchId);
+        return queryUpdate(UPDATE_RESULT_TYPE_SQL, params);
     }
 
     public int findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime start, int firstTeamId, int secondTeamId) {

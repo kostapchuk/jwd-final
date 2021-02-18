@@ -17,6 +17,7 @@ public enum CommandManager {
     UPDATE_ROLE(UpdateRoleCommand.INSTANCE),
     ROLLBACK_ROLE(RollbackRoleCommand.INSTANCE),
     CREATE_MATCH(CreateMatchCommand.INSTANCE),
+    SET_RESULT(SetResultCommand.INSTANCE),
     SHOW_ADMIN_PAGE(ShowAdminPage.INSTANCE),
     SHOW_BOOKMAKER_PAGE(ShowBookmakerPage.INSTANCE),
     SHOW_ALL_BETS_PAGE(ShowAllBetsPage.INSTANCE),

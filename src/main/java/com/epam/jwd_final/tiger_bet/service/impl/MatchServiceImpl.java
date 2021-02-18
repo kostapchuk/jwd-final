@@ -4,6 +4,7 @@ import com.epam.jwd_final.tiger_bet.dao.MatchDao;
 import com.epam.jwd_final.tiger_bet.dao.TeamDao;
 import com.epam.jwd_final.tiger_bet.domain.Match;
 import com.epam.jwd_final.tiger_bet.domain.MatchDto;
+import com.epam.jwd_final.tiger_bet.domain.Result;
 import com.epam.jwd_final.tiger_bet.domain.Status;
 import com.epam.jwd_final.tiger_bet.service.MatchService;
 
@@ -38,11 +39,17 @@ public class MatchServiceImpl implements MatchService {
         return matchDao.createMatch(sportType, startTime, firstTeam, secondTeam);
     }
 
+    @Override
     public int findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime start, String firstTeam, String secondTeam) {
         return matchDao.findMatchIdByStartAndFirstTeamAndSecondTeam(
                 start,
                 teamDao.findIdByName(firstTeam).orElseThrow(IllegalArgumentException::new), // TODO: redo exception
                 teamDao.findIdByName(secondTeam).orElseThrow(IllegalArgumentException::new)); // TODO: redo exception
+    }
+
+    @Override
+    public boolean updateResult(int matchId, Result result) {
+        return matchDao.updateResult(matchId, result);
     }
 
     @Override
@@ -52,6 +59,7 @@ public class MatchServiceImpl implements MatchService {
 
     private MatchDto convertToDto(Match match) {
         return new MatchDto(
+                match.getId(),
                 match.getSportType(),
                 match.getStart(),
                 match.getFirstTeam(),
