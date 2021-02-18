@@ -24,6 +24,7 @@ public enum SetResultCommand implements Command {
         final int matchId = Integer.parseInt(String.valueOf(req.getParameter(MATCH_ID_PARAMETER)));
         matchService.updateResult(matchId,
                 Result.valueOf(String.valueOf(req.getParameter(RESULT_TYPE_PARAMETER)).toUpperCase()));
+        // TODO: it supports only exact enum type in any case but with underscore
         return ShowAllMatchesPage.INSTANCE.execute(req);
     }
 }
