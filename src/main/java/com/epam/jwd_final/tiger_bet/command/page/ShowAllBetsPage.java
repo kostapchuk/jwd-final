@@ -4,6 +4,7 @@ import com.epam.jwd_final.tiger_bet.command.Command;
 import com.epam.jwd_final.tiger_bet.command.RequestContext;
 import com.epam.jwd_final.tiger_bet.command.ResponseContext;
 import com.epam.jwd_final.tiger_bet.dao.BetDao;
+import com.epam.jwd_final.tiger_bet.dao.MultiplierDao;
 import com.epam.jwd_final.tiger_bet.dao.UserDao;
 import com.epam.jwd_final.tiger_bet.domain.BetDto;
 import com.epam.jwd_final.tiger_bet.service.impl.BetServiceImpl;
@@ -17,11 +18,12 @@ public enum ShowAllBetsPage implements Command {
 
     public static final String NAME_PARAMETER = "userName";
     public static final String BETS_PARAMETER = "bets";
+    private static final String EXPECTED_WIN_PARAMETER = "expectedWin";
 
     private final BetServiceImpl betService;
 
     ShowAllBetsPage() {
-        this.betService = new BetServiceImpl(new BetDao(new UserDao()));
+        this.betService = new BetServiceImpl(new BetDao(new UserDao(), new MultiplierDao()));
     }
 
     public static final ResponseContext ALL_BETS_PAGE_RESPONSE = new ResponseContext() {
@@ -45,6 +47,7 @@ public enum ShowAllBetsPage implements Command {
         }
         final List<BetDto> betDtos = betService.findAllBetsByUserName(name).orElse(Collections.emptyList());
         req.setAttribute(BETS_PARAMETER, betDtos);
+        req.setAttribute(EXPECTED_WIN_PARAMETER, betService.calculateExpectedWin(name));
         return ALL_BETS_PAGE_RESPONSE;
     }
 }

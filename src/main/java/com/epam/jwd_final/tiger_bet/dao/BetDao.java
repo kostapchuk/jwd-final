@@ -20,10 +20,14 @@ public class BetDao extends AbstractDao<Bet> {
 
     private static final String DELETE_BET_BY_ID_SQL = "delete from bet where id = ?";
 
-    private final UserDao userDao;
+    private static final String FIND_BET_BY_USER_ID_SQL = "select id, user_id, multiplier_id, bet_money from bet where user_id = ?";
 
-    public BetDao(UserDao userDao) {
+    private final UserDao userDao;
+    private final MultiplierDao multiplierDao;
+
+    public BetDao(UserDao userDao, MultiplierDao multiplierDao) {
         this.userDao = userDao;
+        this.multiplierDao = multiplierDao;
     }
 
     public Optional<List<Bet>> findAllBetsByUserName(String name) {
@@ -48,6 +52,13 @@ public class BetDao extends AbstractDao<Bet> {
 
     public void deleteBet(int id) {
         queryUpdate(DELETE_BET_BY_ID_SQL, Collections.singletonList(id));
+    }
+
+    public BigDecimal calculateExpectedWin(String name) {
+        final int userId = userDao.findUserIdByUserName(name);
+        final Bet bet = querySelectForSingleResult(FIND_BET_BY_USER_ID_SQL, Collections.singletonList(userId)).orElseThrow(IllegalArgumentException::new);
+        final BigDecimal betMoney = bet.getBetMoney();
+        return multiplierDao.findCoefficientById(bet.getMultiplierId()).multiply(betMoney);
     }
 
     @Override

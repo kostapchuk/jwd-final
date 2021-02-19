@@ -10,7 +10,7 @@
         <ol>
             <c:forEach var="bet" items="${requestScope.bets}">
                 <form action="${pageContext.request.contextPath}/controller?command=cancel_bet" method="post">
-                    <li>${bet.betMoney}</li>
+                    <li>Bet money: ${bet.betMoney}, expected win: ${requestScope.expectedWin}</li>
                     <input type="hidden" name="betId" value="${bet.id}" />
                     <input type="submit" value="Cancel bet" />
                 </form>

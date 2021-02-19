@@ -1,6 +1,7 @@
 package com.epam.jwd_final.tiger_bet.service.impl;
 
 import com.epam.jwd_final.tiger_bet.dao.BetDao;
+import com.epam.jwd_final.tiger_bet.dao.UserDao;
 import com.epam.jwd_final.tiger_bet.domain.Bet;
 import com.epam.jwd_final.tiger_bet.domain.BetDto;
 import com.epam.jwd_final.tiger_bet.service.BetService;
@@ -40,6 +41,10 @@ public class BetServiceImpl implements BetService {
     @Override
     public void deleteBet(int id) {
         betDao.deleteBet(id);
+    }
+
+    public BigDecimal calculateExpectedWin(String name) {
+        return betDao.calculateExpectedWin(name);
     }
 
     private BetDto convertToDto(Bet bet) {

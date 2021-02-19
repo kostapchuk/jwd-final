@@ -1,5 +1,6 @@
 package com.epam.jwd_final.tiger_bet.command;
 
+import com.epam.jwd_final.tiger_bet.command.page.ShowAllMatchesPage;
 import com.epam.jwd_final.tiger_bet.command.page.ShowMakeBetPage;
 import com.epam.jwd_final.tiger_bet.dao.BetDao;
 import com.epam.jwd_final.tiger_bet.dao.MultiplierDao;
@@ -24,7 +25,7 @@ public enum MakeBetCommand implements Command {
     MakeBetCommand() {
         this.userService = new UserServiceImpl(new UserDao());
         this.multiplierService = new MultiplierServiceImpl(new MultiplierDao());
-        this.betService = new BetServiceImpl(new BetDao(new UserDao()));
+        this.betService = new BetServiceImpl(new BetDao(new UserDao(), new MultiplierDao()));
     }
 
     @Override
@@ -36,6 +37,6 @@ public enum MakeBetCommand implements Command {
 
         betService.saveBet(
                 betService.createBet(userId, multiplierId, new BigDecimal(String.valueOf(req.getParameter("betMoney")))));
-        return ShowMakeBetPage.INSTANCE.execute(req);
+        return ShowAllMatchesPage.INSTANCE.execute(req);
     }
 }
