@@ -37,7 +37,12 @@ public class BetServiceImpl implements BetService {
         return betDao.saveBet(bet);
     }
 
+    @Override
+    public void deleteBet(int id) {
+        betDao.deleteBet(id);
+    }
+
     private BetDto convertToDto(Bet bet) {
-        return new BetDto(bet.getBetMoney());
+        return new BetDto(bet.getId(), bet.getBetMoney());
     }
 }

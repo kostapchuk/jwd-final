@@ -9,7 +9,11 @@
         <h2>Columns</h2>
         <ol>
             <c:forEach var="bet" items="${requestScope.bets}">
-                <li>Bet money: ${bet.betMoney}</li>
+                <form action="${pageContext.request.contextPath}/controller?command=cancel_bet" method="post">
+                    <li>${bet.betMoney}</li>
+                    <input type="hidden" name="betId" value="${bet.id}" />
+                    <input type="submit" value="Cancel bet" />
+                </form>
             </c:forEach>
         </ol>
     </c:if>

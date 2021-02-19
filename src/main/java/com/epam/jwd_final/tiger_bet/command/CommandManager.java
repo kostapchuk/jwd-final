@@ -19,6 +19,7 @@ public enum CommandManager {
     ROLLBACK_ROLE(RollbackRoleCommand.INSTANCE),
     CREATE_MATCH(CreateMatchCommand.INSTANCE),
     SET_RESULT(SetResultCommand.INSTANCE),
+    CANCEL_BET(CancelBetCommand.INSTANCE),
     MAKE_BET(MakeBetCommand.INSTANCE),
     SHOW_MAKE_BET_PAGE(ShowMakeBetPage.INSTANCE),
     SHOW_ALL_USERS_PAGE(ShowAllUsersPage.INSTANCE),

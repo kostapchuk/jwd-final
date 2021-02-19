@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 
 public class BetDto {
 
+    private final int id;
     private final BigDecimal betMoney;
 
-    public BetDto(BigDecimal betMoney) {
+    public BetDto(int id, BigDecimal betMoney) {
+        this.id = id;
         this.betMoney = betMoney;
     }
 
@@ -14,4 +16,7 @@ public class BetDto {
         return betMoney.toString();
     }
 
+    public int getId() {
+        return id;
+    }
 }

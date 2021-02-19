@@ -11,9 +11,10 @@ public class BetModelMapper implements ModelMapper<Bet> {
 
     @Override
     public Bet mapToEntity(ResultSet rs) throws SQLException {
+        final int id = rs.getInt("id");
         final int userId = rs.getInt("user_id");
         final int multiplierId = rs.getInt("multiplier_id");
         final BigDecimal betMoney = rs.getBigDecimal("bet_money");
-        return new Bet(userId, multiplierId, betMoney);
+        return new Bet(id, userId, multiplierId, betMoney);
     }
 }

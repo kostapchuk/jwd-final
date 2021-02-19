@@ -14,4 +14,6 @@ public interface BetService {
     Bet createBet(int userId, int multiplierId, BigDecimal betMoney);
 
     boolean saveBet(Bet bet);
+
+    void deleteBet(int id);
 }

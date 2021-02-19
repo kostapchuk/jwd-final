@@ -18,6 +18,8 @@ public class BetDao extends AbstractDao<Bet> {
 
     private static final String SAVE_BET = "insert into bet (user_id, multiplier_id, bet_money) values (?, ?, ?)";
 
+    private static final String DELETE_BET_BY_ID_SQL = "delete from bet where id = ?";
+
     private final UserDao userDao;
 
     public BetDao(UserDao userDao) {
@@ -42,6 +44,10 @@ public class BetDao extends AbstractDao<Bet> {
         params.add(bet.getMultiplierId());
         params.add(bet.getBetMoney());
         return queryUpdate(SAVE_BET, params);
+    }
+
+    public void deleteBet(int id) {
+        queryUpdate(DELETE_BET_BY_ID_SQL, Collections.singletonList(id));
     }
 
     @Override
