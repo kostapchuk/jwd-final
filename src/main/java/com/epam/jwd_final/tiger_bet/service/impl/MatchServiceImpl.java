@@ -53,6 +53,11 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    public boolean updateStatus(int matchId, Status status) {
+        return matchDao.updateStatus(matchId, status);
+    }
+
+    @Override
     public boolean saveMatch(Match match) {
         return matchDao.saveMatch(match);
     }

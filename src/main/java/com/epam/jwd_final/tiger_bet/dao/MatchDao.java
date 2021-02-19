@@ -23,7 +23,10 @@ public class MatchDao extends AbstractDao<Match> {
 
     private static final String FIND_MATCH_ID_BY_START_FIRST_TEAM_SECOND_TEAM_SQL =
             "select id, sport_type_id, start, first_team_id, second_team_id, status_id, result_type_id from `match` where start = ? and first_team_id = ? and second_team_id = ?";
+
     private static final String UPDATE_RESULT_TYPE_SQL = "update `match` set result_type_id = ? where id = ?";
+
+    private static final String UPDATE_STATUS_TYPE_SQL = "update `match` set status_id = ? where id = ?";
 
     private final TeamDao teamDao = new TeamDao();
 
@@ -54,6 +57,13 @@ public class MatchDao extends AbstractDao<Match> {
         params.add(result.getId());
         params.add(matchId);
         return queryUpdate(UPDATE_RESULT_TYPE_SQL, params);
+    }
+
+    public boolean updateStatus(int matchId, Status status) {
+        List<Object> params = new ArrayList<>();
+        params.add(status.getId());
+        params.add(matchId);
+        return queryUpdate(UPDATE_STATUS_TYPE_SQL, params);
     }
 
     public int findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime start, int firstTeamId, int secondTeamId) {
