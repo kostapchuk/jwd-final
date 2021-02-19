@@ -73,8 +73,7 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
                 preparedStatement.setString(i + 1, String.valueOf(parameters.get(i)));
             }
             return preparedStatement;
-        }
-        finally {
+        } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }
     }

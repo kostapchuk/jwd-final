@@ -1,7 +1,6 @@
 package com.epam.jwd_final.tiger_bet.command.page;
 
 import com.epam.jwd_final.tiger_bet.command.Command;
-import com.epam.jwd_final.tiger_bet.command.MakeBetCommand;
 import com.epam.jwd_final.tiger_bet.command.RequestContext;
 import com.epam.jwd_final.tiger_bet.command.ResponseContext;
 

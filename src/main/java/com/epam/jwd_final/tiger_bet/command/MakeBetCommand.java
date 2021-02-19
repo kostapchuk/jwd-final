@@ -4,7 +4,6 @@ import com.epam.jwd_final.tiger_bet.command.page.ShowMakeBetPage;
 import com.epam.jwd_final.tiger_bet.dao.BetDao;
 import com.epam.jwd_final.tiger_bet.dao.MultiplierDao;
 import com.epam.jwd_final.tiger_bet.dao.UserDao;
-import com.epam.jwd_final.tiger_bet.domain.Multiplier;
 import com.epam.jwd_final.tiger_bet.domain.Result;
 import com.epam.jwd_final.tiger_bet.service.BetService;
 import com.epam.jwd_final.tiger_bet.service.UserService;

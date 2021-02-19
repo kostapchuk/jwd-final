@@ -2,7 +2,6 @@ package com.epam.jwd_final.tiger_bet.service;
 
 import com.epam.jwd_final.tiger_bet.domain.Bet;
 import com.epam.jwd_final.tiger_bet.domain.BetDto;
-import com.epam.jwd_final.tiger_bet.domain.Multiplier;
 
 import java.math.BigDecimal;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.epam.jwd_final.tiger_bet.command;
 
-import com.epam.jwd_final.tiger_bet.command.page.ShowAllMatchesPage;
+import com.epam.jwd_final.tiger_bet.command.page.ShowBookmakerPage;
 import com.epam.jwd_final.tiger_bet.dao.MatchDao;
 import com.epam.jwd_final.tiger_bet.dao.TeamDao;
 import com.epam.jwd_final.tiger_bet.domain.Result;
@@ -25,6 +25,6 @@ public enum SetResultCommand implements Command {
         matchService.updateResult(matchId,
                 Result.valueOf(String.valueOf(req.getParameter(RESULT_TYPE_PARAMETER)).toUpperCase()));
         // TODO: it supports only exact enum type in any case but with underscore
-        return ShowAllMatchesPage.INSTANCE.execute(req);
+        return ShowBookmakerPage.INSTANCE.execute(req);
     }
 }

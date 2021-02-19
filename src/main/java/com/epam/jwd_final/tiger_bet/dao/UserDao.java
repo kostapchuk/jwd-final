@@ -2,11 +2,8 @@ package com.epam.jwd_final.tiger_bet.dao;
 
 import com.epam.jwd_final.tiger_bet.domain.Role;
 import com.epam.jwd_final.tiger_bet.domain.User;
-import com.epam.jwd_final.tiger_bet.domain.UserDto;
 import com.epam.jwd_final.tiger_bet.mapper.ModelMapper;
 import com.epam.jwd_final.tiger_bet.mapper.impl.UserModelMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
