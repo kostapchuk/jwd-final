@@ -76,6 +76,11 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public int findUserIdByUserName(String userName) {
+        return userDao.findUserIdByUserName(userName);
+    }
+
     private UserDto convertToDto(User user) {
         return new UserDto(user.getName(), user.getRole().name());
     }

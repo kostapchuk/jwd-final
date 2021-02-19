@@ -65,6 +65,11 @@ public class UserDao extends AbstractDao<User> {
         return queryUpdate(CHANGE_ROLE_SQL, params);
     }
 
+    public int findUserIdByUserName(String userName) {
+        return querySelectForSingleResult(FIND_BY_NAME_SQL, Collections.singletonList(userName))
+                .orElseThrow(IllegalArgumentException::new).getId();
+    }
+
     @Override
     protected ModelMapper<User> retrieveModelMapper() {
         return new UserModelMapper();

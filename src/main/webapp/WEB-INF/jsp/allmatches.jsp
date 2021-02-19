@@ -11,7 +11,11 @@
     <c:if test="${not empty requestScope.matches}">
         <h2>Columns</h2>
         <c:forEach var="match" items="${requestScope.matches}">
-            <li>${match.firstTeam} vs ${match.secondTeam}</li>
+            <form action="${pageContext.request.contextPath}/controller?command=show_make_bet_page" method="post">
+                <li>${match.firstTeam} vs ${match.secondTeam}</li>
+                <input type="hidden" name="matchId" value="${match.id}" />
+                <input type="submit" value="Make bet" />
+            </form>
         </c:forEach>
     </c:if>
 </body>

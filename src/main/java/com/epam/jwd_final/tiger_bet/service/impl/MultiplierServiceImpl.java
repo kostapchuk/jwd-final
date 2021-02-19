@@ -22,4 +22,7 @@ public class MultiplierServiceImpl {
         return multiplierDao.saveMultiplier(multiplier);
     }
 
+    public int findIdByMatchIdAndResult(int matchId, Result result) {
+        return multiplierDao.findIdByMatchIdAndResult(matchId, result.getId());
+    }
 }

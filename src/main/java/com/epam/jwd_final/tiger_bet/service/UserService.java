@@ -19,4 +19,6 @@ public interface UserService {
     boolean updateRole(String userName);
 
     boolean rollbackRole(String userName);
+
+    int findUserIdByUserName(String userName);
 }

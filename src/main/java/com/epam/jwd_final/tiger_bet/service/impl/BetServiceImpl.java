@@ -5,6 +5,7 @@ import com.epam.jwd_final.tiger_bet.domain.Bet;
 import com.epam.jwd_final.tiger_bet.domain.BetDto;
 import com.epam.jwd_final.tiger_bet.service.BetService;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,16 @@ public class BetServiceImpl implements BetService {
                         .map(this::convertToDto)
                         .collect(toList())
                 );
+    }
+
+    @Override
+    public Bet createBet(int userId, int multiplierId, BigDecimal betMoney) {
+        return betDao.createBet(userId, multiplierId, betMoney);
+    }
+
+    @Override
+    public boolean saveBet(Bet bet) {
+        return betDao.saveBet(bet);
     }
 
     private BetDto convertToDto(Bet bet) {
