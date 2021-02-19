@@ -11,13 +11,7 @@
     <c:if test="${not empty requestScope.matches}">
         <h2>Columns</h2>
         <c:forEach var="match" items="${requestScope.matches}">
-            <form action="${pageContext.request.contextPath}/controller?command=set_result" method="post">
-                <li>${match.firstTeam} vs ${match.secondTeam}
-                    Result: <input type="text" name="resultType" >
-                    <input type="hidden" name="matchId" value="${match.id}" />
-                    <input type="submit" value="Submit new result" />
-                </li>
-            </form>
+            <li>${match.firstTeam} vs ${match.secondTeam}</li>
         </c:forEach>
     </c:if>
 </body>
