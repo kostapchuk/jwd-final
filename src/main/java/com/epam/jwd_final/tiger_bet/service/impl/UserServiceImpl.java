@@ -6,7 +6,9 @@ import com.epam.jwd_final.tiger_bet.domain.UserDto;
 import com.epam.jwd_final.tiger_bet.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
 
@@ -17,6 +19,15 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    @Override
+    public Optional<List<UserDto>> findAll() {
+        return userDao.findAll()
+                .map(users ->
+                        users.stream()
+                                .map(this::convertToDto)
+                                .collect(Collectors.toList()));
     }
 
     @Override

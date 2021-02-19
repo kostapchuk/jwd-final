@@ -17,8 +17,8 @@
 <a href="<c:url value="/controller?command=show_login_page"/>">log in</a><br>
 <a href="<c:url value="/controller?command=logout"/>">log out</a><br>
 <a href="<c:url value="/controller?command=show_all_matches_page"/>">all matches</a><br>
-<a href="<c:url value="/controller?command=show_admin_page"/>">admin page</a><br>
 <a href="<c:url value="/controller?command=show_bookmaker_page"/>">bookmaker page</a><br>
+<a href="<c:url value="/controller?command=show_all_users_page"/>">all users</a><br>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 package com.epam.jwd_final.tiger_bet.command;
 
-import com.epam.jwd_final.tiger_bet.command.page.ShowAdminPage;
+import com.epam.jwd_final.tiger_bet.command.page.ShowAllUsersPage;
 import com.epam.jwd_final.tiger_bet.dao.UserDao;
 import com.epam.jwd_final.tiger_bet.service.UserService;
 import com.epam.jwd_final.tiger_bet.service.impl.UserServiceImpl;
@@ -18,8 +18,9 @@ public enum UpdateRoleCommand implements Command {
 
     @Override
     public ResponseContext execute(RequestContext req) {
-        final String userName = String.valueOf(req.getSession().getAttribute(USER_NAME_ATTRIBUTE));
+//        final String userName = String.valueOf(req.getSession().getAttribute(USER_NAME_ATTRIBUTE));
+        final String userName = String.valueOf(req.getParameter(USER_NAME_ATTRIBUTE));
         userService.updateRole(userName);
-        return ShowAdminPage.INSTANCE.execute(req);
+        return ShowAllUsersPage.INSTANCE.execute(req);
     }
 }
