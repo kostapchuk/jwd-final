@@ -1,6 +1,5 @@
 package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.web.command.page.ShowLoginPage;
 import com.epam.jwd_final.web.command.page.ShowMainPage;
 import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.domain.UserDto;
@@ -27,15 +26,14 @@ public enum LoginCommand implements Command {
         final String name = String.valueOf(req.getParameter(USER_NAME_PARAMETER));
         final String password = String.valueOf(req.getParameter(USER_PASSWORD_PARAMETER));
         final Optional<UserDto> userDto = userService.login(name, password);
-        ResponseContext result;
         if (userDto.isPresent()) {
             req.setSessionAttribute(USER_NAME_PARAMETER, name);
             req.setSessionAttribute(USER_ROLE_ATTRIBUTE, userDto.get().getRole());
-            result = ShowMainPage.INSTANCE.execute(req); // TODO: redirect
+             // TODO: redirect
         } else {
             req.setSessionAttribute("errorMessage", "invalid credentials");
-            result = ShowLoginPage.INSTANCE.execute(req); // TODO: forward
+            // TODO: forward
         }
-        return result;
+        return ShowMainPage.INSTANCE.execute(req);
     }
 }
