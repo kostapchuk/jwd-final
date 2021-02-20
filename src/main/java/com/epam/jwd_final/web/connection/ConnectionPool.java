@@ -122,6 +122,7 @@ public final class ConnectionPool {
 
     private void init() {
         LOGGER.info("Initializing connection pool...");
+        LOGGER.error("Initializing connection pool...");
         registerDrivers();
         availableConnections.addAll(ConnectionPoolManager.createConnections(INITIAL_POOL_SIZE));
         initialized.set(true);
