@@ -1,6 +1,6 @@
-package com.epam.jwd_final.tiger_bet.command;
+package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.tiger_bet.command.page.ShowMainPage;
+import com.epam.jwd_final.web.command.page.ShowMainPage;
 
 public enum LogoutCommand implements Command {
 

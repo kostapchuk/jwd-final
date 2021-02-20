@@ -1,14 +1,14 @@
-package com.epam.jwd_final.tiger_bet.command;
+package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.tiger_bet.command.page.ShowAllBetsPage;
-import com.epam.jwd_final.tiger_bet.command.page.ShowAllMatchesPage;
-import com.epam.jwd_final.tiger_bet.command.page.ShowAllUsersPage;
-import com.epam.jwd_final.tiger_bet.command.page.ShowBookmakerPage;
-import com.epam.jwd_final.tiger_bet.command.page.ShowErrorPage;
-import com.epam.jwd_final.tiger_bet.command.page.ShowLoginPage;
-import com.epam.jwd_final.tiger_bet.command.page.ShowMainPage;
-import com.epam.jwd_final.tiger_bet.command.page.ShowMakeBetPage;
-import com.epam.jwd_final.tiger_bet.command.page.ShowSignupPage;
+import com.epam.jwd_final.web.command.page.ShowAllBetsPage;
+import com.epam.jwd_final.web.command.page.ShowAllMatchesPage;
+import com.epam.jwd_final.web.command.page.ShowAllUsersPage;
+import com.epam.jwd_final.web.command.page.ShowBookmakerPage;
+import com.epam.jwd_final.web.command.page.ShowErrorPage;
+import com.epam.jwd_final.web.command.page.ShowLoginPage;
+import com.epam.jwd_final.web.command.page.ShowMainPage;
+import com.epam.jwd_final.web.command.page.ShowMakeBetPage;
+import com.epam.jwd_final.web.command.page.ShowSignupPage;
 
 public enum CommandManager {
 

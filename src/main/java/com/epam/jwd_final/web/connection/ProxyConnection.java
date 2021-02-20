@@ -1,4 +1,4 @@
-package com.epam.jwd_final.tiger_bet.connection;
+package com.epam.jwd_final.web.connection;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

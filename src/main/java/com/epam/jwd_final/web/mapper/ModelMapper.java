@@ -1,6 +1,6 @@
-package com.epam.jwd_final.tiger_bet.mapper;
+package com.epam.jwd_final.web.mapper;
 
-import com.epam.jwd_final.tiger_bet.domain.Entity;
+import com.epam.jwd_final.web.domain.Entity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,9 +1,9 @@
-package com.epam.jwd_final.tiger_bet.command;
+package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.tiger_bet.command.page.ShowErrorPage;
-import com.epam.jwd_final.tiger_bet.command.page.ShowMainPage;
-import com.epam.jwd_final.tiger_bet.dao.UserDao;
-import com.epam.jwd_final.tiger_bet.service.impl.UserServiceImpl;
+import com.epam.jwd_final.web.command.page.ShowErrorPage;
+import com.epam.jwd_final.web.command.page.ShowMainPage;
+import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
 public enum SignupCommand implements Command {
 

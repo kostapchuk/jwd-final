@@ -1,7 +1,7 @@
-package com.epam.jwd_final.tiger_bet.service;
+package com.epam.jwd_final.web.service;
 
-import com.epam.jwd_final.tiger_bet.domain.Bet;
-import com.epam.jwd_final.tiger_bet.domain.BetDto;
+import com.epam.jwd_final.web.domain.Bet;
+import com.epam.jwd_final.web.domain.BetDto;
 
 import java.math.BigDecimal;
 import java.util.List;

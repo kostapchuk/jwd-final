@@ -1,11 +1,11 @@
-package com.epam.jwd_final.tiger_bet.mapper.impl;
+package com.epam.jwd_final.web.mapper.impl;
 
-import com.epam.jwd_final.tiger_bet.dao.TeamDao;
-import com.epam.jwd_final.tiger_bet.domain.Match;
-import com.epam.jwd_final.tiger_bet.domain.Result;
-import com.epam.jwd_final.tiger_bet.domain.Sport;
-import com.epam.jwd_final.tiger_bet.domain.Status;
-import com.epam.jwd_final.tiger_bet.mapper.ModelMapper;
+import com.epam.jwd_final.web.dao.TeamDao;
+import com.epam.jwd_final.web.domain.Match;
+import com.epam.jwd_final.web.domain.Result;
+import com.epam.jwd_final.web.domain.Sport;
+import com.epam.jwd_final.web.domain.Status;
+import com.epam.jwd_final.web.mapper.ModelMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

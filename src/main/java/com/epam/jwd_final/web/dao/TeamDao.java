@@ -1,6 +1,6 @@
-package com.epam.jwd_final.tiger_bet.dao;
+package com.epam.jwd_final.web.dao;
 
-import com.epam.jwd_final.tiger_bet.connection.ConnectionPool;
+import com.epam.jwd_final.web.connection.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

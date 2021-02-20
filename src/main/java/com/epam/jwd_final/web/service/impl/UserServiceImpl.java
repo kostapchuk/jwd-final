@@ -1,9 +1,9 @@
-package com.epam.jwd_final.tiger_bet.service.impl;
+package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.tiger_bet.dao.UserDao;
-import com.epam.jwd_final.tiger_bet.domain.User;
-import com.epam.jwd_final.tiger_bet.domain.UserDto;
-import com.epam.jwd_final.tiger_bet.service.UserService;
+import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.domain.User;
+import com.epam.jwd_final.web.domain.UserDto;
+import com.epam.jwd_final.web.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;

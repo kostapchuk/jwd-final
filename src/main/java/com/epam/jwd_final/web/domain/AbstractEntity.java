@@ -1,4 +1,4 @@
-package com.epam.jwd_final.tiger_bet.domain;
+package com.epam.jwd_final.web.domain;
 
 
 public class AbstractEntity implements Entity {

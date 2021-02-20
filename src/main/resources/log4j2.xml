@@ -6,7 +6,7 @@
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
             </PatternLayout>
         </Console>
-        <File name="ALog" fileName="src/main/resources/logs/webapp.log" append="true">
+        <File name="ALog" fileName="${sys:catalina.home}/webapps/tigerbet/logs/webapp.log" append="true">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
             </PatternLayout>

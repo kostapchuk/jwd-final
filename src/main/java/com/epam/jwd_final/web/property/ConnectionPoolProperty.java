@@ -1,4 +1,4 @@
-package com.epam.jwd_final.tiger_bet.property;
+package com.epam.jwd_final.web.property;
 
 public class ConnectionPoolProperty {
 

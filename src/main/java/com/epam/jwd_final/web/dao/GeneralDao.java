@@ -1,6 +1,6 @@
-package com.epam.jwd_final.tiger_bet.dao;
+package com.epam.jwd_final.web.dao;
 
-import com.epam.jwd_final.tiger_bet.domain.Entity;
+import com.epam.jwd_final.web.domain.Entity;
 
 import java.util.List;
 import java.util.Optional;

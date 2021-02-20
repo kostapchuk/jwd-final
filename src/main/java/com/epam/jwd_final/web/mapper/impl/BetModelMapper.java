@@ -1,7 +1,7 @@
-package com.epam.jwd_final.tiger_bet.mapper.impl;
+package com.epam.jwd_final.web.mapper.impl;
 
-import com.epam.jwd_final.tiger_bet.domain.Bet;
-import com.epam.jwd_final.tiger_bet.mapper.ModelMapper;
+import com.epam.jwd_final.web.domain.Bet;
+import com.epam.jwd_final.web.mapper.ModelMapper;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;

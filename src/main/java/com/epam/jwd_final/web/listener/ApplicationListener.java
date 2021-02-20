@@ -1,6 +1,6 @@
-package com.epam.jwd_final.tiger_bet.listener;
+package com.epam.jwd_final.web.listener;
 
-import com.epam.jwd_final.tiger_bet.connection.ConnectionPool;
+import com.epam.jwd_final.web.connection.ConnectionPool;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

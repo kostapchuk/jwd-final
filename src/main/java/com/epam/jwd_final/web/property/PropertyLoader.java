@@ -1,18 +1,18 @@
-package com.epam.jwd_final.tiger_bet.property;
+package com.epam.jwd_final.web.property;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import static com.epam.jwd_final.tiger_bet.property.ConnectionPoolProperty.POOL_CONNECTION_TIME_OUT_PROPERTY;
-import static com.epam.jwd_final.tiger_bet.property.ConnectionPoolProperty.POOL_EXTRA_CONNECTIONS_AMOUNT_PROPERTY;
-import static com.epam.jwd_final.tiger_bet.property.ConnectionPoolProperty.POOL_INITIAL_SIZE_PROPERTY;
-import static com.epam.jwd_final.tiger_bet.property.ConnectionPoolProperty.POOL_LOAD_FACTOR_PROPERTY;
-import static com.epam.jwd_final.tiger_bet.property.ConnectionPoolProperty.POOL_MAX_SIZE_PROPERTY;
-import static com.epam.jwd_final.tiger_bet.property.ConnectionPoolProperty.POOL_SHRINK_FACTOR_PROPERTY;
-import static com.epam.jwd_final.tiger_bet.property.DatabaseProperty.DB_PASSWORD_PROPERTY;
-import static com.epam.jwd_final.tiger_bet.property.DatabaseProperty.DB_URL_PROPERTY;
-import static com.epam.jwd_final.tiger_bet.property.DatabaseProperty.DB_USER_PROPERTY;
+import static com.epam.jwd_final.web.property.ConnectionPoolProperty.POOL_CONNECTION_TIME_OUT_PROPERTY;
+import static com.epam.jwd_final.web.property.ConnectionPoolProperty.POOL_EXTRA_CONNECTIONS_AMOUNT_PROPERTY;
+import static com.epam.jwd_final.web.property.ConnectionPoolProperty.POOL_INITIAL_SIZE_PROPERTY;
+import static com.epam.jwd_final.web.property.ConnectionPoolProperty.POOL_LOAD_FACTOR_PROPERTY;
+import static com.epam.jwd_final.web.property.ConnectionPoolProperty.POOL_MAX_SIZE_PROPERTY;
+import static com.epam.jwd_final.web.property.ConnectionPoolProperty.POOL_SHRINK_FACTOR_PROPERTY;
+import static com.epam.jwd_final.web.property.DatabaseProperty.DB_PASSWORD_PROPERTY;
+import static com.epam.jwd_final.web.property.DatabaseProperty.DB_URL_PROPERTY;
+import static com.epam.jwd_final.web.property.DatabaseProperty.DB_USER_PROPERTY;
 
 public final class PropertyLoader {
 

@@ -1,8 +1,8 @@
-package com.epam.jwd_final.tiger_bet.dao;
+package com.epam.jwd_final.web.dao;
 
-import com.epam.jwd_final.tiger_bet.connection.ConnectionPool;
-import com.epam.jwd_final.tiger_bet.domain.Entity;
-import com.epam.jwd_final.tiger_bet.mapper.ModelMapper;
+import com.epam.jwd_final.web.connection.ConnectionPool;
+import com.epam.jwd_final.web.domain.Entity;
+import com.epam.jwd_final.web.mapper.ModelMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

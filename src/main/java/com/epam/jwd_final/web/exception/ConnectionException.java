@@ -1,4 +1,4 @@
-package com.epam.jwd_final.tiger_bet.exception;
+package com.epam.jwd_final.web.exception;
 
 public class ConnectionException extends RuntimeException {
 

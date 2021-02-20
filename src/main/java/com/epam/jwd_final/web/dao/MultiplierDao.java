@@ -1,9 +1,9 @@
-package com.epam.jwd_final.tiger_bet.dao;
+package com.epam.jwd_final.web.dao;
 
-import com.epam.jwd_final.tiger_bet.domain.Multiplier;
-import com.epam.jwd_final.tiger_bet.domain.Result;
-import com.epam.jwd_final.tiger_bet.mapper.ModelMapper;
-import com.epam.jwd_final.tiger_bet.mapper.impl.MultiplierModelMapper;
+import com.epam.jwd_final.web.domain.Multiplier;
+import com.epam.jwd_final.web.domain.Result;
+import com.epam.jwd_final.web.mapper.ModelMapper;
+import com.epam.jwd_final.web.mapper.impl.MultiplierModelMapper;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

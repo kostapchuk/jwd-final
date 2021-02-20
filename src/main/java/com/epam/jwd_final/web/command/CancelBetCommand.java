@@ -1,11 +1,11 @@
-package com.epam.jwd_final.tiger_bet.command;
+package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.tiger_bet.command.page.ShowAllBetsPage;
-import com.epam.jwd_final.tiger_bet.dao.BetDao;
-import com.epam.jwd_final.tiger_bet.dao.MultiplierDao;
-import com.epam.jwd_final.tiger_bet.dao.UserDao;
-import com.epam.jwd_final.tiger_bet.service.BetService;
-import com.epam.jwd_final.tiger_bet.service.impl.BetServiceImpl;
+import com.epam.jwd_final.web.command.page.ShowAllBetsPage;
+import com.epam.jwd_final.web.dao.BetDao;
+import com.epam.jwd_final.web.dao.MultiplierDao;
+import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.service.BetService;
+import com.epam.jwd_final.web.service.impl.BetServiceImpl;
 
 public enum CancelBetCommand implements Command {
 

@@ -1,9 +1,9 @@
-package com.epam.jwd_final.tiger_bet.command;
+package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.tiger_bet.dao.MatchDao;
-import com.epam.jwd_final.tiger_bet.dao.TeamDao;
-import com.epam.jwd_final.tiger_bet.service.MatchService;
-import com.epam.jwd_final.tiger_bet.service.impl.MatchServiceImpl;
+import com.epam.jwd_final.web.dao.MatchDao;
+import com.epam.jwd_final.web.dao.TeamDao;
+import com.epam.jwd_final.web.service.MatchService;
+import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 
 public enum CreateMatchCommand implements Command {
 

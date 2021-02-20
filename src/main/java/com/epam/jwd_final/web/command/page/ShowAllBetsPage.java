@@ -1,13 +1,13 @@
-package com.epam.jwd_final.tiger_bet.command.page;
+package com.epam.jwd_final.web.command.page;
 
-import com.epam.jwd_final.tiger_bet.command.Command;
-import com.epam.jwd_final.tiger_bet.command.RequestContext;
-import com.epam.jwd_final.tiger_bet.command.ResponseContext;
-import com.epam.jwd_final.tiger_bet.dao.BetDao;
-import com.epam.jwd_final.tiger_bet.dao.MultiplierDao;
-import com.epam.jwd_final.tiger_bet.dao.UserDao;
-import com.epam.jwd_final.tiger_bet.domain.BetDto;
-import com.epam.jwd_final.tiger_bet.service.impl.BetServiceImpl;
+import com.epam.jwd_final.web.command.Command;
+import com.epam.jwd_final.web.command.RequestContext;
+import com.epam.jwd_final.web.command.ResponseContext;
+import com.epam.jwd_final.web.dao.BetDao;
+import com.epam.jwd_final.web.dao.MultiplierDao;
+import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.domain.BetDto;
+import com.epam.jwd_final.web.service.impl.BetServiceImpl;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,10 +1,10 @@
-package com.epam.jwd_final.tiger_bet.connection;
+package com.epam.jwd_final.web.connection;
 
 
-import com.epam.jwd_final.tiger_bet.context.ApplicationContext;
-import com.epam.jwd_final.tiger_bet.exception.ConnectionPoolException;
-import com.epam.jwd_final.tiger_bet.property.ConnectionPoolProperty;
-import com.epam.jwd_final.tiger_bet.property.DatabaseProperty;
+import com.epam.jwd_final.web.context.ApplicationContext;
+import com.epam.jwd_final.web.exception.ConnectionPoolException;
+import com.epam.jwd_final.web.property.ConnectionPoolProperty;
+import com.epam.jwd_final.web.property.DatabaseProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -122,7 +122,6 @@ public final class ConnectionPool {
 
     private void init() {
         LOGGER.info("Initializing connection pool...");
-        LOGGER.error("Initializing connection pool...");
         registerDrivers();
         availableConnections.addAll(ConnectionPoolManager.createConnections(INITIAL_POOL_SIZE));
         initialized.set(true);

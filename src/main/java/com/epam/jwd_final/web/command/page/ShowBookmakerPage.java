@@ -1,11 +1,11 @@
-package com.epam.jwd_final.tiger_bet.command.page;
+package com.epam.jwd_final.web.command.page;
 
-import com.epam.jwd_final.tiger_bet.command.Command;
-import com.epam.jwd_final.tiger_bet.command.RequestContext;
-import com.epam.jwd_final.tiger_bet.command.ResponseContext;
-import com.epam.jwd_final.tiger_bet.dao.MatchDao;
-import com.epam.jwd_final.tiger_bet.dao.TeamDao;
-import com.epam.jwd_final.tiger_bet.service.impl.MatchServiceImpl;
+import com.epam.jwd_final.web.command.Command;
+import com.epam.jwd_final.web.command.RequestContext;
+import com.epam.jwd_final.web.command.ResponseContext;
+import com.epam.jwd_final.web.dao.MatchDao;
+import com.epam.jwd_final.web.dao.TeamDao;
+import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 
 import java.util.Collections;
 

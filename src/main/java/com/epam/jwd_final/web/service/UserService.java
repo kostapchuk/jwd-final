@@ -1,7 +1,7 @@
-package com.epam.jwd_final.tiger_bet.service;
+package com.epam.jwd_final.web.service;
 
-import com.epam.jwd_final.tiger_bet.domain.User;
-import com.epam.jwd_final.tiger_bet.domain.UserDto;
+import com.epam.jwd_final.web.domain.User;
+import com.epam.jwd_final.web.domain.UserDto;
 
 import java.util.List;
 import java.util.Optional;

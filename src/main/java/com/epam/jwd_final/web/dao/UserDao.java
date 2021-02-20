@@ -1,9 +1,9 @@
-package com.epam.jwd_final.tiger_bet.dao;
+package com.epam.jwd_final.web.dao;
 
-import com.epam.jwd_final.tiger_bet.domain.Role;
-import com.epam.jwd_final.tiger_bet.domain.User;
-import com.epam.jwd_final.tiger_bet.mapper.ModelMapper;
-import com.epam.jwd_final.tiger_bet.mapper.impl.UserModelMapper;
+import com.epam.jwd_final.web.domain.Role;
+import com.epam.jwd_final.web.domain.User;
+import com.epam.jwd_final.web.mapper.ModelMapper;
+import com.epam.jwd_final.web.mapper.impl.UserModelMapper;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,8 +1,8 @@
-package com.epam.jwd_final.tiger_bet.context;
+package com.epam.jwd_final.web.context;
 
-import com.epam.jwd_final.tiger_bet.property.ConnectionPoolProperty;
-import com.epam.jwd_final.tiger_bet.property.DatabaseProperty;
-import com.epam.jwd_final.tiger_bet.property.PropertyLoader;
+import com.epam.jwd_final.web.property.ConnectionPoolProperty;
+import com.epam.jwd_final.web.property.DatabaseProperty;
+import com.epam.jwd_final.web.property.PropertyLoader;
 
 public final class ApplicationContext {
 

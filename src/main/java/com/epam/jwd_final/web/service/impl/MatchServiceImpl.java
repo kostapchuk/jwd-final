@@ -1,12 +1,12 @@
-package com.epam.jwd_final.tiger_bet.service.impl;
+package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.tiger_bet.dao.MatchDao;
-import com.epam.jwd_final.tiger_bet.dao.TeamDao;
-import com.epam.jwd_final.tiger_bet.domain.Match;
-import com.epam.jwd_final.tiger_bet.domain.MatchDto;
-import com.epam.jwd_final.tiger_bet.domain.Result;
-import com.epam.jwd_final.tiger_bet.domain.Status;
-import com.epam.jwd_final.tiger_bet.service.MatchService;
+import com.epam.jwd_final.web.dao.MatchDao;
+import com.epam.jwd_final.web.dao.TeamDao;
+import com.epam.jwd_final.web.domain.Match;
+import com.epam.jwd_final.web.domain.MatchDto;
+import com.epam.jwd_final.web.domain.Result;
+import com.epam.jwd_final.web.domain.Status;
+import com.epam.jwd_final.web.service.MatchService;
 
 import java.time.LocalDateTime;
 import java.util.List;

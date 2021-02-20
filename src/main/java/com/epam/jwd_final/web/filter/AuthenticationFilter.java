@@ -1,6 +1,6 @@
-package com.epam.jwd_final.tiger_bet.filter;
+package com.epam.jwd_final.web.filter;
 
-import com.epam.jwd_final.tiger_bet.domain.Role;
+import com.epam.jwd_final.web.domain.Role;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

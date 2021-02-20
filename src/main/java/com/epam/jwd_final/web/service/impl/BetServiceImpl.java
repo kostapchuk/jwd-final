@@ -1,10 +1,9 @@
-package com.epam.jwd_final.tiger_bet.service.impl;
+package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.tiger_bet.dao.BetDao;
-import com.epam.jwd_final.tiger_bet.dao.UserDao;
-import com.epam.jwd_final.tiger_bet.domain.Bet;
-import com.epam.jwd_final.tiger_bet.domain.BetDto;
-import com.epam.jwd_final.tiger_bet.service.BetService;
+import com.epam.jwd_final.web.dao.BetDao;
+import com.epam.jwd_final.web.domain.Bet;
+import com.epam.jwd_final.web.domain.BetDto;
+import com.epam.jwd_final.web.service.BetService;
 
 import java.math.BigDecimal;
 import java.util.List;

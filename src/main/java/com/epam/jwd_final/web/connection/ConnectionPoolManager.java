@@ -1,8 +1,8 @@
-package com.epam.jwd_final.tiger_bet.connection;
+package com.epam.jwd_final.web.connection;
 
-import com.epam.jwd_final.tiger_bet.context.ApplicationContext;
-import com.epam.jwd_final.tiger_bet.exception.ConnectionException;
-import com.epam.jwd_final.tiger_bet.property.DatabaseProperty;
+import com.epam.jwd_final.web.context.ApplicationContext;
+import com.epam.jwd_final.web.exception.ConnectionException;
+import com.epam.jwd_final.web.property.DatabaseProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,12 +14,12 @@ import java.util.Deque;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.EXTRA_CONNECTIONS_AMOUNT;
-import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.INITIAL_POOL_SIZE;
-import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.LOAD_FACTOR;
-import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.MAX_POOL_SIZE;
-import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.SHRINK_FACTOR;
-import static com.epam.jwd_final.tiger_bet.connection.ConnectionPool.TIME_OUT;
+import static com.epam.jwd_final.web.connection.ConnectionPool.EXTRA_CONNECTIONS_AMOUNT;
+import static com.epam.jwd_final.web.connection.ConnectionPool.INITIAL_POOL_SIZE;
+import static com.epam.jwd_final.web.connection.ConnectionPool.LOAD_FACTOR;
+import static com.epam.jwd_final.web.connection.ConnectionPool.MAX_POOL_SIZE;
+import static com.epam.jwd_final.web.connection.ConnectionPool.SHRINK_FACTOR;
+import static com.epam.jwd_final.web.connection.ConnectionPool.TIME_OUT;
 
 public final class ConnectionPoolManager {
 
