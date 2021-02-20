@@ -4,6 +4,7 @@
     <title>WELCOME</title>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 <h2>WE'RE GLAD TO SEE YOU IN OUR CLAN, <b>TIGERRRR</b></h2>
 </body>
 </html>

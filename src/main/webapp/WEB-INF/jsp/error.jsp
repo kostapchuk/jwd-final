@@ -4,6 +4,8 @@
     <title>ERROR</title>
 </head>
 <body>
+
+<jsp:include page="header.jsp"/>
     <h1>Cannot sign you up. Account with such name exists</h1>
 </body>
 </html>
