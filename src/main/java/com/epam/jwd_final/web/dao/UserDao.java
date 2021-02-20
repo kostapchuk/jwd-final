@@ -5,6 +5,7 @@ import com.epam.jwd_final.web.domain.User;
 import com.epam.jwd_final.web.mapper.ModelMapper;
 import com.epam.jwd_final.web.mapper.impl.UserModelMapper;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,6 +23,9 @@ public class UserDao extends AbstractDao<User> {
     private static final String SAVE_USER_SQL =
             "insert into user (name, password) values (?, ?)";
     private static final String FIND_ALL_SQL = "select id, name, password, balance, role from user";
+
+    private static final String CHANGE_BALANCE_SQL =
+            "update user set balance = ? where name = ?";
 
     public Optional<List<User>> findAll() {
         return querySelect(FIND_ALL_SQL, Collections.emptyList());
@@ -65,6 +69,16 @@ public class UserDao extends AbstractDao<User> {
     public int findUserIdByUserName(String userName) {
         return querySelectForSingleResult(FIND_BY_NAME_SQL, Collections.singletonList(userName))
                 .orElseThrow(IllegalArgumentException::new).getId();
+    }
+
+    public void topUpBalance(String userName, BigDecimal amount) {
+        final Optional<User> user = querySelectForSingleResult(FIND_BY_NAME_SQL, Collections.singletonList(userName));
+        final BigDecimal previousBalance = user.orElseThrow(IllegalArgumentException::new).getBalance();
+        final BigDecimal newBalance = previousBalance.add(amount);
+        List<Object> params = new ArrayList<>();
+        params.add(newBalance);
+        params.add(userName);
+        queryUpdate(CHANGE_BALANCE_SQL, params);
     }
 
     @Override

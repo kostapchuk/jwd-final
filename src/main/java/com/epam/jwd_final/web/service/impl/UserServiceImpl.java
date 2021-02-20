@@ -6,6 +6,7 @@ import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -79,6 +80,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public int findUserIdByUserName(String userName) {
         return userDao.findUserIdByUserName(userName);
+    }
+
+    @Override
+    public void topUpBalance(String userName, BigDecimal amount) {
+        userDao.topUpBalance(userName, amount);
     }
 
     private UserDto convertToDto(User user) {
