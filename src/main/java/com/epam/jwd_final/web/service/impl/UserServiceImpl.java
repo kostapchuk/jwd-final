@@ -87,6 +87,11 @@ public class UserServiceImpl implements UserService {
         userDao.topUpBalance(userName, amount);
     }
 
+    @Override
+    public void withdrawFromBalance(String userName, BigDecimal amount) {
+        userDao.withdrawFromBalance(userName, amount);
+    }
+
     private UserDto convertToDto(User user) {
         return new UserDto(user.getName(), user.getRole().name());
     }

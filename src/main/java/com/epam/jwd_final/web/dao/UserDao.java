@@ -81,6 +81,19 @@ public class UserDao extends AbstractDao<User> {
         queryUpdate(CHANGE_BALANCE_SQL, params);
     }
 
+    public void withdrawFromBalance(String userName, BigDecimal amount) {
+        final Optional<User> user = querySelectForSingleResult(FIND_BY_NAME_SQL, Collections.singletonList(userName));
+        final BigDecimal actualBalance = user.orElseThrow(IllegalArgumentException::new).getBalance();
+        final BigDecimal expectedBalance = actualBalance.subtract(amount);
+        if (expectedBalance.compareTo(new BigDecimal("0.00")) != -1) {
+            List<Object> params = new ArrayList<>();
+            params.add(expectedBalance);
+            params.add(userName);
+            queryUpdate(CHANGE_BALANCE_SQL, params);
+        } // TODO: else cannot withdraw money
+
+    }
+
     @Override
     protected ModelMapper<User> retrieveModelMapper() {
         return new UserModelMapper();

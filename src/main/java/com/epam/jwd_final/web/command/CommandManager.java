@@ -10,6 +10,7 @@ import com.epam.jwd_final.web.command.page.ShowLoginPage;
 import com.epam.jwd_final.web.command.page.ShowMainPage;
 import com.epam.jwd_final.web.command.page.ShowMakeBetPage;
 import com.epam.jwd_final.web.command.page.ShowSignupPage;
+import com.epam.jwd_final.web.command.page.ShowWithdrawPage;
 
 public enum CommandManager {
 
@@ -24,6 +25,8 @@ public enum CommandManager {
     MAKE_BET(MakeBetCommand.INSTANCE),
     SET_STATUS(SetStatusCommand.INSTANCE),
     DEPOSIT(DepositCommand.INSTANCE),
+    WITHDRAW(WithdrawCommand.INSTANCE),
+    SHOW_WITHDRAW_PAGE(ShowWithdrawPage.INSTANCE),
     SHOW_DEPOSIT_PAGE(ShowDepositPage.INSTANCE),
     SHOW_MAKE_BET_PAGE(ShowMakeBetPage.INSTANCE),
     SHOW_ALL_USERS_PAGE(ShowAllUsersPage.INSTANCE),

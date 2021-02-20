@@ -24,4 +24,6 @@ public interface UserService {
     int findUserIdByUserName(String userName);
 
     void topUpBalance(String userName, BigDecimal amount);
+
+    void withdrawFromBalance(String userName, BigDecimal amount);
 }
