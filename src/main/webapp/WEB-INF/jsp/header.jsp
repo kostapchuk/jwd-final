@@ -64,6 +64,11 @@
     <div>
         <c:if test="${not empty sessionScope.userName}">
             <li class="navbar-text text-dark">
+                    ${sessionScope.userName}
+            </li>
+        </c:if>
+        <c:if test="${not empty sessionScope.userName}">
+            <li class="navbar-text text-dark">
                     ${sessionScope.userBalance} $
             </li>
         </c:if>

@@ -1,5 +1,6 @@
 package com.epam.jwd_final.web.command;
 
+import com.epam.jwd_final.web.command.page.ShowAllMatchesPage;
 import com.epam.jwd_final.web.command.page.ShowErrorPage;
 import com.epam.jwd_final.web.command.page.ShowMainPage;
 import com.epam.jwd_final.web.dao.UserDao;
@@ -9,6 +10,9 @@ public enum SignupCommand implements Command {
 
     INSTANCE;
 
+    private static final String USER_NAME_PARAMETER = "userName";
+    private static final String USER_PASSWORD_PARAMETER = "userPassword";
+
     private final UserServiceImpl userService;
 
     SignupCommand() {
@@ -17,11 +21,12 @@ public enum SignupCommand implements Command {
 
     @Override
     public ResponseContext execute(RequestContext req) {
-        final String name = String.valueOf(req.getParameter("userName"));
-        final String password = String.valueOf(req.getParameter("userPassword"));
+        final String name = String.valueOf(req.getParameter(USER_NAME_PARAMETER));
+        final String password = String.valueOf(req.getParameter(USER_PASSWORD_PARAMETER));
         ResponseContext result;
         if (userService.signup(name, password)) {
-            result = ShowMainPage.INSTANCE.execute(req);
+            LoginCommand.INSTANCE.execute(req);
+            result = ShowAllMatchesPage.INSTANCE.execute(req);
         } else {
             result = ShowErrorPage.INSTANCE.execute(req);
         }

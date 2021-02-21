@@ -6,6 +6,6 @@
 <body>
 
 <jsp:include page="header.jsp"/>
-    <h1>Cannot sign you up. Account with such name exists</h1>
+    <h1>Something went wrong. Try again</h1>
 </body>
 </html>
