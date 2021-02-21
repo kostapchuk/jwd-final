@@ -14,42 +14,63 @@
                     Home
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/controller?command=show_all_bets_page"/>">
-                    My bets
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/controller?command=show_deposit_page"/>">
-                    Deposit
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/controller?command=show_withdraw_page"/>">
-                    Withdraw
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/controller?command=show_bookmaker_page"/>">
-                    Bookmaker page
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/controller?command=show_all_users_page"/>">
-                    All users
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/controller?command=logout"/>">
-                    Log out
-                </a>
-            </li>
+            <c:if test="${not empty sessionScope.userName}">
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/controller?command=show_all_bets_page"/>">
+                        My bets
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${not empty sessionScope.userName}">
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/controller?command=show_deposit_page"/>">
+                        Deposit
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${not empty sessionScope.userName}">
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/controller?command=show_withdraw_page"/>">
+                        Withdraw
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.userRole == 'BOOKMAKER' or sessionScope.userRole == 'ADMIN'}">
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/controller?command=show_bookmaker_page"/>">
+                        Bookmaker page
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.userRole == 'ADMIN'}">
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/controller?command=show_all_users_page"/>">
+                        All users
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${not empty sessionScope.userName}">
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/controller?command=logout"/>">
+                        Log out
+                    </a>
+                </li>
+            </c:if>
+
+
         </ul>
     </div>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-        Sign in
-    </button>
+    <div>
+        <c:if test="${not empty sessionScope.userName}">
+            <li class="navbar-text text-dark">
+                    ${sessionScope.userBalance} $
+            </li>
+        </c:if>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Sign in
+        </button>
+    </div>
 
     <!-- Sign in MODAL -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -69,7 +90,7 @@
 <%--                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>--%>
                         </div>
                         <div class="form-group">
-                            <labe>Password</labe>
+                            <label>Password</label>
                             <input type="password" class="form-control" placeholder="Password" name="userPassword" required>
                         </div>
 <%--                        <div class="form-check">--%>

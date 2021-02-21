@@ -5,6 +5,7 @@ import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public enum LoginCommand implements Command {
@@ -14,6 +15,7 @@ public enum LoginCommand implements Command {
     private static final String USER_ROLE_ATTRIBUTE = "userRole";
     private static final String USER_NAME_PARAMETER = "userName";
     private static final String USER_PASSWORD_PARAMETER = "userPassword";
+    private static final String USER_BALANCE_ATTRIBUTE = "userBalance";
 
     private final UserServiceImpl userService;
 
@@ -29,7 +31,8 @@ public enum LoginCommand implements Command {
         if (userDto.isPresent()) {
             req.setSessionAttribute(USER_NAME_PARAMETER, name);
             req.setSessionAttribute(USER_ROLE_ATTRIBUTE, userDto.get().getRole());
-             // TODO: redirect
+            req.setSessionAttribute(USER_BALANCE_ATTRIBUTE, userDto.get().getBalance());
+            // TODO: redirect
         } else {
             req.setSessionAttribute("errorMessage", "invalid credentials");
             // TODO: forward
