@@ -3,6 +3,7 @@ package com.epam.jwd_final.web.dao;
 import com.epam.jwd_final.web.domain.AbstractEntity;
 import com.epam.jwd_final.web.domain.Bet;
 import com.epam.jwd_final.web.domain.Result;
+import com.epam.jwd_final.web.domain.Status;
 import com.epam.jwd_final.web.mapper.ModelMapper;
 import com.epam.jwd_final.web.mapper.impl.BetModelMapper;
 
@@ -21,7 +22,7 @@ public class BetDao extends AbstractDao<Bet> {
 
     private static final String DELETE_BET_BY_ID_SQL = "delete from bet where id = ?";
 
-    private static final String FIND_BET_BY_USER_ID_SQL = "select id, user_id, multiplier_id, bet_money from bet where user_id = ?";
+    private static final String FIND_BET_BY_USER_ID_SQL = "select id, user_id, multiplier_id, bet_money from bet where user_id = ? and multiplier_id = ?";
 
     private static final String FIND_BET_BY_USER_ID_AND_MULTIPLIER_SQL = "select id, user_id, multiplier_id, bet_money from bet where user_id = ? and multiplier_id = ?";
     private static final String FIND_BET_BY_ID_SQL = "select id, user_id, multiplier_id, bet_money from bet where id = ?";
@@ -86,8 +87,24 @@ public class BetDao extends AbstractDao<Bet> {
         if (!bet.isPresent()) {
             return false;
         }
+        final Status matchStatus = matchDao.findMatchStatusById(matchId);
         final Result userResultType = multiplierDao.findResultTypeById(bet.get().getMultiplierId());
-        return userResultType.equals(actualResultType);
+        return userResultType.equals(actualResultType) && matchStatus.equals(Status.FINISHED);
+    }
+
+    public BigDecimal findBetMoneyById(int id) {
+        return querySelectForSingleResult(FIND_BET_BY_ID_SQL, Collections.singletonList(id)).orElseThrow(IllegalArgumentException::new).getBetMoney();
+    }
+
+    public BigDecimal findBetMoneyByUserIdAndMultiplierId(int userId, int multiplierId) {
+        List<Object> params = new ArrayList<>();
+        params.add(userId);
+        params.add(multiplierId);
+        final Optional<Bet> optionalBet = querySelectForSingleResult(FIND_BET_BY_USER_ID_SQL, params);
+        if (optionalBet.isPresent()) {
+            return optionalBet.get().getBetMoney();
+        }
+        return new BigDecimal("0.0");
     }
 
     @Override

@@ -25,6 +25,7 @@ public enum SetStatusCommand implements Command {
         matchService.updateStatus(matchId,
                 Status.valueOf(String.valueOf(req.getParameter(STATUS_TYPE_PARAMETER)).toUpperCase()));
         // TODO: it supports only exact enum type in any case but with underscore
+        SetResultCommand.INSTANCE.execute(req);
         return ShowBookmakerPage.INSTANCE.execute(req);
     }
 }

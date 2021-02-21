@@ -3,9 +3,8 @@ package com.epam.jwd_final.web.controller;
 import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.command.WrappingRequestContext;
-import com.epam.jwd_final.web.observer.EventManager;
 import com.epam.jwd_final.web.observer.Payout;
-import com.epam.jwd_final.web.observer.PayoutNotificationListener;
+import com.epam.jwd_final.web.observer.PayoutUserWinListener;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,7 +24,7 @@ public class Controller extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        payout.events.subscribe("payout", new PayoutNotificationListener());
+        payout.events.subscribe("payoutUserWin", new PayoutUserWinListener());
     }
 
     @Override

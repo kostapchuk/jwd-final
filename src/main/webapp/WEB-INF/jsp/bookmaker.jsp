@@ -28,15 +28,11 @@
         <h2>Matches list</h2>
         <c:forEach var="match" items="${requestScope.matches}">
             <li>${match.firstTeam} vs ${match.secondTeam}</li>
-            <form action="${pageContext.request.contextPath}/controller?command=set_result" method="post">
-                New Result: <input type="text" name="resultType" >
-                <input type="hidden" name="matchId" value="${match.id}" />
-                <input type="submit" value="Submit new result" />
-            </form>
             <form action="${pageContext.request.contextPath}/controller?command=set_status" method="post">
-                New Status: <input type="text" name="statusType" >
+                New Result: <input type="text" name="resultType" required>
+                New Status: <input type="text" name="statusType" required>
                 <input type="hidden" name="matchId" value="${match.id}" />
-                <input type="submit" value="Submit new status" />
+                <input type="submit" value="Submit" />
             </form>
         </c:forEach>
     </c:if>

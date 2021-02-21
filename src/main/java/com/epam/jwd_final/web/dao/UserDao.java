@@ -20,6 +20,9 @@ public class UserDao extends AbstractDao<User> {
     private static final String FIND_BY_NAME_SQL =
             "select id, name, password, balance, role from user where name = ?";
 
+    private static final String FIND_BY_ID_SQL =
+            "select id, name, password, balance, role from user where id = ?";
+
     private static final String SAVE_USER_SQL =
             "insert into user (name, password) values (?, ?)";
     private static final String FIND_ALL_SQL = "select id, name, password, balance, role from user";
@@ -92,6 +95,10 @@ public class UserDao extends AbstractDao<User> {
             queryUpdate(CHANGE_BALANCE_SQL, params);
         } // TODO: else cannot withdraw money
 
+    }
+
+    public User retrieveById(int id) {
+        return querySelectForSingleResult(FIND_BY_ID_SQL, Collections.singletonList(id)).orElseThrow(IllegalArgumentException::new);
     }
 
     @Override

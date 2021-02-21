@@ -54,6 +54,16 @@ public class BetServiceImpl implements BetService {
         return betDao.isUserWinner(userName, matchId);
     }
 
+    @Override
+    public BigDecimal findBetMoneyById(int id) {
+        return betDao.findBetMoneyById(id);
+    }
+
+    @Override
+    public BigDecimal findBetMoneyByUserIdAndMultiplierId(int userId, int multiplierId) {
+        return betDao.findBetMoneyByUserIdAndMultiplierId(userId, multiplierId);
+    }
+
     private BetDto convertToDto(Bet bet) {
         return new BetDto(bet.getId(), bet.getBetMoney());
     }

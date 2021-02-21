@@ -92,7 +92,12 @@ public class UserServiceImpl implements UserService {
         userDao.withdrawFromBalance(userName, amount);
     }
 
+    @Override
+    public BigDecimal findBalanceById(int id) {
+        return userDao.retrieveById(id).getBalance();
+    }
+
     private UserDto convertToDto(User user) {
-        return new UserDto(user.getName(), user.getRole().name());
+        return new UserDto(user.getName(), user.getRole().name(), user.getBalance());
     }
 }

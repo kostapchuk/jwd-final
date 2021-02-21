@@ -18,14 +18,14 @@ import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class PayoutNotificationListener implements EventListener {
+public class PayoutUserWinListener implements EventListener {
 
     private final UserService userService;
     private final MatchService matchService;
     private final MultiplierServiceImpl multiplierService;
     private final BetService betService;
 
-    public PayoutNotificationListener() {
+    public PayoutUserWinListener() {
         this.userService = new UserServiceImpl(new UserDao());
         this.matchService = new MatchServiceImpl(new MatchDao(), new TeamDao());
         this.multiplierService = new MultiplierServiceImpl(new MultiplierDao());
@@ -42,6 +42,13 @@ public class PayoutNotificationListener implements EventListener {
                 final BigDecimal winMoneyAmount = betService.calculateExpectedWin(user.getName(), multiplierId);
                 userService.topUpBalance(user.getName(), winMoneyAmount);
             }
+//            else {
+//                final Result result = matchService.findResultTypeById(matchId);
+//                final int multiplierId = multiplierService.findIdByMatchIdAndResult(matchId, result);
+//                userService.topUpBalance(
+//                        "admin",
+//                        betService.findBetMoneyByUserIdAndMultiplierId(userService.findUserIdByUserName(user.getName()), multiplierId));
+//            }
         }
     }
 }

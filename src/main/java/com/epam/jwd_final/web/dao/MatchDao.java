@@ -80,6 +80,10 @@ public class MatchDao extends AbstractDao<Match> {
         return querySelectForSingleResult(FIND_MATCH_BY_ID_SQL, Collections.singletonList(id)).orElseThrow(IllegalArgumentException::new).getResultType();
     }
 
+    public Status findMatchStatusById(int id) {
+        return querySelectForSingleResult(FIND_MATCH_BY_ID_SQL, Collections.singletonList(id)).orElseThrow(IllegalArgumentException::new).getStatus();
+    }
+
     @Override
     protected ModelMapper<Match> retrieveModelMapper() {
         return new MatchModelMapper();

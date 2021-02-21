@@ -20,4 +20,8 @@ public interface BetService {
     BigDecimal calculateExpectedWin(String name, int multiplierId);
 
     boolean isUserWinner(String userName, int matchId);
+
+    BigDecimal findBetMoneyById(int id);
+
+    BigDecimal findBetMoneyByUserIdAndMultiplierId(int userId, int multiplierId);
 }

@@ -6,6 +6,7 @@ import com.epam.jwd_final.web.dao.MatchDao;
 import com.epam.jwd_final.web.dao.MultiplierDao;
 import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.domain.Result;
+import com.epam.jwd_final.web.observer.Payout;
 import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.UserService;
 import com.epam.jwd_final.web.service.impl.BetServiceImpl;
@@ -33,10 +34,15 @@ public enum MakeBetCommand implements Command {
         final int matchId = Integer.parseInt(String.valueOf(req.getSession().getAttribute("matchId")));
         final String userResult = String.valueOf(req.getParameter("userResult"));
         final int multiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.valueOf(userResult));
-        final int userId = userService.findUserIdByUserName(String.valueOf(req.getSession().getAttribute("userName")));
-
-        betService.saveBet(
-                betService.createBet(userId, multiplierId, new BigDecimal(String.valueOf(req.getParameter("betMoney")))));
+        final String userName = String.valueOf(req.getSession().getAttribute("userName"));
+        final int userId = userService.findUserIdByUserName(userName);
+        final BigDecimal betMoney = new BigDecimal(String.valueOf(req.getParameter("betMoney")));
+        final BigDecimal currentBalance = userService.findBalanceById(userId);
+        if (currentBalance.subtract(betMoney).compareTo(new BigDecimal("0.00")) != -1) {
+            betService.saveBet(
+                    betService.createBet(userId, multiplierId, betMoney));
+            userService.withdrawFromBalance(userName, betMoney);
+        }
         return ShowAllMatchesPage.INSTANCE.execute(req);
     }
 }
