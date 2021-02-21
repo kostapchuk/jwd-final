@@ -22,4 +22,6 @@ public interface MatchService {
     boolean updateResult(int matchId, Result result);
 
     boolean updateStatus(int matchId, Status status);
+
+    Result findResultTypeById(int id);
 }

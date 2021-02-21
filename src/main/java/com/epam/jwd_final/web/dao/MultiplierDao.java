@@ -17,7 +17,7 @@ public class MultiplierDao extends AbstractDao<Multiplier> {
             "insert into `multiplier` (match_id, result_type_id, coefficient) values (?, ?, ?)";
     private static final String FIND_ID_SQL = "select id, match_id, result_type_id, coefficient from `multiplier` where match_id = ? and result_type_id = ?";
 
-    private static final String FIND_COEFFICIENT_BY_ID_SQL = "select id, match_id, result_type_id, coefficient from multiplier where id = ?";
+    private static final String FIND_MULTIPLIER_BY_ID_SQL = "select id, match_id, result_type_id, coefficient from multiplier where id = ?";
 
     public Multiplier createMultiplier(int matchId, Result result, BigDecimal coefficient) {
         return new Multiplier(matchId, result, coefficient);
@@ -40,10 +40,13 @@ public class MultiplierDao extends AbstractDao<Multiplier> {
     }
 
     public BigDecimal findCoefficientById(int id) {
-        return querySelectForSingleResult(FIND_COEFFICIENT_BY_ID_SQL,
+        return querySelectForSingleResult(FIND_MULTIPLIER_BY_ID_SQL,
                 Collections.singletonList(id)).orElseThrow(IllegalArgumentException::new).getCoefficient();
     }
 
+    public Result findResultTypeById(int id) {
+        return querySelectForSingleResult(FIND_MULTIPLIER_BY_ID_SQL, Collections.singletonList(id)).orElseThrow(IllegalArgumentException::new).getResult();
+    }
 
     @Override
     protected ModelMapper<Multiplier> retrieveModelMapper() {

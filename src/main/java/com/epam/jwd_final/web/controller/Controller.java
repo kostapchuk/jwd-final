@@ -3,6 +3,9 @@ package com.epam.jwd_final.web.controller;
 import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.command.WrappingRequestContext;
+import com.epam.jwd_final.web.observer.EventManager;
+import com.epam.jwd_final.web.observer.Payout;
+import com.epam.jwd_final.web.observer.PayoutNotificationListener;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +19,14 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
 
     private static final String COMMAND_PARAMETER_NAME = "command";
+
+    public static final Payout payout = new Payout();
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        payout.events.subscribe("payout", new PayoutNotificationListener());
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

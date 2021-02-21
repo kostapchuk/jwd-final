@@ -27,6 +27,7 @@ public class MatchDao extends AbstractDao<Match> {
     private static final String UPDATE_RESULT_TYPE_SQL = "update `match` set result_type_id = ? where id = ?";
 
     private static final String UPDATE_STATUS_TYPE_SQL = "update `match` set status_id = ? where id = ?";
+    private static final String FIND_MATCH_BY_ID_SQL = "select id, sport_type_id, start, first_team_id, second_team_id, status_id, result_type_id from `match` where id = ?";
 
     private final TeamDao teamDao = new TeamDao();
 
@@ -73,6 +74,10 @@ public class MatchDao extends AbstractDao<Match> {
         params.add(secondTeamId);
         return querySelectForSingleResult(FIND_MATCH_ID_BY_START_FIRST_TEAM_SECOND_TEAM_SQL, params)
                 .map(Match::getId).orElseThrow(IllegalStateException::new); // TODO: throw custom or another thing
+    }
+
+    public Result findResultTypeById(int id) {
+        return querySelectForSingleResult(FIND_MATCH_BY_ID_SQL, Collections.singletonList(id)).orElseThrow(IllegalArgumentException::new).getResultType();
     }
 
     @Override

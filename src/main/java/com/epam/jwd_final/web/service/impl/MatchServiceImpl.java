@@ -58,6 +58,11 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    public Result findResultTypeById(int id) {
+        return matchDao.findResultTypeById(id);
+    }
+
+    @Override
     public boolean saveMatch(Match match) {
         return matchDao.saveMatch(match);
     }

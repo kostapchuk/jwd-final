@@ -42,8 +42,16 @@ public class BetServiceImpl implements BetService {
         betDao.deleteBet(id);
     }
 
-    public BigDecimal calculateExpectedWin(String name) {
-        return betDao.calculateExpectedWin(name);
+    public BigDecimal calculateExpectedWin(String name, int multiplierId) {
+        return betDao.calculateExpectedWin(name, multiplierId);
+    }
+
+    public int findMultiplierIdById(int betId) {
+        return betDao.findMultiplierIdById(betId);
+    }
+
+    public boolean isUserWinner(String userName, int matchId) {
+        return betDao.isUserWinner(userName, matchId);
     }
 
     private BetDto convertToDto(Bet bet) {

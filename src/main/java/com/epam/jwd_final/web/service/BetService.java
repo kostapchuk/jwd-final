@@ -16,4 +16,8 @@ public interface BetService {
     boolean saveBet(Bet bet);
 
     void deleteBet(int id);
+
+    BigDecimal calculateExpectedWin(String name, int multiplierId);
+
+    boolean isUserWinner(String userName, int matchId);
 }

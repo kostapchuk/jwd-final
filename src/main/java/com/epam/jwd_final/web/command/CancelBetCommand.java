@@ -2,6 +2,7 @@ package com.epam.jwd_final.web.command;
 
 import com.epam.jwd_final.web.command.page.ShowAllBetsPage;
 import com.epam.jwd_final.web.dao.BetDao;
+import com.epam.jwd_final.web.dao.MatchDao;
 import com.epam.jwd_final.web.dao.MultiplierDao;
 import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.service.BetService;
@@ -14,7 +15,7 @@ public enum CancelBetCommand implements Command {
     private final BetService betService;
 
     CancelBetCommand() {
-        this.betService = new BetServiceImpl(new BetDao(new UserDao(), new MultiplierDao()));
+        this.betService = new BetServiceImpl(new BetDao(new UserDao(), new MultiplierDao(), new MatchDao()));
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.epam.jwd_final.web.command;
 
 import com.epam.jwd_final.web.command.page.ShowAllMatchesPage;
 import com.epam.jwd_final.web.dao.BetDao;
+import com.epam.jwd_final.web.dao.MatchDao;
 import com.epam.jwd_final.web.dao.MultiplierDao;
 import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.domain.Result;
@@ -24,7 +25,7 @@ public enum MakeBetCommand implements Command {
     MakeBetCommand() {
         this.userService = new UserServiceImpl(new UserDao());
         this.multiplierService = new MultiplierServiceImpl(new MultiplierDao());
-        this.betService = new BetServiceImpl(new BetDao(new UserDao(), new MultiplierDao()));
+        this.betService = new BetServiceImpl(new BetDao(new UserDao(), new MultiplierDao(), new MatchDao()));
     }
 
     @Override
