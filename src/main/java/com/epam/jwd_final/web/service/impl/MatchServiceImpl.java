@@ -5,9 +5,11 @@ import com.epam.jwd_final.web.dao.TeamDao;
 import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.domain.MatchDto;
 import com.epam.jwd_final.web.domain.Result;
+import com.epam.jwd_final.web.domain.Sport;
 import com.epam.jwd_final.web.domain.Status;
 import com.epam.jwd_final.web.service.MatchService;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +30,7 @@ public enum MatchServiceImpl implements MatchService {
 
     @Override
     public Optional<List<MatchDto>> findAllUnfinishedMatches() {
-        return matchDao.findAllMatchesByStatus(Status.PLANNED)
+        return matchDao.findAllByStatusId(Status.PLANNED.getId())
                 .map(matches ->
                         matches.stream()
                                 .map(this::convertToDto)
@@ -38,15 +40,21 @@ public enum MatchServiceImpl implements MatchService {
 
     @Override
     public Match createMatch(String sportType, String startTime, String firstTeam, String secondTeam) {
-        return matchDao.createMatch(sportType, startTime, firstTeam, secondTeam);
+        return new Match(
+                Sport.valueOf(sportType.toUpperCase()),
+                LocalDateTime.parse(startTime),
+                firstTeam,
+                secondTeam
+        );
     }
 
     @Override
     public int findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime start, String firstTeam, String secondTeam) {
-        return matchDao.findMatchIdByStartAndFirstTeamAndSecondTeam(
-                start,
+        return matchDao.findOneByStartAndFirstTeamAndSecondTeam(
+                Timestamp.valueOf(start),
                 teamDao.findIdByName(firstTeam).orElseThrow(IllegalArgumentException::new), // TODO: redo exception
-                teamDao.findIdByName(secondTeam).orElseThrow(IllegalArgumentException::new)); // TODO: redo exception
+                teamDao.findIdByName(secondTeam).orElseThrow(IllegalArgumentException::new) // TODO: redo exception
+        ).orElseThrow(IllegalArgumentException::new).getId(); // TODO: redo exception
     }
 
     @Override
@@ -61,12 +69,12 @@ public enum MatchServiceImpl implements MatchService {
 
     @Override
     public Result findResultTypeById(int id) {
-        return matchDao.findResultTypeById(id);
+        return matchDao.findOneById(id).orElseThrow(IllegalArgumentException::new).getResultType();
     }
 
     @Override
-    public boolean saveMatch(Match match) {
-        return matchDao.saveMatch(match);
+    public void saveMatch(Match match) {
+        matchDao.save(match);
     }
 
     private MatchDto convertToDto(Match match) {

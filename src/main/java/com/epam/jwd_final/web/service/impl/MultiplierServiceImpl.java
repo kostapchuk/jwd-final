@@ -15,14 +15,16 @@ public class MultiplierServiceImpl {
     }
 
     public Multiplier createMultiplier(int matchId, Result result, BigDecimal coefficient) {
-        return multiplierDao.createMultiplier(matchId, result, coefficient);
+        return new Multiplier(matchId, result, coefficient);
     }
 
-    public boolean saveMultiplier(Multiplier multiplier) {
-        return multiplierDao.saveMultiplier(multiplier);
+    public void saveMultiplier(Multiplier multiplier) {
+        multiplierDao.save(multiplier);
     }
 
     public int findIdByMatchIdAndResult(int matchId, Result result) {
-        return multiplierDao.findIdByMatchIdAndResult(matchId, result.getId());
+        return multiplierDao.findOneByMatchIdByResultId(matchId, result.getId())
+                .orElseThrow(IllegalArgumentException::new)
+                .getId();
     }
 }

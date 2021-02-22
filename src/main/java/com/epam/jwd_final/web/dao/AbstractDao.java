@@ -19,8 +19,8 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
     private static final Logger LOGGER = LogManager.getLogger(AbstractDao.class);
 
     @Override
-    public Optional<T> querySelectForSingleResult(String querySQL, List<Object> params) {
-        Optional<List<T>> result = querySelect(querySQL, params);
+    public Optional<T> querySelectOne(String querySQL, List<Object> params) {
+        Optional<List<T>> result = querySelectAll(querySQL, params);
         if (!result.isPresent()) {
             return Optional.empty();
         }
@@ -43,7 +43,7 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
     }
 
     @Override
-    public Optional<List<T>> querySelect(String querySQL, List<Object> params) {
+    public Optional<List<T>> querySelectAll(String querySQL, List<Object> params) {
         List<T> objects = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = makeStatementPrepared(querySQL, params);

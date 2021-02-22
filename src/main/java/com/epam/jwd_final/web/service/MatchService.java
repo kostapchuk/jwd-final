@@ -15,7 +15,7 @@ public interface MatchService {
 
     Match createMatch(String sportType, String startTime, String firstTeam, String secondTeam);
 
-    boolean saveMatch(Match match);
+    void saveMatch(Match match);
 
     int findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime start, String firstTeam, String secondTeam);
 

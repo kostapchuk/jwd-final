@@ -128,16 +128,18 @@ public enum UserServiceImpl implements UserService {
         final int userId = userDao.findOneByName(name).orElseThrow(IllegalArgumentException::new).getId();
         final Bet bet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId).orElseThrow(IllegalArgumentException::new);
         final BigDecimal betMoney = bet.getBetMoney();
-        return multiplierDao.findCoefficientById(bet.getMultiplierId()).multiply(betMoney);
+        return multiplierDao.findOneById(bet.getMultiplierId()).orElseThrow(IllegalArgumentException::new).getCoefficient().multiply(betMoney);
     }
 
     public boolean isUserWinner(String userName, int matchId) {
         final int userId = userDao.findOneByName(userName).orElseThrow(IllegalArgumentException::new).getId();
-        final Result actualResultType = matchDao.findResultTypeById(matchId);
-        final int multiplierId = multiplierDao.findIdByMatchIdAndResult(matchId, actualResultType.getId());
+        final Result actualResultType = matchDao.findOneById(matchId).orElseThrow(IllegalArgumentException::new).getResultType();
+        final int multiplierId = multiplierDao.findOneByMatchIdByResultId(matchId, actualResultType.getId())
+                .orElseThrow(IllegalArgumentException::new)
+                .getId(); // TODO: redo
         final Bet bet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId).orElseThrow(IllegalArgumentException::new);
-        final Status matchStatus = matchDao.findMatchStatusById(matchId);
-        final Result userResultType = multiplierDao.findResultTypeById(bet.getMultiplierId());
+        final Status matchStatus = matchDao.findOneById(matchId).orElseThrow(IllegalArgumentException::new).getStatus();
+        final Result userResultType = multiplierDao.findOneById(bet.getMultiplierId()).orElseThrow(IllegalArgumentException::new).getResult();
         return userResultType.equals(actualResultType) && matchStatus.equals(Status.FINISHED);
     }
 

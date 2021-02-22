@@ -33,21 +33,21 @@ public class UserDao extends AbstractDao<User> {
             "update user set balance = ? where name = ?";
 
     public Optional<List<User>> findAll() {
-        return querySelect(
+        return querySelectAll(
                 FIND_ALL_SQL,
                 Collections.emptyList()
         );
     }
 
     public Optional<User> findOneByName(String name) {
-        return querySelectForSingleResult(
+        return querySelectOne(
                 FIND_BY_NAME_SQL,
                 Collections.singletonList(name)
         );
     }
 
     public Optional<User> findOneById(int id) {
-        return querySelectForSingleResult(
+        return querySelectOne(
                 FIND_BY_ID_SQL,
                 Collections.singletonList(id)
         );

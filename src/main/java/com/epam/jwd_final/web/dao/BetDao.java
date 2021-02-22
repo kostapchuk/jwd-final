@@ -27,21 +27,21 @@ public class BetDao extends AbstractDao<Bet> {
             "delete from bet where id = ?";
 
     public Optional<Bet> findOneById(int id) {
-        return querySelectForSingleResult(
+        return querySelectOne(
                 FIND_ONE_BY_ID_SQL,
                 Collections.singletonList(id)
         );
     }
 
     public Optional<Bet> findOneByUserIdByMultiplierId(int userId, int multiplierId) {
-        return querySelectForSingleResult(
+        return querySelectOne(
                 FIND_ONE_BY_USER_ID_BY_MULTIPLIER_ID_SQL,
                 Arrays.asList(userId, multiplierId)
         );
     }
 
     public Optional<List<Bet>> findAllByUserId(int userId) {
-        return querySelect(
+        return querySelectAll(
                 FIND_BY_USER_ID_SQL,
                 Collections.singletonList(userId)
         );
