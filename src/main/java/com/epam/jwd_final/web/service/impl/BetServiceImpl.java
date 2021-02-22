@@ -1,6 +1,7 @@
 package com.epam.jwd_final.web.service.impl;
 
 import com.epam.jwd_final.web.dao.BetDao;
+import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.domain.Bet;
 import com.epam.jwd_final.web.domain.BetDto;
 import com.epam.jwd_final.web.service.BetService;
@@ -29,25 +30,27 @@ public class BetServiceImpl implements BetService {
 
     @Override
     public Bet createBet(int userId, int multiplierId, BigDecimal betMoney) {
-        return betDao.createBet(userId, multiplierId, betMoney);
+        return new Bet(userId, multiplierId, betMoney);
     }
 
     @Override
     public boolean saveBet(Bet bet) {
-        return betDao.saveBet(bet);
+        return betDao.save(bet);
     }
 
     @Override
     public void deleteBet(int id) {
-        betDao.deleteBet(id);
+        betDao.delete(id);
     }
 
     public BigDecimal calculateExpectedWin(String name, int multiplierId) {
         return betDao.calculateExpectedWin(name, multiplierId);
     }
 
-    public int findMultiplierIdById(int betId) {
-        return betDao.findMultiplierIdById(betId);
+    public int findMultiplierIdById(int id) {
+        return betDao.findOneById(id)
+                .orElseThrow(IllegalArgumentException::new)
+                .getMultiplierId();
     }
 
     public boolean isUserWinner(String userName, int matchId) {
@@ -56,12 +59,16 @@ public class BetServiceImpl implements BetService {
 
     @Override
     public BigDecimal findBetMoneyById(int id) {
-        return betDao.findBetMoneyById(id);
+        return betDao.findOneById(id)
+                .orElseThrow(IllegalArgumentException::new)
+                .getBetMoney();
     }
 
     @Override
     public BigDecimal findBetMoneyByUserIdAndMultiplierId(int userId, int multiplierId) {
-        return betDao.findBetMoneyByUserIdAndMultiplierId(userId, multiplierId);
+        return betDao.findOneByUserIdByMultiplierId(userId, multiplierId)
+                .orElseThrow(IllegalArgumentException::new)
+                .getBetMoney();
     }
 
     private BetDto convertToDto(Bet bet) {

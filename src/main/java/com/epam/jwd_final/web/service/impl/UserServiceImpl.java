@@ -7,6 +7,7 @@ import com.epam.jwd_final.web.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserDto> login(String name, String password) {
-        final Optional<User> user = userDao.findByName(name);
+        final Optional<User> user = userDao.findOneByName(name);
         if (!user.isPresent()) {
             BCrypt.checkpw(password, HASHED_DUMMY_PASSWORD);
             return Optional.empty();
@@ -60,41 +61,53 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateRole(String userName) {
-        final Optional<User> userOptional = userDao.findByName(userName);
-        if (userOptional.isPresent()) {
-            return userDao.updateRole(userOptional.get());
-        }
-        return false;
+    public void updateRole(String userName) {
+        userDao.updateRole(
+                userDao.findOneByName(userName)
+                        .orElseThrow(IllegalArgumentException::new)
+        );
     }
 
     @Override
-    public boolean rollbackRole(String userName) {
-        final Optional<User> userOptional = userDao.findByName(userName);
-        if (userOptional.isPresent()) {
-            return userDao.rollbackRole(userOptional.get());
-        }
-        return false;
+    public void rollbackRole(String userName) {
+        userDao.rollbackRole(
+                userDao.findOneByName(userName)
+                        .orElseThrow(IllegalArgumentException::new)
+        );
     }
 
     @Override
     public int findUserIdByUserName(String userName) {
-        return userDao.findUserIdByUserName(userName);
+        return userDao.findOneByName(userName)
+                .orElseThrow(IllegalArgumentException::new)
+                .getId();
     }
 
     @Override
     public void topUpBalance(String userName, BigDecimal amount) {
-        userDao.topUpBalance(userName, amount);
+        final BigDecimal previousBalance = userDao.findOneByName(userName)
+                .orElseThrow(IllegalArgumentException::new)
+                .getBalance();
+        final BigDecimal newBalance = previousBalance.add(amount);
+        userDao.updateBalance(userName, newBalance);
     }
 
     @Override
     public void withdrawFromBalance(String userName, BigDecimal amount) {
-        userDao.withdrawFromBalance(userName, amount);
+        final BigDecimal previousBalance = userDao.findOneByName(userName)
+                .orElseThrow(IllegalArgumentException::new)
+                .getBalance();
+        final BigDecimal newBalance = previousBalance.subtract(amount);
+        if (newBalance.compareTo(BigDecimal.ZERO) >= 0) {
+            userDao.updateBalance(userName, newBalance);
+        }
     }
 
     @Override
     public BigDecimal findBalanceById(int id) {
-        return userDao.retrieveById(id).getBalance();
+        return userDao.findOneById(id)
+                .orElseThrow(IllegalArgumentException::new)
+                .getBalance();
     }
 
     private UserDto convertToDto(User user) {

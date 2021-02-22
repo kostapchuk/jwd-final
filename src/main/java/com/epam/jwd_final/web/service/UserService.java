@@ -17,9 +17,9 @@ public interface UserService {
 
     boolean signup(String name, String password);
 
-    boolean updateRole(String userName);
+    void updateRole(String userName);
 
-    boolean rollbackRole(String userName);
+    void rollbackRole(String userName);
 
     int findUserIdByUserName(String userName);
 
