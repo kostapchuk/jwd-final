@@ -1,9 +1,10 @@
 package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.web.dao.BetDao;
-import com.epam.jwd_final.web.dao.MatchDao;
-import com.epam.jwd_final.web.dao.MultiplierDao;
+import com.epam.jwd_final.web.dao.impl.BetDao;
+import com.epam.jwd_final.web.dao.impl.MatchDao;
+import com.epam.jwd_final.web.dao.impl.MultiplierDao;
 import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.dao.impl.UserDaoImpl;
 import com.epam.jwd_final.web.domain.Bet;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.domain.Status;
@@ -13,7 +14,6 @@ import com.epam.jwd_final.web.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,7 +31,7 @@ public enum UserServiceImpl implements UserService {
     private static final String HASHED_DUMMY_PASSWORD = BCrypt.hashpw(DUMMY_PASSWORD, BCrypt.gensalt());
 
     UserServiceImpl() {
-        this.userDao = new UserDao();
+        this.userDao = new UserDaoImpl();
         this.betDao = new BetDao();
         this.matchDao = new MatchDao();
         this.multiplierDao = new MultiplierDao();

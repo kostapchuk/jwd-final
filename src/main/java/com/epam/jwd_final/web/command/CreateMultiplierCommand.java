@@ -1,9 +1,7 @@
 package com.epam.jwd_final.web.command;
 
 import com.epam.jwd_final.web.command.page.ShowMainPage;
-import com.epam.jwd_final.web.dao.MatchDao;
-import com.epam.jwd_final.web.dao.MultiplierDao;
-import com.epam.jwd_final.web.dao.TeamDao;
+import com.epam.jwd_final.web.dao.impl.MultiplierDao;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;

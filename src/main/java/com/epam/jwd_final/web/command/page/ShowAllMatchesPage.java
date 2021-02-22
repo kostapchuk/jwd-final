@@ -3,8 +3,6 @@ package com.epam.jwd_final.web.command.page;
 import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
-import com.epam.jwd_final.web.dao.MatchDao;
-import com.epam.jwd_final.web.dao.TeamDao;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 
 import java.util.Collections;

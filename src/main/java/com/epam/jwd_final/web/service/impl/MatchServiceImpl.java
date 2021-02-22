@@ -1,7 +1,7 @@
 package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.web.dao.MatchDao;
-import com.epam.jwd_final.web.dao.TeamDao;
+import com.epam.jwd_final.web.dao.impl.MatchDao;
+import com.epam.jwd_final.web.dao.impl.TeamDao;
 import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.domain.MatchDto;
 import com.epam.jwd_final.web.domain.Result;

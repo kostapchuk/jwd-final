@@ -1,4 +1,4 @@
-package com.epam.jwd_final.web.dao;
+package com.epam.jwd_final.web.dao.impl;
 
 import com.epam.jwd_final.web.connection.ConnectionPool;
 import org.apache.logging.log4j.LogManager;

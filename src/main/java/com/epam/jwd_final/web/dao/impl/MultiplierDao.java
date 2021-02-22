@@ -1,5 +1,6 @@
-package com.epam.jwd_final.web.dao;
+package com.epam.jwd_final.web.dao.impl;
 
+import com.epam.jwd_final.web.dao.AbstractDao;
 import com.epam.jwd_final.web.domain.Multiplier;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.mapper.ModelMapper;

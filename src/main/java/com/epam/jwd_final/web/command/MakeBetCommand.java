@@ -1,12 +1,8 @@
 package com.epam.jwd_final.web.command;
 
 import com.epam.jwd_final.web.command.page.ShowAllMatchesPage;
-import com.epam.jwd_final.web.dao.BetDao;
-import com.epam.jwd_final.web.dao.MatchDao;
-import com.epam.jwd_final.web.dao.MultiplierDao;
-import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.dao.impl.MultiplierDao;
 import com.epam.jwd_final.web.domain.Result;
-import com.epam.jwd_final.web.observer.Payout;
 import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.UserService;
 import com.epam.jwd_final.web.service.impl.BetServiceImpl;
@@ -39,7 +35,7 @@ public enum MakeBetCommand implements Command {
         final BigDecimal betMoney = new BigDecimal(String.valueOf(req.getParameter("betMoney")));
         final BigDecimal currentBalance = userService.findBalanceById(userId);
         if (currentBalance.subtract(betMoney).compareTo(new BigDecimal("0.00")) != -1) {
-            betService.saveBet(
+            betService.save(
                     betService.createBet(userId, multiplierId, betMoney));
             userService.withdrawFromBalance(userName, betMoney);
         }

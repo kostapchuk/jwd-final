@@ -1,6 +1,6 @@
 package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.web.dao.MultiplierDao;
+import com.epam.jwd_final.web.dao.impl.MultiplierDao;
 import com.epam.jwd_final.web.domain.Multiplier;
 import com.epam.jwd_final.web.domain.Result;
 

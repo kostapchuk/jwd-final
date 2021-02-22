@@ -13,6 +13,7 @@
     <jsp:include page="header.jsp"/>
     <h2>Create match:</h2>
     <form action="${pageContext.request.contextPath}/controller?command=create_match" method="post">
+<%--        <input type="hidden" name="userName" value="${user.name}" />--%>
         <p>Sport type: <input type="text" name="sportType" required></p>
         <p>Start: <input type="datetime-local" name="startTime" required></p>
         <p>First team: <input type="text" name="firstTeam" required></p>

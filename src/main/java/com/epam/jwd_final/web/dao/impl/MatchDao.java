@@ -1,15 +1,13 @@
-package com.epam.jwd_final.web.dao;
+package com.epam.jwd_final.web.dao.impl;
 
+import com.epam.jwd_final.web.dao.AbstractDao;
 import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.domain.Result;
-import com.epam.jwd_final.web.domain.Sport;
 import com.epam.jwd_final.web.domain.Status;
 import com.epam.jwd_final.web.mapper.ModelMapper;
 import com.epam.jwd_final.web.mapper.impl.MatchModelMapper;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

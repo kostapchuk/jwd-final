@@ -9,17 +9,15 @@ import java.util.Optional;
 
 public interface BetService {
 
-    Optional<List<BetDto>> findAllBetsByUserName(String name);
+    Optional<List<BetDto>> findAllByUserName(String name);
 
     Bet createBet(int userId, int multiplierId, BigDecimal betMoney);
 
-    void saveBet(Bet bet);
+    void save(Bet bet);
 
-    void deleteBet(int id);
+    void deleteById(int id);
 
     BigDecimal findBetMoneyById(int id);
 
     int findMultiplierIdById(int id);
-
-    BigDecimal findBetMoneyByUserIdAndMultiplierId(int userId, int multiplierId);
 }

@@ -1,8 +1,6 @@
 package com.epam.jwd_final.web.command;
 
 import com.epam.jwd_final.web.command.page.ShowBookmakerPage;
-import com.epam.jwd_final.web.dao.MatchDao;
-import com.epam.jwd_final.web.dao.TeamDao;
 import com.epam.jwd_final.web.domain.Status;
 import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;

@@ -1,9 +1,8 @@
 package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.web.dao.BetDao;
-import com.epam.jwd_final.web.dao.MatchDao;
-import com.epam.jwd_final.web.dao.MultiplierDao;
+import com.epam.jwd_final.web.dao.impl.BetDao;
 import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.dao.impl.UserDaoImpl;
 import com.epam.jwd_final.web.domain.Bet;
 import com.epam.jwd_final.web.domain.BetDto;
 import com.epam.jwd_final.web.service.BetService;
@@ -23,10 +22,11 @@ public enum BetServiceImpl implements BetService {
 
     BetServiceImpl() {
         this.betDao = new BetDao();
-        this.userDao = new UserDao();
+        this.userDao = new UserDaoImpl();
     }
 
-    public Optional<List<BetDto>> findAllBetsByUserName(String name) {
+    @Override
+    public Optional<List<BetDto>> findAllByUserName(String name) {
         final Integer userId = userDao.findOneByName(name)
                 .orElseThrow(IllegalArgumentException::new)
                 .getId();
@@ -43,15 +43,16 @@ public enum BetServiceImpl implements BetService {
     }
 
     @Override
-    public void saveBet(Bet bet) {
+    public void save(Bet bet) {
         betDao.save(bet);
     }
 
     @Override
-    public void deleteBet(int id) {
+    public void deleteById(int id) {
         betDao.deleteById(id);
     }
 
+    @Override
     public int findMultiplierIdById(int id) {
         return betDao.findOneById(id)
                 .orElseThrow(IllegalArgumentException::new)
@@ -61,13 +62,6 @@ public enum BetServiceImpl implements BetService {
     @Override
     public BigDecimal findBetMoneyById(int id) {
         return betDao.findOneById(id)
-                .orElseThrow(IllegalArgumentException::new)
-                .getBetMoney();
-    }
-
-    @Override
-    public BigDecimal findBetMoneyByUserIdAndMultiplierId(int userId, int multiplierId) {
-        return betDao.findOneByUserIdByMultiplierId(userId, multiplierId)
                 .orElseThrow(IllegalArgumentException::new)
                 .getBetMoney();
     }

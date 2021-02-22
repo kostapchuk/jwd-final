@@ -1,10 +1,6 @@
 package com.epam.jwd_final.web.observer;
 
-import com.epam.jwd_final.web.dao.BetDao;
-import com.epam.jwd_final.web.dao.MatchDao;
-import com.epam.jwd_final.web.dao.MultiplierDao;
-import com.epam.jwd_final.web.dao.TeamDao;
-import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.dao.impl.MultiplierDao;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.service.BetService;
