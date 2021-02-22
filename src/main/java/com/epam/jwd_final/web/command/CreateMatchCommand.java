@@ -25,7 +25,6 @@ public enum CreateMatchCommand implements Command {
         final String firstTeam = String.valueOf(req.getParameter(FIRST_TEAM_PARAMETER));
         final String secondTeam = String.valueOf(req.getParameter(SECOND_TEAM_PARAMETER));
         matchService.saveMatch(matchService.createMatch(sportType, start, firstTeam, secondTeam));
-        CreateMultiplierCommand.INSTANCE.execute(req);
-        return CreateMatchCommand.INSTANCE.execute(req);
+        return CreateMultiplierCommand.INSTANCE.execute(req);
     }
 }

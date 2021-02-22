@@ -46,13 +46,14 @@ public enum CreateMultiplierCommand implements Command {
                 .findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime.parse(start), firstTeam, secondTeam);
 
         multiplierService.saveMultiplier(
+                multiplierService.createMultiplier(matchId, Result.FIRST_TEAM, firstTeamCoefficient));
+
+        multiplierService.saveMultiplier(
                 multiplierService.createMultiplier(matchId, Result.SECOND_TEAM, secondTeamCoefficient));
 
         multiplierService.saveMultiplier(
                 multiplierService.createMultiplier(matchId, Result.DRAW, drawCoefficient));
 
-        multiplierService.saveMultiplier(
-                multiplierService.createMultiplier(matchId, Result.FIRST_TEAM, firstTeamCoefficient));
         return ShowMainPage.INSTANCE.execute(req); // TODO: write successfully create
     }
 }

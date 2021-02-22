@@ -11,32 +11,74 @@
 <body>
 
     <jsp:include page="header.jsp"/>
-    <h2>Create match:</h2>
-    <form action="${pageContext.request.contextPath}/controller?command=create_match" method="post">
-<%--        <input type="hidden" name="userName" value="${user.name}" />--%>
-        <p>Sport type: <input type="text" name="sportType" required></p>
-        <p>Start: <input type="datetime-local" name="startTime" required></p>
-        <p>First team: <input type="text" name="firstTeam" required></p>
-        <p>Second team: <input type="text" name="secondTeam" required></p>
-        <p>First team coefficient: <input type="number" step="0.01" name="firstTeamCoefficient" required></p>
-        <p>Second team coefficient: <input type="number" step="0.01" name="secondTeamCoefficient" required></p>
-        <p>Draw coefficient: <input type="number" step="0.01" name="drawCoefficient" required></p>
-        <input type="submit" value="Create match" />
-    </form>
-
-
-    <c:if test="${not empty requestScope.matches}">
-        <h2>Matches list</h2>
-        <c:forEach var="match" items="${requestScope.matches}">
-            <li>${match.firstTeam} vs ${match.secondTeam}</li>
-            <form action="${pageContext.request.contextPath}/controller?command=set_status" method="post">
-                New Result: <input type="text" name="resultType" required>
-                New Status: <input type="text" name="statusType" required>
-                <input type="hidden" name="matchId" value="${match.id}" />
-                <input type="submit" value="Submit" />
+    <div class="container">
+        <div class="offset-md-2 col-md-8">
+            <h2>Create match</h2>
+            <%--    <form action="${pageContext.request.contextPath}/controller?command=create_match" method="post">--%>
+            <%--        <p>Sport type: <input type="text" name="sportType" required></p>--%>
+            <%--        <p>Start: <input type="datetime-local" name="startTime" required></p>--%>
+            <%--        <p>First team: <input type="text" name="firstTeam" required></p>--%>
+            <%--        <p>Second team: <input type="text" name="secondTeam" required></p>--%>
+            <%--        <p>First team coefficient: <input type="number" step="0.01" name="firstTeamCoefficient" required></p>--%>
+            <%--        <p>Second team coefficient: <input type="number" step="0.01" name="secondTeamCoefficient" required></p>--%>
+            <%--        <p>Draw coefficient: <input type="number" step="0.01" name="drawCoefficient" required></p>--%>
+            <%--        <input type="submit" value="Create match" />--%>
+            <%--    </form>--%>
+            <form action="${pageContext.request.contextPath}/controller?command=create_match" method="post">
+                <div class="form-group">
+                    <label for="sportType">Sport type</label>
+                    <select class="form-control" id="sportType" name="sportType">
+                        <option>Football</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="start">Start</label>
+                    <input type="datetime-local" name="startTime" class="form-control" id="start" required>
+                </div>
+                <div class="form-group">
+                    <label for="firstTeam">Opponent</label>
+                    <select class="form-control" id="firstTeam" name="firstTeam" required>
+                        <option>Arsenal</option>
+                        <option>Chelsea</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="secondTeam">Opponent</label>
+                    <select class="form-control" id="secondTeam" name="secondTeam" required>
+                        <option>Arsenal</option>
+                        <option>Chelsea</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="firstTeamCoefficientId">First team coefficient</label>
+                    <input type="number" step="0.01" class="form-control" id="firstTeamCoefficientId" name="firstTeamCoefficient" required>
+                </div>
+                <div class="form-group">
+                    <label for="secondTeamCoefficientId">Second team coefficient</label>
+                    <input type="number" step="0.01" class="form-control" id="secondTeamCoefficientId" name="secondTeamCoefficient" required>
+                </div>
+                <div class="form-group">
+                    <label for="drawCoefficientId">Draw coefficient</label>
+                    <input type="number" step="0.01" class="form-control" id="drawCoefficientId" name="drawCoefficient" required>
+                </div>
+                <button type="submit" class="btn btn-success">Create match</button>
             </form>
-        </c:forEach>
-    </c:if>
+
+
+            <c:if test="${not empty requestScope.matches}">
+                <h2>Matches list</h2>
+                <c:forEach var="match" items="${requestScope.matches}">
+                    <li>${match.firstTeam} vs ${match.secondTeam}</li>
+                    <form action="${pageContext.request.contextPath}/controller?command=set_status" method="post">
+                        New Result: <input type="text" name="resultType" required>
+                        New Status: <input type="text" name="statusType" required>
+                        <input type="hidden" name="matchId" value="${match.id}" />
+                        <input type="submit" value="Submit" />
+                    </form>
+                </c:forEach>
+            </c:if>
+        </div>
+    </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
