@@ -1,6 +1,8 @@
 package com.epam.jwd_final.web.service.impl;
 
 import com.epam.jwd_final.web.dao.BetDao;
+import com.epam.jwd_final.web.dao.MatchDao;
+import com.epam.jwd_final.web.dao.MultiplierDao;
 import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.domain.Bet;
 import com.epam.jwd_final.web.domain.BetDto;
@@ -12,16 +14,23 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-public class BetServiceImpl implements BetService {
+public enum BetServiceImpl implements BetService {
+
+    INSTANCE;
 
     private final BetDao betDao;
+    private final UserDao userDao;
 
-    public BetServiceImpl(BetDao betDao) {
-        this.betDao = betDao;
+    BetServiceImpl() {
+        this.betDao = new BetDao();
+        this.userDao = new UserDao();
     }
 
     public Optional<List<BetDto>> findAllBetsByUserName(String name) {
-        return betDao.findAllBetsByUserName(name)
+        final Integer userId = userDao.findOneByName(name)
+                .orElseThrow(IllegalArgumentException::new)
+                .getId();
+        return betDao.findAllByUserId(userId)
                 .map(bets -> bets.stream()
                         .map(this::convertToDto)
                         .collect(toList())
@@ -34,27 +43,19 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
-    public boolean saveBet(Bet bet) {
-        return betDao.save(bet);
+    public void saveBet(Bet bet) {
+        betDao.save(bet);
     }
 
     @Override
     public void deleteBet(int id) {
-        betDao.delete(id);
-    }
-
-    public BigDecimal calculateExpectedWin(String name, int multiplierId) {
-        return betDao.calculateExpectedWin(name, multiplierId);
+        betDao.deleteById(id);
     }
 
     public int findMultiplierIdById(int id) {
         return betDao.findOneById(id)
                 .orElseThrow(IllegalArgumentException::new)
                 .getMultiplierId();
-    }
-
-    public boolean isUserWinner(String userName, int matchId) {
-        return betDao.isUserWinner(userName, matchId);
     }
 
     @Override

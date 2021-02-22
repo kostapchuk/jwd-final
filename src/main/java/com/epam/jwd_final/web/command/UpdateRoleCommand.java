@@ -13,7 +13,7 @@ public enum UpdateRoleCommand implements Command {
     private final UserService userService;
 
     UpdateRoleCommand() {
-        this.userService = new UserServiceImpl(new UserDao());
+        this.userService = UserServiceImpl.INSTANCE;
     }
 
     @Override

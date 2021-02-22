@@ -20,8 +20,8 @@ public enum CancelBetCommand implements Command {
     private final UserService userService;
 
     CancelBetCommand() {
-        this.betService = new BetServiceImpl(new BetDao(new UserDao(), new MultiplierDao(), new MatchDao()));
-        this.userService = new UserServiceImpl(new UserDao());
+        this.betService = BetServiceImpl.INSTANCE;
+        this.userService = UserServiceImpl.INSTANCE;
     }
 
     @Override

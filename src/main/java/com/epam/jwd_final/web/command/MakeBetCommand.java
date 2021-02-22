@@ -24,9 +24,9 @@ public enum MakeBetCommand implements Command {
     private final BetService betService;
 
     MakeBetCommand() {
-        this.userService = new UserServiceImpl(new UserDao());
+        this.userService = UserServiceImpl.INSTANCE;
         this.multiplierService = new MultiplierServiceImpl(new MultiplierDao());
-        this.betService = new BetServiceImpl(new BetDao(new UserDao(), new MultiplierDao(), new MatchDao()));
+        this.betService = BetServiceImpl.INSTANCE;
     }
 
     @Override

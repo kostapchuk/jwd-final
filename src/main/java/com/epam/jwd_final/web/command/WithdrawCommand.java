@@ -14,7 +14,7 @@ public enum WithdrawCommand implements Command {
     private final UserService userService;
 
     WithdrawCommand() {
-        this.userService = new UserServiceImpl(new UserDao());
+        this.userService = UserServiceImpl.INSTANCE;
     }
 
     @Override

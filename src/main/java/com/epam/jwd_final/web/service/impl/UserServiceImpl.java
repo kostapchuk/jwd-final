@@ -1,6 +1,12 @@
 package com.epam.jwd_final.web.service.impl;
 
+import com.epam.jwd_final.web.dao.BetDao;
+import com.epam.jwd_final.web.dao.MatchDao;
+import com.epam.jwd_final.web.dao.MultiplierDao;
 import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.domain.Bet;
+import com.epam.jwd_final.web.domain.Result;
+import com.epam.jwd_final.web.domain.Status;
 import com.epam.jwd_final.web.domain.User;
 import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.service.UserService;
@@ -12,15 +18,23 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class UserServiceImpl implements UserService {
+public enum UserServiceImpl implements UserService {
+
+    INSTANCE;
 
     private final UserDao userDao;
+    private final BetDao betDao;
+    private final MatchDao matchDao;
+    private final MultiplierDao multiplierDao;
 
     private static final String DUMMY_PASSWORD = "defaultPwd";
     private static final String HASHED_DUMMY_PASSWORD = BCrypt.hashpw(DUMMY_PASSWORD, BCrypt.gensalt());
 
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
+    UserServiceImpl() {
+        this.userDao = new UserDao();
+        this.betDao = new BetDao();
+        this.matchDao = new MatchDao();
+        this.multiplierDao = new MultiplierDao();
     }
 
     @Override
@@ -108,6 +122,23 @@ public class UserServiceImpl implements UserService {
         return userDao.findOneById(id)
                 .orElseThrow(IllegalArgumentException::new)
                 .getBalance();
+    }
+
+    public BigDecimal calculateExpectedWin(String name, int multiplierId) {
+        final int userId = userDao.findOneByName(name).orElseThrow(IllegalArgumentException::new).getId();
+        final Bet bet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId).orElseThrow(IllegalArgumentException::new);
+        final BigDecimal betMoney = bet.getBetMoney();
+        return multiplierDao.findCoefficientById(bet.getMultiplierId()).multiply(betMoney);
+    }
+
+    public boolean isUserWinner(String userName, int matchId) {
+        final int userId = userDao.findOneByName(userName).orElseThrow(IllegalArgumentException::new).getId();
+        final Result actualResultType = matchDao.findResultTypeById(matchId);
+        final int multiplierId = multiplierDao.findIdByMatchIdAndResult(matchId, actualResultType.getId());
+        final Bet bet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId).orElseThrow(IllegalArgumentException::new);
+        final Status matchStatus = matchDao.findMatchStatusById(matchId);
+        final Result userResultType = multiplierDao.findResultTypeById(bet.getMultiplierId());
+        return userResultType.equals(actualResultType) && matchStatus.equals(Status.FINISHED);
     }
 
     private UserDto convertToDto(User user) {

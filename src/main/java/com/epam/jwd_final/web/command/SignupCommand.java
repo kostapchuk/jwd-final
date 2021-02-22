@@ -16,7 +16,7 @@ public enum SignupCommand implements Command {
     private final UserServiceImpl userService;
 
     SignupCommand() {
-        this.userService = new UserServiceImpl(new UserDao());
+        this.userService = UserServiceImpl.INSTANCE;
     }
 
     @Override

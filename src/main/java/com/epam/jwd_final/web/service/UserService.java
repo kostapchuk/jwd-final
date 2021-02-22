@@ -28,4 +28,8 @@ public interface UserService {
     void withdrawFromBalance(String userName, BigDecimal amount);
 
     BigDecimal findBalanceById(int id);
+
+    BigDecimal calculateExpectedWin(String name, int multiplierId);
+
+    boolean isUserWinner(String userName, int matchId);
 }

@@ -14,7 +14,7 @@ public enum RollbackRoleCommand implements Command {
     private final UserService userService;
 
     RollbackRoleCommand() {
-        this.userService = new UserServiceImpl(new UserDao());
+        this.userService = UserServiceImpl.INSTANCE;
     }
 
     @Override

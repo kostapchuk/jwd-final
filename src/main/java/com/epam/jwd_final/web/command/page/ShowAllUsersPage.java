@@ -20,7 +20,7 @@ public enum ShowAllUsersPage implements Command {
     private final UserService userService;
 
     ShowAllUsersPage() {
-        this.userService = new UserServiceImpl(new UserDao());
+        this.userService = UserServiceImpl.INSTANCE;
     }
 
     private static final ResponseContext ALL_USERS_PAGE_RESPONSE = new ResponseContext() {

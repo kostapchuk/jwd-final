@@ -14,7 +14,7 @@ public enum DepositCommand implements Command {
     private final UserService userService;
 
     DepositCommand() {
-        this.userService = new UserServiceImpl(new UserDao());
+        this.userService = UserServiceImpl.INSTANCE;
     }
 
     @Override

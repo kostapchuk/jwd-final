@@ -13,15 +13,13 @@ public interface BetService {
 
     Bet createBet(int userId, int multiplierId, BigDecimal betMoney);
 
-    boolean saveBet(Bet bet);
+    void saveBet(Bet bet);
 
     void deleteBet(int id);
 
-    BigDecimal calculateExpectedWin(String name, int multiplierId);
-
-    boolean isUserWinner(String userName, int matchId);
-
     BigDecimal findBetMoneyById(int id);
+
+    int findMultiplierIdById(int id);
 
     BigDecimal findBetMoneyByUserIdAndMultiplierId(int userId, int multiplierId);
 }

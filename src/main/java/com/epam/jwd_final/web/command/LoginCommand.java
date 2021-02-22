@@ -20,7 +20,7 @@ public enum LoginCommand implements Command {
     private final UserServiceImpl userService;
 
     LoginCommand() {
-        this.userService = new UserServiceImpl(new UserDao());
+        this.userService = UserServiceImpl.INSTANCE;
     }
 
     @Override

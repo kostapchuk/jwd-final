@@ -8,7 +8,9 @@ import com.epam.jwd_final.web.dao.MatchDao;
 import com.epam.jwd_final.web.dao.MultiplierDao;
 import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.domain.BetDto;
+import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.impl.BetServiceImpl;
+import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,10 +23,12 @@ public enum ShowAllBetsPage implements Command {
     public static final String BETS_PARAMETER = "bets";
     private static final String EXPECTED_WIN_PARAMETER = "expectedWin";
 
-    private final BetServiceImpl betService;
+    private final UserServiceImpl userService;
+    private final BetService betService;
 
     ShowAllBetsPage() {
-        this.betService = new BetServiceImpl(new BetDao(new UserDao(), new MultiplierDao(), new MatchDao()));
+            this.userService = UserServiceImpl.INSTANCE;
+            this.betService = BetServiceImpl.INSTANCE;
     }
 
     public static final ResponseContext ALL_BETS_PAGE_RESPONSE = new ResponseContext() {
@@ -48,7 +52,7 @@ public enum ShowAllBetsPage implements Command {
         }
         final List<BetDto> betDtos = betService.findAllBetsByUserName(name).orElse(Collections.emptyList());
         for (BetDto bet : betDtos) {
-            bet.setExpectedWin(betService.calculateExpectedWin(name, betService.findMultiplierIdById(bet.getId())));
+            bet.setExpectedWin(userService.calculateExpectedWin(name, betService.findMultiplierIdById(bet.getId())));
         }
         req.setAttribute(BETS_PARAMETER, betDtos);
         return ALL_BETS_PAGE_RESPONSE;
