@@ -15,11 +15,11 @@ public class BetDao extends AbstractDao<Bet> {
     private static final String FIND_ONE_BY_ID_SQL =
             "select id, user_id, multiplier_id, bet_money from bet where id = ?";
 
-    private static final String FIND_BY_USER_ID_SQL =
-            "select id, user_id, multiplier_id, bet_money from bet where user_id = ?";
-
     private static final String FIND_ONE_BY_USER_ID_BY_MULTIPLIER_ID_SQL =
             "select id, user_id, multiplier_id, bet_money from bet where user_id = ? and multiplier_id = ?";
+
+    private static final String FIND_ALL_BY_USER_ID_SQL =
+            "select id, user_id, multiplier_id, bet_money from bet where user_id = ?";
 
     private static final String SAVE_SQL =
             "insert into bet (user_id, multiplier_id, bet_money) values (?, ?, ?)";
@@ -43,7 +43,7 @@ public class BetDao extends AbstractDao<Bet> {
 
     public Optional<List<Bet>> findAllByUserId(int userId) {
         return querySelectAll(
-                FIND_BY_USER_ID_SQL,
+                FIND_ALL_BY_USER_ID_SQL,
                 Collections.singletonList(userId)
         );
     }

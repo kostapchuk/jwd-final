@@ -29,8 +29,8 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Optional<List<MatchDto>> findAllUnfinishedMatches() {
-        return matchDao.findAllByStatusId(Status.PLANNED.getId())
+    public Optional<List<MatchDto>> findAllByStatus(Status status) {
+        return matchDao.findAllByStatusId(status.getId())
                 .map(matches ->
                         matches.stream()
                                 .map(this::convertToDto)
@@ -50,7 +50,7 @@ public enum MatchServiceImpl implements MatchService {
 
     @Override
     public int findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime start, String firstTeam, String secondTeam) {
-        return matchDao.findOneByStartAndFirstTeamAndSecondTeam(
+        return matchDao.findOneByStartByFirstTeamIdBySecondTeamId(
                 Timestamp.valueOf(start),
                 teamDao.findIdByName(firstTeam).orElseThrow(IllegalArgumentException::new), // TODO: redo exception
                 teamDao.findIdByName(secondTeam).orElseThrow(IllegalArgumentException::new) // TODO: redo exception
@@ -59,12 +59,12 @@ public enum MatchServiceImpl implements MatchService {
 
     @Override
     public boolean updateResult(int matchId, Result result) {
-        return matchDao.updateResult(matchId, result);
+        return matchDao.updateResultId(matchId, result.getId());
     }
 
     @Override
     public boolean updateStatus(int matchId, Status status) {
-        return matchDao.updateStatus(matchId, status);
+        return matchDao.updateStatusId(matchId, status.getId());
     }
 
     @Override

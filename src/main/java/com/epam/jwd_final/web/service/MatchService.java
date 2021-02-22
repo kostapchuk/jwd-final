@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface MatchService {
 
-    Optional<List<MatchDto>> findAllUnfinishedMatches();
+    Optional<List<MatchDto>> findAllByStatus(Status status);
 
     Match createMatch(String sportType, String startTime, String firstTeam, String secondTeam);
 

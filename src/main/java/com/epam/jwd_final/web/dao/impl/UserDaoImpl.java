@@ -18,10 +18,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_ALL_SQL =
             "select id, name, password, balance, role from user";
 
-    private static final String FIND_BY_ID_SQL =
+    private static final String FIND_ONE_BY_ID_SQL =
             "select id, name, password, balance, role from user where id = ?";
 
-    private static final String FIND_BY_NAME_SQL =
+    private static final String FIND_ONE_BY_NAME_SQL =
             "select id, name, password, balance, role from user where name = ?";
 
     private static final String SAVE_USER_SQL =
@@ -44,7 +44,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public Optional<User> findOneByName(String name) {
         return querySelectOne(
-                FIND_BY_NAME_SQL,
+                FIND_ONE_BY_NAME_SQL,
                 Collections.singletonList(name)
         );
     }
@@ -52,7 +52,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public Optional<User> findOneById(int id) {
         return querySelectOne(
-                FIND_BY_ID_SQL,
+                FIND_ONE_BY_ID_SQL,
                 Collections.singletonList(id)
         );
     }
