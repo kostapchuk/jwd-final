@@ -1,6 +1,7 @@
 package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.web.dao.impl.BetDao;
+import com.epam.jwd_final.web.dao.impl.BetDaoImpl;
+import com.epam.jwd_final.web.dao.BetDao;
 import com.epam.jwd_final.web.dao.impl.MatchDao;
 import com.epam.jwd_final.web.dao.impl.MultiplierDao;
 import com.epam.jwd_final.web.dao.UserDao;
@@ -32,7 +33,7 @@ public enum UserServiceImpl implements UserService {
 
     UserServiceImpl() {
         this.userDao = new UserDaoImpl();
-        this.betDao = new BetDao();
+        this.betDao = new BetDaoImpl();
         this.matchDao = new MatchDao();
         this.multiplierDao = new MultiplierDao();
     }

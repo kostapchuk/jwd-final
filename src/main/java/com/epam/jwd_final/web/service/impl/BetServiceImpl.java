@@ -1,7 +1,8 @@
 package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.web.dao.impl.BetDao;
+import com.epam.jwd_final.web.dao.impl.BetDaoImpl;
 import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.dao.BetDao;
 import com.epam.jwd_final.web.dao.impl.UserDaoImpl;
 import com.epam.jwd_final.web.domain.Bet;
 import com.epam.jwd_final.web.domain.BetDto;
@@ -21,7 +22,7 @@ public enum BetServiceImpl implements BetService {
     private final UserDao userDao;
 
     BetServiceImpl() {
-        this.betDao = new BetDao();
+        this.betDao = new BetDaoImpl();
         this.userDao = new UserDaoImpl();
     }
 

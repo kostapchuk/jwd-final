@@ -1,6 +1,7 @@
 package com.epam.jwd_final.web.dao.impl;
 
 import com.epam.jwd_final.web.dao.AbstractDao;
+import com.epam.jwd_final.web.dao.BetDao;
 import com.epam.jwd_final.web.domain.Bet;
 import com.epam.jwd_final.web.mapper.ModelMapper;
 import com.epam.jwd_final.web.mapper.impl.BetModelMapper;
@@ -10,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class BetDao extends AbstractDao<Bet> {
+public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
 
     private static final String FIND_ONE_BY_ID_SQL =
             "select id, user_id, multiplier_id, bet_money from bet where id = ?";
@@ -27,6 +28,7 @@ public class BetDao extends AbstractDao<Bet> {
     private static final String DELETE_BY_ID_SQL =
             "delete from bet where id = ?";
 
+    @Override
     public Optional<Bet> findOneById(int id) {
         return querySelectOne(
                 FIND_ONE_BY_ID_SQL,
@@ -34,6 +36,7 @@ public class BetDao extends AbstractDao<Bet> {
         );
     }
 
+    @Override
     public Optional<Bet> findOneByUserIdByMultiplierId(int userId, int multiplierId) {
         return querySelectOne(
                 FIND_ONE_BY_USER_ID_BY_MULTIPLIER_ID_SQL,
@@ -41,6 +44,7 @@ public class BetDao extends AbstractDao<Bet> {
         );
     }
 
+    @Override
     public Optional<List<Bet>> findAllByUserId(int userId) {
         return querySelectAll(
                 FIND_ALL_BY_USER_ID_SQL,
@@ -48,6 +52,7 @@ public class BetDao extends AbstractDao<Bet> {
         );
     }
 
+    @Override
     public void save(Bet bet) {
         queryUpdate(
                 SAVE_SQL,
@@ -55,6 +60,7 @@ public class BetDao extends AbstractDao<Bet> {
         );
     }
 
+    @Override
     public void deleteById(int id) { // TODO: replace id with Bet bet
         queryUpdate(
                 DELETE_BY_ID_SQL,

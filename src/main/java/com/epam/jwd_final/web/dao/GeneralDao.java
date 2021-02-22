@@ -10,5 +10,4 @@ public interface GeneralDao<T extends Entity> {
     Optional<T> querySelectOne(String query, List<Object> params);
 
     Optional<List<T>> querySelectAll(String query, List<Object> params);
-
 }
