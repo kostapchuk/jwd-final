@@ -17,13 +17,10 @@ public enum Sport implements Entity {
 
     public static Sport resolveSportById(int id) {
         Sport sport;
-        switch (id) {
-            case 1:
-                sport = Sport.FOOTBALL;
-                break;
-            default:
-                // TODO log "no such sport"
-                throw new IllegalArgumentException();
+        if (id == 1) {
+            sport = Sport.FOOTBALL;
+        } else {// TODO log "no such sport"
+            throw new IllegalArgumentException();
         }
         return sport;
     }
