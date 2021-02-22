@@ -29,7 +29,7 @@ public enum CreateMultiplierCommand implements Command {
 
     CreateMultiplierCommand() {
         this.multiplierService = new MultiplierServiceImpl(new MultiplierDao());
-        this.matchService = new MatchServiceImpl(new MatchDao(), new TeamDao());
+        this.matchService = MatchServiceImpl.INSTANCE;
     }
 
     @Override

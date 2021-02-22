@@ -18,7 +18,7 @@ public enum ShowAllMatchesPage implements Command {
     private final MatchServiceImpl matchService;
 
     ShowAllMatchesPage() {
-        this.matchService = new MatchServiceImpl(new MatchDao(), new TeamDao());
+        this.matchService = MatchServiceImpl.INSTANCE;
     }
 
     private static final ResponseContext ALL_MATCHES_PAGE_RESPONSE = new ResponseContext() {

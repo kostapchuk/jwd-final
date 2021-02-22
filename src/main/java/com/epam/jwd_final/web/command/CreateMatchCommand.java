@@ -17,7 +17,7 @@ public enum CreateMatchCommand implements Command {
     private final MatchService matchService;
 
     CreateMatchCommand() {
-        matchService = new MatchServiceImpl(new MatchDao(), new TeamDao());
+        matchService = MatchServiceImpl.INSTANCE;
     }
 
     @Override

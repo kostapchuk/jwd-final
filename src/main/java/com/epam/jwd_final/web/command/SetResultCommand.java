@@ -18,7 +18,7 @@ public enum SetResultCommand implements Command {
     private final MatchService matchService;
 
     SetResultCommand() {
-        this.matchService = new MatchServiceImpl(new MatchDao(), new TeamDao());
+        this.matchService = MatchServiceImpl.INSTANCE;
     }
 
     @Override

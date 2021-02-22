@@ -14,14 +14,16 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-public class MatchServiceImpl implements MatchService {
+public enum MatchServiceImpl implements MatchService {
+
+    INSTANCE;
 
     private final MatchDao matchDao;
     private final TeamDao teamDao;
 
-    public MatchServiceImpl(MatchDao matchDao, TeamDao teamDao) {
-        this.matchDao = matchDao;
-        this.teamDao = teamDao;
+    MatchServiceImpl() {
+        this.matchDao = new MatchDao();
+        this.teamDao = new TeamDao();
     }
 
     @Override

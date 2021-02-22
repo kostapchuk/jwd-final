@@ -18,7 +18,7 @@ public enum ShowBookmakerPage implements Command {
     private final MatchServiceImpl matchService;
 
     ShowBookmakerPage() {
-        this.matchService = new MatchServiceImpl(new MatchDao(), new TeamDao());
+        this.matchService = MatchServiceImpl.INSTANCE;
     }
 
     public static final ResponseContext BOOKMAKER_PAGE_RESPONSE = new ResponseContext() {

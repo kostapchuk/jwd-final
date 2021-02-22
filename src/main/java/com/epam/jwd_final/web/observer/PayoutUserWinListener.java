@@ -27,7 +27,7 @@ public class PayoutUserWinListener implements EventListener {
 
     public PayoutUserWinListener() {
         this.userService = UserServiceImpl.INSTANCE;
-        this.matchService = new MatchServiceImpl(new MatchDao(), new TeamDao());
+        this.matchService = MatchServiceImpl.INSTANCE;
         this.multiplierService = new MultiplierServiceImpl(new MultiplierDao());
         this.betService = BetServiceImpl.INSTANCE;
     }

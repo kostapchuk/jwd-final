@@ -16,7 +16,7 @@ public enum SetStatusCommand implements Command {
     private final MatchService matchService;
 
     SetStatusCommand() {
-        this.matchService = new MatchServiceImpl(new MatchDao(), new TeamDao());
+        this.matchService = MatchServiceImpl.INSTANCE;
     }
 
     @Override
