@@ -14,19 +14,25 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
-    <h1>BEST MATCHEES, RRRRRRR tiger!</h1>
-    <h2>Matches list</h2>
-
-    <c:if test="${not empty requestScope.matches}">
-        <h2>Columns</h2>
-        <c:forEach var="match" items="${requestScope.matches}">
-            <form action="${pageContext.request.contextPath}/controller?command=show_make_bet_page" method="post">
-                <li>${match.firstTeam} vs ${match.secondTeam}</li>
-                <input type="hidden" name="matchId" value="${match.id}" />
-                <input type="submit" value="Make bet" />
-            </form>
-        </c:forEach>
-    </c:if>
+    <div class="container-lg">
+        <c:if test="${not empty requestScope.matches}">
+            <div class="row">
+                <c:forEach var="match" items="${requestScope.matches}">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="${pageContext.request.contextPath}/controller?command=show_make_bet_page" method="post">
+                                    <h5 class="card-title">${match.firstTeam} vs ${match.secondTeam}</h5>
+                                    <input type="hidden" name="matchId" value="${match.id}" />
+                                    <button class="btn btn-primary">Make bet</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </c:if>
+    </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
