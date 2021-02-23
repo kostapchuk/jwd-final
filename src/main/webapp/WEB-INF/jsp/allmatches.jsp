@@ -12,16 +12,19 @@
     <jsp:include page="header.jsp"/>
 
     <div class="container-lg">
-        <c:if test="${not empty requestScope.matches}">
+        <c:if test="${not empty requestScope.events}">
             <div class="row">
-                <c:forEach var="match" items="${requestScope.matches}">
+                <c:forEach var="event" items="${requestScope.events}">
                     <div class="col-sm-6">
                         <div class="card">
                             <div class="card-body">
                                 <form action="${pageContext.request.contextPath}/controller?command=show_make_bet_page" method="post">
-                                    <h5 class="card-title">${match.firstTeam} vs ${match.secondTeam}</h5>
-                                    <p>Start: <c:out value="${match.start}"/></p>
-                                    <input type="hidden" name="matchId" value="${match.id}" />
+                                    <h5 class="card-title">${event.firstTeam} vs ${event.secondTeam}</h5>
+                                    <p>Start: <c:out value="${event.start}"/></p>
+                                    <p>First team coef: <c:out value="${event.firstTeamCoefficient}"/></p>
+                                    <p>Second team coef: <c:out value="${event.secondTeamCoefficient}"/></p>
+                                    <p>Draw coef: <c:out value="${event.drawCoefficient}"/></p>
+                                    <input type="hidden" name="matchId" value="${event.matchId}" />
                                     <button class="btn btn-primary">Make bet</button>
                                 </form>
                             </div>

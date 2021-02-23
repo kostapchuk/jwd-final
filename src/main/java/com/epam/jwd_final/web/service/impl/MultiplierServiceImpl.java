@@ -30,6 +30,14 @@ public enum MultiplierServiceImpl {
         }
     }
 
+    public BigDecimal findCoefficientByMatchIdByResult(int matchId, Result result) throws ServiceException {
+        try {
+            return multiplierDao.findOneByMatchIdByResultId(matchId, result.getId()).orElseThrow(ServiceException::new).getCoefficient();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
     public int findIdByMatchIdAndResult(int matchId, Result result) throws ServiceException {
         try {
             return multiplierDao.findOneByMatchIdByResultId(matchId, result.getId())
