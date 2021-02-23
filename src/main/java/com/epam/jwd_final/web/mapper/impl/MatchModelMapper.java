@@ -5,6 +5,8 @@ import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.domain.Sport;
 import com.epam.jwd_final.web.domain.Status;
+import com.epam.jwd_final.web.exception.DaoException;
+import com.epam.jwd_final.web.exception.ModelMapperException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
 
 import java.sql.ResultSet;
@@ -24,22 +26,26 @@ public class MatchModelMapper implements ModelMapper<Match> {
     private final TeamDao teamDao = new TeamDao();
 
     @Override
-    public Match mapToEntity(ResultSet rs) throws SQLException {
-        final int id = rs.getInt(ID_COLUMN);
-        final int sportTypeId = rs.getInt(SPORT_TYPE_ID_COLUMN);
-        final LocalDateTime startTime = rs.getTimestamp(START_COLUMN).toLocalDateTime();
-        final int firstTeamId = rs.getInt(FIRST_TEAM_ID_COLUMN);
-        final int secondTeamId = rs.getInt(SECOND_TEAM_ID_COLUMN);
-        final int statusId = rs.getInt(STATUS_ID_COLUMN);
-        final int resultTypeId = rs.getInt(RESULT_TYPE_ID_COLUMN);
-        return new Match(
-                id,
-                Sport.resolveSportById(sportTypeId),
-                startTime,
-                teamDao.findTeamById(firstTeamId).orElse("No team"), // TODO: throw exception
-                teamDao.findTeamById(secondTeamId).orElse("No team"), // TODO: throw exception
-                Status.resolveStatusById(statusId),
-                Result.resolveResultById(resultTypeId)
-        );
+    public Match mapToEntity(ResultSet rs) throws SQLException, ModelMapperException {
+        try {
+            final int id = rs.getInt(ID_COLUMN);
+            final int sportTypeId = rs.getInt(SPORT_TYPE_ID_COLUMN);
+            final LocalDateTime startTime = rs.getTimestamp(START_COLUMN).toLocalDateTime();
+            final int firstTeamId = rs.getInt(FIRST_TEAM_ID_COLUMN);
+            final int secondTeamId = rs.getInt(SECOND_TEAM_ID_COLUMN);
+            final int statusId = rs.getInt(STATUS_ID_COLUMN);
+            final int resultTypeId = rs.getInt(RESULT_TYPE_ID_COLUMN);
+            return new Match(
+                    id,
+                    Sport.resolveSportById(sportTypeId),
+                    startTime,
+                    teamDao.findTeamById(firstTeamId).orElseThrow(ModelMapperException::new),
+                    teamDao.findTeamById(secondTeamId).orElseThrow(ModelMapperException::new),
+                    Status.resolveStatusById(statusId),
+                    Result.resolveResultById(resultTypeId)
+            );
+        } catch (DaoException e) {
+            throw new ModelMapperException(e.getMessage(), e.getCause());
+        }
     }
 }

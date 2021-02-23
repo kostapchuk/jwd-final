@@ -11,20 +11,31 @@
 <body>
 
     <jsp:include page="header.jsp"/>
-    <h2>Users</h2>
-    <c:if test="${not empty requestScope.users}">
-        <c:forEach var="user" items="${requestScope.users}">
-            <li>Username: ${user.name}, role: ${user.role}</li>
-            <form action="${pageContext.request.contextPath}/controller?command=update_role" method="post">
-                <input type="hidden" name="userName" value="${user.name}" />
-                <input type="submit" value="Update role" />
-            </form>
-            <form action="${pageContext.request.contextPath}/controller?command=rollback_role" method="post">
-                <input type="hidden" name="userName" value="${user.name}" />
-                <input type="submit" value="Rollback role" />
-            </form>
-        </c:forEach>
-    </c:if>
+    <div class="container">
+        <h2>Users</h2>
+        <c:if test="${not empty requestScope.users}">
+            <div class="row">
+                <c:forEach var="user" items="${requestScope.users}">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="${pageContext.request.contextPath}/controller?command=update_role" method="post">
+                                    <h5 class="card-title"><strong>Username:</strong> ${user.name}</h5>
+                                    <h5 class="card-title"><strong>Role:</strong> ${user.role}</h5>
+                                    <input type="hidden" name="userName" value="${user.name}" />
+                                    <button class="btn btn-primary">Update role</button>
+                                </form>
+                                <form action="${pageContext.request.contextPath}/controller?command=rollback_role" method="post">
+                                    <input type="hidden" name="userName" value="${user.name}" />
+                                    <button class="btn btn-primary">Rollback role</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </c:if>
+    </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

@@ -1,5 +1,7 @@
 package com.epam.jwd_final.web.observer;
 
+import com.epam.jwd_final.web.exception.ListenerException;
+
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class EventManager {
         users.remove(listener);
     }
 
-    public void notify(String eventType, int matchId) {
+    public void notify(String eventType, int matchId) throws ListenerException {
         List<EventListener> users = listeners.get(eventType);
         for (EventListener listener : users) {
             listener.update(eventType, matchId);

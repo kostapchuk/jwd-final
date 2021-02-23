@@ -3,6 +3,7 @@ package com.epam.jwd_final.web.dao.impl;
 import com.epam.jwd_final.web.dao.AbstractDao;
 import com.epam.jwd_final.web.dao.BetDao;
 import com.epam.jwd_final.web.domain.Bet;
+import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
 import com.epam.jwd_final.web.mapper.impl.BetModelMapper;
 
@@ -29,7 +30,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
             "delete from bet where id = ?";
 
     @Override
-    public Optional<Bet> findOneById(int id) {
+    public Optional<Bet> findOneById(int id) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_ID_SQL,
                 Collections.singletonList(id)
@@ -37,7 +38,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     }
 
     @Override
-    public Optional<Bet> findOneByUserIdByMultiplierId(int userId, int multiplierId) {
+    public Optional<Bet> findOneByUserIdByMultiplierId(int userId, int multiplierId) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_USER_ID_BY_MULTIPLIER_ID_SQL,
                 Arrays.asList(userId, multiplierId)
@@ -45,7 +46,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     }
 
     @Override
-    public Optional<List<Bet>> findAllByUserId(int userId) {
+    public Optional<List<Bet>> findAllByUserId(int userId) throws DaoException {
         return querySelectAll(
                 FIND_ALL_BY_USER_ID_SQL,
                 Collections.singletonList(userId)
@@ -53,7 +54,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     }
 
     @Override
-    public void save(Bet bet) {
+    public void save(Bet bet) throws DaoException {
         queryUpdate(
                 SAVE_SQL,
                 Arrays.asList(bet.getUserId(), bet.getMultiplierId(), bet.getBetMoney())
@@ -61,7 +62,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     }
 
     @Override
-    public void deleteById(int id) { // TODO: replace id with Bet bet
+    public void deleteById(int id) throws DaoException { // TODO: replace id with Bet bet
         queryUpdate(
                 DELETE_BY_ID_SQL,
                 Collections.singletonList(id)

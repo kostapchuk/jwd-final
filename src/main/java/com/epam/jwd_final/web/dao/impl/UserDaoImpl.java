@@ -4,6 +4,7 @@ import com.epam.jwd_final.web.dao.AbstractDao;
 import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.domain.Role;
 import com.epam.jwd_final.web.domain.User;
+import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
 import com.epam.jwd_final.web.mapper.impl.UserModelMapper;
 
@@ -34,7 +35,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             "update user set balance = ? where name = ?";
 
     @Override
-    public Optional<List<User>> findAll() {
+    public Optional<List<User>> findAll() throws DaoException {
         return querySelectAll(
                 FIND_ALL_SQL,
                 Collections.emptyList()
@@ -42,7 +43,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public Optional<User> findOneByName(String name) {
+    public Optional<User> findOneByName(String name) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_NAME_SQL,
                 Collections.singletonList(name)
@@ -50,7 +51,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public Optional<User> findOneById(int id) {
+    public Optional<User> findOneById(int id) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_ID_SQL,
                 Collections.singletonList(id)
@@ -58,7 +59,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public boolean save(User user) {
+    public boolean save(User user) throws DaoException {
         return queryUpdate(
                 SAVE_USER_SQL,
                 Arrays.asList(user.getName(), user.getPassword())
@@ -66,7 +67,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void updateRole(User user) {
+    public void updateRole(User user) throws DaoException {
         int newRoleId;
         switch (user.getRole()) {
             case CLIENT:
@@ -86,7 +87,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void rollbackRole(User user) {
+    public void rollbackRole(User user) throws DaoException {
         int newRoleId;
         switch (user.getRole()) {
             case ADMIN:
@@ -104,7 +105,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void updateBalance(String userName, BigDecimal balance) {
+    public void updateBalance(String userName, BigDecimal balance) throws DaoException {
         queryUpdate(
                 UPDATE_BALANCE_SQL,
                 Arrays.asList(userName, balance)

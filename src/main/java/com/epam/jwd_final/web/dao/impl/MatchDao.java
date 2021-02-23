@@ -2,6 +2,7 @@ package com.epam.jwd_final.web.dao.impl;
 
 import com.epam.jwd_final.web.dao.AbstractDao;
 import com.epam.jwd_final.web.domain.Match;
+import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
 import com.epam.jwd_final.web.mapper.impl.MatchModelMapper;
 
@@ -33,47 +34,47 @@ public class MatchDao extends AbstractDao<Match> {
 
     private final TeamDao teamDao = new TeamDao();
 
-    public Optional<Match> findOneById(int id) {
+    public Optional<Match> findOneById(int id) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_ID_SQL,
                 Collections.singletonList(id)
         );
     }
 
-    public Optional<Match> findOneByStartByFirstTeamIdBySecondTeamId(Timestamp start, int firstTeamId, int secondTeamId) {
+    public Optional<Match> findOneByStartByFirstTeamIdBySecondTeamId(Timestamp start, int firstTeamId, int secondTeamId) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_START_BY_FIRST_TEAM_ID_BY_SECOND_TEAM_ID_SQL,
                 Arrays.asList(start, firstTeamId, secondTeamId)
         );
     }
 
-    public Optional<List<Match>> findAllByStatusId(int statusId) {
+    public Optional<List<Match>> findAllByStatusId(int statusId) throws DaoException {
         return querySelectAll(
                 FIND_ALL_BY_STATUS_ID_SQL,
                 Collections.singletonList(statusId)
         );
     }
 
-    public void save(Match match) {
+    public void save(Match match) throws DaoException {
         queryUpdate(
                 SAVE_SQL,
                 Arrays.asList(
                         match.getSportType().getId(),
                         java.sql.Timestamp.valueOf(match.getStart()),
-                        teamDao.findIdByName(match.getFirstTeam()).orElseThrow(IllegalArgumentException::new),
-                        teamDao.findIdByName(match.getSecondTeam()).orElseThrow(IllegalArgumentException::new)
+                        teamDao.findIdByName(match.getFirstTeam()).orElseThrow(DaoException::new),
+                        teamDao.findIdByName(match.getSecondTeam()).orElseThrow(DaoException::new)
                 )
         );
     }
 
-    public boolean updateResultId(int matchId, int resultId) {
+    public boolean updateResultId(int matchId, int resultId) throws DaoException {
         return queryUpdate(
                 UPDATE_RESULT_TYPE_ID_SQL,
                 Arrays.asList(resultId, matchId)
         );
     }
 
-    public boolean updateStatusId(int matchId, int statusId) {
+    public boolean updateStatusId(int matchId, int statusId) throws DaoException {
         return queryUpdate(
                 UPDATE_STATUS_TYPE_ID_SQL,
                 Arrays.asList(statusId, matchId)

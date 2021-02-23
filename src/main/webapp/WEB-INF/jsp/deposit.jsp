@@ -10,11 +10,16 @@
 </head>
 <body>
 
-<jsp:include page="header.jsp"/>
-    <form action="${pageContext.request.contextPath}/controller?command=deposit" method="post">
-        <p>Amount of money: <input type="number" step="0.01" name="depositMoney" required> $</p>
-        <input type="submit" value="Deposit" />
-    </form>
+    <jsp:include page="header.jsp"/>
+    <div class="container col-lg-5">
+        <form action="${pageContext.request.contextPath}/controller?command=deposit" method="post">
+            <div class="form-group">
+                <label for="depositInput">Amount of money ($)</label>
+                <input type="number" step="0.01" name="depositMoney" required class="form-control" id="depositInput" aria-describedby="emailHelp">
+            </div>
+            <button type="submit" class="btn btn-warning">Deposit</button>
+        </form>
+    </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

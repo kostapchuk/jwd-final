@@ -14,16 +14,6 @@
     <div class="container">
         <div class="offset-md-2 col-md-8">
             <h2>Create match</h2>
-            <%--    <form action="${pageContext.request.contextPath}/controller?command=create_match" method="post">--%>
-            <%--        <p>Sport type: <input type="text" name="sportType" required></p>--%>
-            <%--        <p>Start: <input type="datetime-local" name="startTime" required></p>--%>
-            <%--        <p>First team: <input type="text" name="firstTeam" required></p>--%>
-            <%--        <p>Second team: <input type="text" name="secondTeam" required></p>--%>
-            <%--        <p>First team coefficient: <input type="number" step="0.01" name="firstTeamCoefficient" required></p>--%>
-            <%--        <p>Second team coefficient: <input type="number" step="0.01" name="secondTeamCoefficient" required></p>--%>
-            <%--        <p>Draw coefficient: <input type="number" step="0.01" name="drawCoefficient" required></p>--%>
-            <%--        <input type="submit" value="Create match" />--%>
-            <%--    </form>--%>
             <form action="${pageContext.request.contextPath}/controller?command=create_match" method="post">
                 <div class="form-group">
                     <label for="sportType">Sport type</label>
@@ -38,15 +28,21 @@
                 <div class="form-group">
                     <label for="firstTeam">Opponent</label>
                     <select class="form-control" id="firstTeam" name="firstTeam" required>
-                        <option>Arsenal</option>
-                        <option>Chelsea</option>
+                        <c:if test="${not empty requestScope.teams}">
+                            <c:forEach var="team" items="${requestScope.teams}">
+                                <option>${team}</option>
+                            </c:forEach>
+                        </c:if>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="secondTeam">Opponent</label>
                     <select class="form-control" id="secondTeam" name="secondTeam" required>
-                        <option>Arsenal</option>
-                        <option>Chelsea</option>
+                        <c:if test="${not empty requestScope.teams}">
+                            <c:forEach var="team" items="${requestScope.teams}">
+                                <option>${team}</option>
+                            </c:forEach>
+                        </c:if>
                     </select>
                 </div>
                 <div class="form-group">

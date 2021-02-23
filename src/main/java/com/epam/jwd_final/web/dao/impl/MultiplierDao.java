@@ -2,6 +2,7 @@ package com.epam.jwd_final.web.dao.impl;
 
 import com.epam.jwd_final.web.dao.AbstractDao;
 import com.epam.jwd_final.web.domain.Multiplier;
+import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
 import com.epam.jwd_final.web.mapper.impl.MultiplierModelMapper;
 
@@ -21,21 +22,21 @@ public class MultiplierDao extends AbstractDao<Multiplier> {
             "insert into `multiplier` (match_id, result_type_id, coefficient) values (?, ?, ?)";
 
 
-    public Optional<Multiplier> findOneById(int id) {
+    public Optional<Multiplier> findOneById(int id) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_ID_SQL,
                 Collections.singletonList(id)
         );
     }
 
-    public Optional<Multiplier> findOneByMatchIdByResultId(int matchId, int resultId) {
+    public Optional<Multiplier> findOneByMatchIdByResultId(int matchId, int resultId) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_MATCH_ID_BY_RESULT_TYPE_ID_SQL,
                 Arrays.asList(matchId, resultId)
         );
     }
 
-    public void save(Multiplier multiplier) {
+    public void save(Multiplier multiplier) throws DaoException {
         queryUpdate(
                 SAVE_SQL,
                 Arrays.asList(multiplier.getMatchId(), multiplier.getResult().getId(), multiplier.getCoefficient())

@@ -4,6 +4,8 @@ import com.epam.jwd_final.web.command.page.ShowAllMatchesPage;
 import com.epam.jwd_final.web.command.page.ShowErrorPage;
 import com.epam.jwd_final.web.command.page.ShowMainPage;
 import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.exception.CommandException;
+import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
 public enum SignupCommand implements Command {
@@ -20,16 +22,19 @@ public enum SignupCommand implements Command {
     }
 
     @Override
-    public ResponseContext execute(RequestContext req) {
-        final String name = String.valueOf(req.getParameter(USER_NAME_PARAMETER));
-        final String password = String.valueOf(req.getParameter(USER_PASSWORD_PARAMETER));
-        ResponseContext result;
-        if (userService.signup(name, password)) {
-            LoginCommand.INSTANCE.execute(req);
-            result = ShowAllMatchesPage.INSTANCE.execute(req);
-        } else {
-            result = ShowErrorPage.INSTANCE.execute(req);
+    public ResponseContext execute(RequestContext req) throws CommandException {
+        try {
+            final String name = String.valueOf(req.getParameter(USER_NAME_PARAMETER));
+            final String password = String.valueOf(req.getParameter(USER_PASSWORD_PARAMETER));
+            ResponseContext result;
+            if (userService.signup(name, password)) {
+                result = ShowAllMatchesPage.INSTANCE.execute(req);
+            } else {
+                result = ShowErrorPage.INSTANCE.execute(req);
+            }
+            return result;
+        } catch (ServiceException e) {
+            throw new CommandException(e.getMessage(), e.getCause());
         }
-        return result;
     }
 }

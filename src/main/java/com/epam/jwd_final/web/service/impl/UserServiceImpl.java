@@ -11,9 +11,12 @@ import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.domain.Status;
 import com.epam.jwd_final.web.domain.User;
 import com.epam.jwd_final.web.domain.UserDto;
+import com.epam.jwd_final.web.exception.DaoException;
+import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 
+import javax.xml.ws.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -39,109 +42,158 @@ public enum UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<List<UserDto>> findAll() {
-        return userDao.findAll()
-                .map(users ->
-                        users.stream()
-                                .map(this::convertToDto)
-                                .collect(Collectors.toList()));
-    }
-
-    @Override
-    public Optional<UserDto> login(String name, String password) {
-        final Optional<User> user = userDao.findOneByName(name);
-        if (!user.isPresent()) {
-            BCrypt.checkpw(password, HASHED_DUMMY_PASSWORD);
-            return Optional.empty();
-        }
-        final String realPassword = user.get().getPassword();
-        if (BCrypt.checkpw(password, realPassword)) {
-            return user.map(this::convertToDto);
-        } else {
-            return Optional.empty();
+    public Optional<List<UserDto>> findAll() throws ServiceException {
+        try {
+            return userDao.findAll()
+                    .map(users ->
+                            users.stream()
+                                    .map(this::convertToDto)
+                                    .collect(Collectors.toList()));
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
         }
     }
 
     @Override
-    public boolean save(User user) {
-        return userDao.save(user);
+    public Optional<UserDto> login(String name, String password) throws ServiceException {
+        try {
+            final Optional<User> user = userDao.findOneByName(name);
+            if (!user.isPresent()) {
+                BCrypt.checkpw(password, HASHED_DUMMY_PASSWORD);
+                return Optional.empty();
+            }
+            final String realPassword = user.get().getPassword();
+            if (BCrypt.checkpw(password, realPassword)) {
+                return user.map(this::convertToDto);
+            } else {
+                return Optional.empty();
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public boolean signup(String name, String password) {
-        return save(new User(
-                name,
-                BCrypt.hashpw(password, BCrypt.gensalt())
-        ));
+    public boolean save(User user) throws ServiceException {
+        try {
+            return userDao.save(user);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public void updateRole(String userName) {
-        userDao.updateRole(
-                userDao.findOneByName(userName)
-                        .orElseThrow(IllegalArgumentException::new)
-        );
+    public boolean signup(String name, String password) throws ServiceException {
+        try {
+            return save(new User(
+                    name,
+                    BCrypt.hashpw(password, BCrypt.gensalt())
+            ));
+        } catch (ServiceException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public void rollbackRole(String userName) {
-        userDao.rollbackRole(
-                userDao.findOneByName(userName)
-                        .orElseThrow(IllegalArgumentException::new)
-        );
+    public void updateRole(String userName) throws ServiceException {
+        try {
+            userDao.updateRole(
+                    userDao.findOneByName(userName)
+                            .orElseThrow(ServiceException::new)
+            );
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public int findUserIdByUserName(String userName) {
-        return userDao.findOneByName(userName)
-                .orElseThrow(IllegalArgumentException::new)
-                .getId();
+    public void rollbackRole(String userName) throws ServiceException {
+        try {
+            userDao.rollbackRole(
+                    userDao.findOneByName(userName)
+                            .orElseThrow(ServiceException::new)
+            );
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public void topUpBalance(String userName, BigDecimal amount) {
-        final BigDecimal previousBalance = userDao.findOneByName(userName)
-                .orElseThrow(IllegalArgumentException::new)
-                .getBalance();
-        final BigDecimal newBalance = previousBalance.add(amount);
-        userDao.updateBalance(userName, newBalance);
+    public int findUserIdByUserName(String userName) throws ServiceException {
+        try {
+            return userDao.findOneByName(userName)
+                    .orElseThrow(ServiceException::new)
+                    .getId();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public void withdrawFromBalance(String userName, BigDecimal amount) {
-        final BigDecimal previousBalance = userDao.findOneByName(userName)
-                .orElseThrow(IllegalArgumentException::new)
-                .getBalance();
-        final BigDecimal newBalance = previousBalance.subtract(amount);
-        if (newBalance.compareTo(BigDecimal.ZERO) >= 0) {
+    public void topUpBalance(String userName, BigDecimal amount) throws ServiceException {
+        final BigDecimal previousBalance;
+        try {
+            previousBalance = userDao.findOneByName(userName)
+                    .orElseThrow(ServiceException::new)
+                    .getBalance();
+            final BigDecimal newBalance = previousBalance.add(amount);
             userDao.updateBalance(userName, newBalance);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
         }
     }
 
     @Override
-    public BigDecimal findBalanceById(int id) {
-        return userDao.findOneById(id)
-                .orElseThrow(IllegalArgumentException::new)
-                .getBalance();
+    public void withdrawFromBalance(String userName, BigDecimal amount) throws ServiceException {
+        try {
+            final BigDecimal previousBalance = userDao.findOneByName(userName)
+                    .orElseThrow(ServiceException::new)
+                    .getBalance();
+            final BigDecimal newBalance = previousBalance.subtract(amount);
+            if (newBalance.compareTo(BigDecimal.ZERO) >= 0) {
+                userDao.updateBalance(userName, newBalance);
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
-    public BigDecimal calculateExpectedWin(String name, int multiplierId) {
-        final int userId = userDao.findOneByName(name).orElseThrow(IllegalArgumentException::new).getId();
-        final Bet bet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId).orElseThrow(IllegalArgumentException::new);
-        final BigDecimal betMoney = bet.getBetMoney();
-        return multiplierDao.findOneById(bet.getMultiplierId()).orElseThrow(IllegalArgumentException::new).getCoefficient().multiply(betMoney);
+    @Override
+    public BigDecimal findBalanceById(int id) throws ServiceException {
+        try {
+            return userDao.findOneById(id)
+                    .orElseThrow(ServiceException::new)
+                    .getBalance();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
-    public boolean isUserWinner(String userName, int matchId) {
-        final int userId = userDao.findOneByName(userName).orElseThrow(IllegalArgumentException::new).getId();
-        final Result actualResultType = matchDao.findOneById(matchId).orElseThrow(IllegalArgumentException::new).getResultType();
-        final int multiplierId = multiplierDao.findOneByMatchIdByResultId(matchId, actualResultType.getId())
-                .orElseThrow(IllegalArgumentException::new)
-                .getId(); // TODO: redo
-        final Bet bet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId).orElseThrow(IllegalArgumentException::new);
-        final Status matchStatus = matchDao.findOneById(matchId).orElseThrow(IllegalArgumentException::new).getStatus();
-        final Result userResultType = multiplierDao.findOneById(bet.getMultiplierId()).orElseThrow(IllegalArgumentException::new).getResult();
-        return userResultType.equals(actualResultType) && matchStatus.equals(Status.FINISHED);
+    public BigDecimal calculateExpectedWin(String name, int multiplierId) throws ServiceException {
+        try {
+            final int userId = userDao.findOneByName(name).orElseThrow(ServiceException::new).getId();
+            final Bet bet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId).orElseThrow(ServiceException::new);
+            final BigDecimal betMoney = bet.getBetMoney();
+            return multiplierDao.findOneById(bet.getMultiplierId()).orElseThrow(ServiceException::new).getCoefficient().multiply(betMoney);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
+    public boolean isUserWinner(String userName, int matchId) throws ServiceException {
+        try {
+            final int userId = userDao.findOneByName(userName).orElseThrow(ServiceException::new).getId();
+            final Result actualResultType = matchDao.findOneById(matchId).orElseThrow(ServiceException::new).getResultType();
+            final int multiplierId = multiplierDao.findOneByMatchIdByResultId(matchId, actualResultType.getId())
+                    .orElseThrow(ServiceException::new)
+                    .getId(); // TODO: redo
+            final Bet bet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId).orElseThrow(ServiceException::new);
+            final Status matchStatus = matchDao.findOneById(matchId).orElseThrow(ServiceException::new).getStatus();
+            final Result userResultType = multiplierDao.findOneById(bet.getMultiplierId()).orElseThrow(ServiceException::new).getResult();
+            return userResultType.equals(actualResultType) && matchStatus.equals(Status.FINISHED);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     private UserDto convertToDto(User user) {

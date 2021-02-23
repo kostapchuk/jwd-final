@@ -7,6 +7,8 @@ import com.epam.jwd_final.web.domain.MatchDto;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.domain.Sport;
 import com.epam.jwd_final.web.domain.Status;
+import com.epam.jwd_final.web.exception.DaoException;
+import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.MatchService;
 
 import java.sql.Timestamp;
@@ -29,13 +31,17 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Optional<List<MatchDto>> findAllByStatus(Status status) {
-        return matchDao.findAllByStatusId(status.getId())
-                .map(matches ->
-                        matches.stream()
-                                .map(this::convertToDto)
-                                .collect(toList())
-                );
+    public Optional<List<MatchDto>> findAllByStatus(Status status) throws ServiceException {
+        try {
+            return matchDao.findAllByStatusId(status.getId())
+                    .map(matches ->
+                            matches.stream()
+                                    .map(this::convertToDto)
+                                    .collect(toList())
+                    );
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
@@ -49,32 +55,52 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public int findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime start, String firstTeam, String secondTeam) {
-        return matchDao.findOneByStartByFirstTeamIdBySecondTeamId(
-                Timestamp.valueOf(start),
-                teamDao.findIdByName(firstTeam).orElseThrow(IllegalArgumentException::new), // TODO: redo exception
-                teamDao.findIdByName(secondTeam).orElseThrow(IllegalArgumentException::new) // TODO: redo exception
-        ).orElseThrow(IllegalArgumentException::new).getId(); // TODO: redo exception
+    public int findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime start, String firstTeam, String secondTeam) throws ServiceException {
+        try {
+            return matchDao.findOneByStartByFirstTeamIdBySecondTeamId(
+                    Timestamp.valueOf(start),
+                    teamDao.findIdByName(firstTeam).orElseThrow(IllegalArgumentException::new), // TODO: redo exception
+                    teamDao.findIdByName(secondTeam).orElseThrow(IllegalArgumentException::new) // TODO: redo exception
+            ).orElseThrow(ServiceException::new).getId();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public boolean updateResult(int matchId, Result result) {
-        return matchDao.updateResultId(matchId, result.getId());
+    public boolean updateResult(int matchId, Result result) throws ServiceException {
+        try {
+            return matchDao.updateResultId(matchId, result.getId());
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public boolean updateStatus(int matchId, Status status) {
-        return matchDao.updateStatusId(matchId, status.getId());
+    public boolean updateStatus(int matchId, Status status) throws ServiceException {
+        try {
+            return matchDao.updateStatusId(matchId, status.getId());
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public Result findResultTypeById(int id) {
-        return matchDao.findOneById(id).orElseThrow(IllegalArgumentException::new).getResultType();
+    public Result findResultTypeById(int id) throws ServiceException {
+        try {
+            return matchDao.findOneById(id).orElseThrow(ServiceException::new).getResultType();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public void saveMatch(Match match) {
-        matchDao.save(match);
+    public void saveMatch(Match match) throws ServiceException {
+        try {
+            matchDao.save(match);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
     }
 
     private MatchDto convertToDto(Match match) {

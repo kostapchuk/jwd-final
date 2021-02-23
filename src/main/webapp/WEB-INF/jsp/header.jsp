@@ -71,7 +71,7 @@
                         ${sessionScope.userBalance} $
                 </li>
             </c:if>
-            <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModalCenter">
+            <button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
                 Sign in
             </button>
         </div>

@@ -4,6 +4,8 @@ import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.domain.BetDto;
+import com.epam.jwd_final.web.exception.CommandException;
+import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.impl.BetServiceImpl;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;
@@ -41,16 +43,20 @@ public enum ShowAllBetsPage implements Command {
     };
 
     @Override
-    public ResponseContext execute(RequestContext req) {
-        final String name = String.valueOf(req.getSession().getAttribute(NAME_PARAMETER));
-        if (name == null || name.equals("null")) {
-            return ShowErrorPage.INSTANCE.execute(req);
+    public ResponseContext execute(RequestContext req) throws CommandException {
+        try {
+            final String name = String.valueOf(req.getSession().getAttribute(NAME_PARAMETER));
+            if (name == null || name.equals("null")) {
+                return ShowErrorPage.INSTANCE.execute(req);
+            }
+            final List<BetDto> betDtos = betService.findAllByUserName(name).orElse(Collections.emptyList());
+            for (BetDto bet : betDtos) {
+                bet.setExpectedWin(userService.calculateExpectedWin(name, betService.findMultiplierIdById(bet.getId())));
+            }
+            req.setAttribute(BETS_PARAMETER, betDtos);
+        } catch (ServiceException e) {
+            throw new CommandException(e.getMessage(), e.getCause());
         }
-        final List<BetDto> betDtos = betService.findAllByUserName(name).orElse(Collections.emptyList());
-        for (BetDto bet : betDtos) {
-            bet.setExpectedWin(userService.calculateExpectedWin(name, betService.findMultiplierIdById(bet.getId())));
-        }
-        req.setAttribute(BETS_PARAMETER, betDtos);
         return ALL_BETS_PAGE_RESPONSE;
     }
 }
