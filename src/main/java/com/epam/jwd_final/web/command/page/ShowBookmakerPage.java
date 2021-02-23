@@ -3,12 +3,13 @@ package com.epam.jwd_final.web.command.page;
 import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
-import com.epam.jwd_final.web.domain.Status;
+import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.TeamService;
 
+import java.time.LocalDate;
 import java.util.Collections;
 
 public enum ShowBookmakerPage implements Command {
@@ -41,7 +42,7 @@ public enum ShowBookmakerPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            req.setAttribute(MATCHES_PARAMETER, matchService.findAllByStatus(Status.PLANNED).orElse(Collections.emptyList()));
+            req.setAttribute(MATCHES_PARAMETER, matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT).orElse(Collections.emptyList()));
             req.setAttribute(TEAMS_PARAMETER, teamService.findAll());
             return BOOKMAKER_PAGE_RESPONSE;
         } catch (ServiceException e) {

@@ -8,7 +8,6 @@ import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.dao.impl.UserDaoImpl;
 import com.epam.jwd_final.web.domain.Bet;
 import com.epam.jwd_final.web.domain.Result;
-import com.epam.jwd_final.web.domain.Status;
 import com.epam.jwd_final.web.domain.User;
 import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.exception.DaoException;
@@ -16,7 +15,6 @@ import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.xml.ws.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -187,10 +185,12 @@ public enum UserServiceImpl implements UserService {
             final int multiplierId = multiplierDao.findOneByMatchIdByResultId(matchId, actualResultType.getId())
                     .orElseThrow(ServiceException::new)
                     .getId(); // TODO: redo
-            final Bet bet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId).orElseThrow(ServiceException::new);
-            final Status matchStatus = matchDao.findOneById(matchId).orElseThrow(ServiceException::new).getStatus();
-            final Result userResultType = multiplierDao.findOneById(bet.getMultiplierId()).orElseThrow(ServiceException::new).getResult();
-            return userResultType.equals(actualResultType) && matchStatus.equals(Status.FINISHED);
+            final Optional<Bet> optionalBet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId);
+            if (!optionalBet.isPresent()) {
+                return false;
+            }
+            final Result userResultType = multiplierDao.findOneById(optionalBet.get().getMultiplierId()).orElseThrow(ServiceException::new).getResult();
+            return userResultType.equals(actualResultType);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }

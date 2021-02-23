@@ -9,7 +9,6 @@ public enum CreateMatchCommand implements Command {
 
     INSTANCE;
 
-    private static final String SPORT_TYPE_PARAMETER = "sportType";
     private static final String FIRST_TEAM_PARAMETER = "firstTeam";
     private static final String SECOND_TEAM_PARAMETER = "secondTeam";
     private static final String START_TIME_PARAMETER = "startTime";
@@ -23,11 +22,10 @@ public enum CreateMatchCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String sportType = String.valueOf(req.getParameter(SPORT_TYPE_PARAMETER));
             final String start = String.valueOf(req.getParameter(START_TIME_PARAMETER));
             final String firstTeam = String.valueOf(req.getParameter(FIRST_TEAM_PARAMETER));
             final String secondTeam = String.valueOf(req.getParameter(SECOND_TEAM_PARAMETER));
-            matchService.saveMatch(matchService.createMatch(sportType, start, firstTeam, secondTeam));
+            matchService.saveMatch(matchService.createMatch(start, firstTeam, secondTeam));
             return CreateMultiplierCommand.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

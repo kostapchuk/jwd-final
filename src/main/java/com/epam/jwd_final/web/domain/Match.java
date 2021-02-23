@@ -6,36 +6,27 @@ public class Match extends AbstractEntity {
 
     private static final long serialVersionUID = -1407601691624011922L;
 
-    private final Sport sportType;
     private final LocalDateTime start;
     private final String firstTeam;
     private final String secondTeam;
-    private final Status status;
     private final Result resultType;
 
-    public Match(Integer id, Sport sportType, LocalDateTime start,
-                 String firstTeam, String secondTeam, Status status,
-                 Result resultType) {
+    public Match(Integer id, LocalDateTime start,
+                 String firstTeam, String secondTeam, Result resultType) {
         super(id);
-        this.sportType = sportType;
         this.start = start;
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
-        this.status = status;
         this.resultType = resultType;
     }
 
-    public Match(Sport sportType, LocalDateTime start, String firstTeam,
-                 String secondTeam, Status status, Result resultType) {
-        this(null, sportType, start, firstTeam, secondTeam, status, resultType);
+    public Match(LocalDateTime start, String firstTeam,
+                 String secondTeam, Result resultType) {
+        this(null, start, firstTeam, secondTeam, resultType);
     }
 
-    public Match(Sport sportType, LocalDateTime start, String firstTeam, String secondTeam) {
-        this(null, sportType, start, firstTeam, secondTeam, null, null);
-    }
-
-    public Sport getSportType() {
-        return sportType;
+    public Match(LocalDateTime start, String firstTeam, String secondTeam) {
+        this(null, start, firstTeam, secondTeam, null);
     }
 
     public LocalDateTime getStart() {
@@ -50,9 +41,6 @@ public class Match extends AbstractEntity {
         return secondTeam;
     }
 
-    public Status getStatus() {
-        return status;
-    }
 
     public Result getResultType() {
         return resultType;

@@ -27,6 +27,7 @@ public enum SetResultCommand implements Command {
             final int matchId = Integer.parseInt(String.valueOf(req.getParameter(MATCH_ID_PARAMETER)));
             final Result newResult = Result.valueOf(String.valueOf(req.getParameter(RESULT_TYPE_PARAMETER)).toUpperCase());
             matchService.updateResult(matchId, newResult);
+            // TODO: delete users' bets for the current match
             new PayoutUserWinListener().update("payoutUserWin", matchId);
             return ShowBookmakerPage.INSTANCE.execute(req);
         } catch (ListenerException | ServiceException e) {

@@ -16,9 +16,14 @@
         <ol>
             <c:forEach var="bet" items="${requestScope.bets}">
                 <form action="${pageContext.request.contextPath}/controller?command=cancel_bet" method="post">
-                    <li>Bet money: ${bet.betMoney}, expected win: ${bet.expectedWin}</li>
+                    <li>Bet money: ${bet.betMoney}, expected win: ${bet.expectedWin} ${requestScope.coefficient}</li>
                     <input type="hidden" name="betId" value="${bet.id}" />
+                    <input type="hidden" name="matchId" value="${requestScope.matchId}" />
                     <input type="submit" value="Cancel bet" />
+                </form>
+                <form action="${pageContext.request.contextPath}/controller?command=update_bet" method="post">
+                    <input type="hidden" name="betId" value="${bet.id}" />
+                    <input type="submit" value="Update bet" />
                 </form>
             </c:forEach>
         </ol>

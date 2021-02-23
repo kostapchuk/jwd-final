@@ -35,12 +35,17 @@ public enum MakeBetCommand implements Command {
             final int multiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.valueOf(userResult));
             final String userName = String.valueOf(req.getSession().getAttribute("userName"));
             final int userId = userService.findUserIdByUserName(userName);
-            final BigDecimal betMoney = new BigDecimal(String.valueOf(req.getParameter("betMoney")));
-            final BigDecimal currentBalance = userService.findBalanceById(userId);
-            if (currentBalance.subtract(betMoney).compareTo(new BigDecimal("0.00")) != -1) {
-                betService.save(
-                        betService.createBet(userId, multiplierId, betMoney));
-                userService.withdrawFromBalance(userName, betMoney);
+            if (!betService.isBetExist(userId, multiplierId)) {
+                final BigDecimal betMoney = new BigDecimal(String.valueOf(req.getParameter("betMoney")));
+                final BigDecimal currentBalance = userService.findBalanceById(userId);
+                final BigDecimal finalBalance = currentBalance.subtract(betMoney);
+
+                if (finalBalance.compareTo(BigDecimal.ZERO) >= 0) {
+                    betService.save(
+                            betService.createBet(userId, multiplierId, betMoney));
+                    userService.withdrawFromBalance(userName, betMoney); // TODO: the same as update user
+                    req.setSessionAttribute("userBalance", finalBalance);
+                }
             }
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

@@ -68,6 +68,16 @@ public enum BetServiceImpl implements BetService {
     }
 
     @Override
+    public boolean isBetExist(int userId, int multiplierId) throws ServiceException {
+        try {
+            final Optional<Bet> optionalBet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId);
+            return optionalBet.isPresent();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
     public int findMultiplierIdById(int id) throws ServiceException {
         try {
             return betDao.findOneById(id)

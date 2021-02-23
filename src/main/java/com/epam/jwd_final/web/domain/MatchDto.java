@@ -1,30 +1,23 @@
 package com.epam.jwd_final.web.domain;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MatchDto {
 
+    private static final String DATE_TIME_FORMATTER = "dd-MM-yyyy HH:mm";
+
     private final Integer id;
-    private final Sport sportType;
     private final LocalDateTime start;
     private final String firstTeam;
     private final String secondTeam;
-    private final Status status;
     private final Result resultType;
 
-    public MatchDto(Integer id,
-                    Sport sportType,
-                    LocalDateTime start,
-                    String firstTeam,
-                    String secondTeam,
-                    Status status,
-                    Result resultType) {
+    public MatchDto(Integer id, LocalDateTime start, String firstTeam, String secondTeam, Result resultType) {
         this.id = id;
-        this.sportType = sportType;
         this.start = start;
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
-        this.status = status;
         this.resultType = resultType;
     }
 
@@ -32,12 +25,8 @@ public class MatchDto {
         return id;
     }
 
-    public Sport getSportType() {
-        return sportType;
-    }
-
-    public LocalDateTime getStart() {
-        return start;
+    public String getStart() {
+        return start.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER));
     }
 
     public String getFirstTeam() {
@@ -48,11 +37,8 @@ public class MatchDto {
         return secondTeam;
     }
 
-    public Status getStatus() {
-        return status;
-    }
 
-    public Result getResultType() {
-        return resultType;
+    public String getResultType() {
+        return resultType.name();
     }
 }

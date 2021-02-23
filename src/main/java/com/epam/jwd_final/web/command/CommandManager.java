@@ -21,7 +21,7 @@ public enum CommandManager {
     SET_RESULT(SetResultCommand.INSTANCE),
     CANCEL_BET(CancelBetCommand.INSTANCE),
     MAKE_BET(MakeBetCommand.INSTANCE),
-    SET_STATUS(SetStatusCommand.INSTANCE),
+    UPDATE_BET(UpdateBetCommand.INSTANCE),
     DEPOSIT(DepositCommand.INSTANCE),
     WITHDRAW(WithdrawCommand.INSTANCE),
     SHOW_WITHDRAW_PAGE(ShowWithdrawPage.INSTANCE),

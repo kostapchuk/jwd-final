@@ -16,12 +16,6 @@
             <h2>Create match</h2>
             <form action="${pageContext.request.contextPath}/controller?command=create_match" method="post">
                 <div class="form-group">
-                    <label for="sportType">Sport type</label>
-                    <select class="form-control" id="sportType" name="sportType">
-                        <option>Football</option>
-                    </select>
-                </div>
-                <div class="form-group">
                     <label for="start">Start</label>
                     <input type="datetime-local" name="startTime" class="form-control" id="start" required>
                 </div>
@@ -65,9 +59,8 @@
                 <h2>Matches list</h2>
                 <c:forEach var="match" items="${requestScope.matches}">
                     <li>${match.firstTeam} vs ${match.secondTeam}</li>
-                    <form action="${pageContext.request.contextPath}/controller?command=set_status" method="post">
+                    <form action="${pageContext.request.contextPath}/controller?command=set_result" method="post">
                         New Result: <input type="text" name="resultType" required>
-                        New Status: <input type="text" name="statusType" required>
                         <input type="hidden" name="matchId" value="${match.id}" />
                         <input type="submit" value="Submit" />
                     </form>

@@ -108,7 +108,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public void updateBalance(String userName, BigDecimal balance) throws DaoException {
         queryUpdate(
                 UPDATE_BALANCE_SQL,
-                Arrays.asList(userName, balance)
+                Arrays.asList(balance, userName)
         );
     }
 

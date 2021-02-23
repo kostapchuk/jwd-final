@@ -5,13 +5,12 @@ import com.epam.jwd_final.web.dao.impl.TeamDao;
 import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.domain.MatchDto;
 import com.epam.jwd_final.web.domain.Result;
-import com.epam.jwd_final.web.domain.Sport;
-import com.epam.jwd_final.web.domain.Status;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.MatchService;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -30,10 +29,9 @@ public enum MatchServiceImpl implements MatchService {
         this.teamDao = new TeamDao();
     }
 
-    @Override
-    public Optional<List<MatchDto>> findAllByStatus(Status status) throws ServiceException {
+    public Optional<List<MatchDto>> findAllByStartOfDateByResult(LocalDate date, Result result) throws ServiceException {
         try {
-            return matchDao.findAllByStatusId(status.getId())
+            return matchDao.findAllByStartOfDateByResultId(date, result.getId())
                     .map(matches ->
                             matches.stream()
                                     .map(this::convertToDto)
@@ -45,9 +43,8 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Match createMatch(String sportType, String startTime, String firstTeam, String secondTeam) {
+    public Match createMatch(String startTime, String firstTeam, String secondTeam) {
         return new Match(
-                Sport.valueOf(sportType.toUpperCase()),
                 LocalDateTime.parse(startTime),
                 firstTeam,
                 secondTeam
@@ -77,15 +74,6 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public boolean updateStatus(int matchId, Status status) throws ServiceException {
-        try {
-            return matchDao.updateStatusId(matchId, status.getId());
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e.getCause());
-        }
-    }
-
-    @Override
     public Result findResultTypeById(int id) throws ServiceException {
         try {
             return matchDao.findOneById(id).orElseThrow(ServiceException::new).getResultType();
@@ -106,11 +94,9 @@ public enum MatchServiceImpl implements MatchService {
     private MatchDto convertToDto(Match match) {
         return new MatchDto(
                 match.getId(),
-                match.getSportType(),
                 match.getStart(),
                 match.getFirstTeam(),
                 match.getSecondTeam(),
-                match.getStatus(),
                 match.getResultType());
     }
 }
