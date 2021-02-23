@@ -8,12 +8,14 @@ import com.epam.jwd_final.web.exception.ServiceException;
 
 import java.math.BigDecimal;
 
-public class MultiplierServiceImpl {
+public enum MultiplierServiceImpl {
+
+    INSTANCE;
 
     private final MultiplierDao multiplierDao;
 
-    public MultiplierServiceImpl(MultiplierDao multiplierDao) {
-        this.multiplierDao = multiplierDao;
+    MultiplierServiceImpl() {
+        this.multiplierDao = new MultiplierDao();
     }
 
     public Multiplier createMultiplier(int matchId, Result result, BigDecimal coefficient) {

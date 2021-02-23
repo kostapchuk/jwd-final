@@ -28,7 +28,7 @@ public enum CreateMultiplierCommand implements Command {
     private final MatchService matchService;
 
     CreateMultiplierCommand() {
-        this.multiplierService = new MultiplierServiceImpl(new MultiplierDao());
+        this.multiplierService = MultiplierServiceImpl.INSTANCE;
         this.matchService = MatchServiceImpl.INSTANCE;
     }
 

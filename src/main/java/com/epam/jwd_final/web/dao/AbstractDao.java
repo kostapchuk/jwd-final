@@ -45,8 +45,8 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
 
     @Override
     public Optional<List<T>> querySelectAll(String querySQL, List<Object> params) throws DaoException {
-        List<T> objects = new ArrayList<>();
         try {
+            List<T> objects = new ArrayList<>();
             PreparedStatement preparedStatement = makeStatementPrepared(querySQL, params);
             ResultSet resultSet = preparedStatement.executeQuery();
             ModelMapper<T> mapper = retrieveModelMapper();
@@ -57,10 +57,10 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
             if (objects.isEmpty()) {
                 return Optional.empty();
             }
+            return Optional.of(objects);
         } catch (SQLException | ModelMapperException e) {
             throw new DaoException(e.getMessage(), e.getCause());
         }
-        return Optional.of(objects);
     }
 
     PreparedStatement makeStatementPrepared(String querySQL, List<Object> parameters)

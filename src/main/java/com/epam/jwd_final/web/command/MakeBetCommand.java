@@ -23,7 +23,7 @@ public enum MakeBetCommand implements Command {
 
     MakeBetCommand() {
         this.userService = UserServiceImpl.INSTANCE;
-        this.multiplierService = new MultiplierServiceImpl(new MultiplierDao());
+        this.multiplierService = MultiplierServiceImpl.INSTANCE;
         this.betService = BetServiceImpl.INSTANCE;
     }
 
