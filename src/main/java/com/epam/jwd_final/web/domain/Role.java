@@ -21,17 +21,15 @@ public enum Role implements Entity {
         Role role;
         switch (id) {
             case (3):
+            default:
                 role = Role.CLIENT;
-                break;
-            case (2):
-                role = Role.BOOKMAKER;
                 break;
             case (1):
                 role = Role.ADMIN;
                 break;
-            default:
-                throw new IllegalArgumentException("Cannot resolve role");
-                // TODO log or throw UnknownEntityException
+            case (2):
+                role = Role.BOOKMAKER;
+                break;
         }
         return role;
     }

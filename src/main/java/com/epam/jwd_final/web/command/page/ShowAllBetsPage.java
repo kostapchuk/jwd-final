@@ -19,7 +19,6 @@ public enum ShowAllBetsPage implements Command {
 
     public static final String NAME_PARAMETER = "userName";
     public static final String BETS_PARAMETER = "bets";
-    private static final String EXPECTED_WIN_PARAMETER = "expectedWin";
 
     private final UserServiceImpl userService;
     private final BetService betService;
@@ -46,9 +45,6 @@ public enum ShowAllBetsPage implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final String name = String.valueOf(req.getSession().getAttribute(NAME_PARAMETER));
-            if (name == null || name.equals("null")) {
-                return ShowErrorPage.INSTANCE.execute(req);
-            }
             final List<BetDto> betDtos = betService.findAllByUserName(name).orElse(Collections.emptyList());
             for (BetDto bet : betDtos) {
                 bet.setExpectedWin(userService.calculateExpectedWin(name, betService.findMultiplierIdById(bet.getId())));

@@ -12,6 +12,7 @@ import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
 public enum MakeBetCommand implements Command {
 
@@ -30,8 +31,8 @@ public enum MakeBetCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final int matchId = Integer.parseInt(String.valueOf(req.getSession().getAttribute("matchId")));
-            final String userResult = String.valueOf(req.getParameter("userResult"));
+            final int matchId = Integer.parseInt(String.valueOf(req.getParameter("matchId")));
+            final String userResult = String.valueOf(req.getParameter("result"));
             final int multiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.valueOf(userResult));
             final String userName = String.valueOf(req.getSession().getAttribute("userName"));
             final int userId = userService.findUserIdByUserName(userName);

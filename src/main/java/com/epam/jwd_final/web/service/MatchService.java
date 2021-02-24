@@ -23,4 +23,6 @@ public interface MatchService {
     boolean updateResult(int matchId, Result result) throws ServiceException;
 
     Result findResultTypeById(int id) throws ServiceException;
+
+    Match findById(int id) throws ServiceException;
 }

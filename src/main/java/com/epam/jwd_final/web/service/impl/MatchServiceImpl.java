@@ -83,6 +83,15 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
+    public Match findById(int id) throws ServiceException {
+        try {
+            return matchDao.findOneById(id).orElseThrow(ServiceException::new);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
     public void saveMatch(Match match) throws ServiceException {
         try {
             matchDao.save(match);

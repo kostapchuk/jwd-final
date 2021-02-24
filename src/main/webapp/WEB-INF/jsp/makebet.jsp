@@ -14,21 +14,26 @@
     <div class="container">
         <div class="offset-md-2 col-md-8">
             <h2>Creating bet...</h2>
-            <form action="${pageContext.request.contextPath}/controller?command=make_bet" method="post">
-                <div class="form-group">
-                    <label for="prediction">Prediction</label>
-                    <select class="form-control" id="prediction" name="userResult" required>
-                        <option>FIRST_TEAM</option>
-                        <option>SECOND_TEAM</option>
-                        <option>DRAW</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="betMoney">Money</label>
-                    <input type="number" step="0.01" class="form-control" id="betMoney" name="betMoney" required>
-                </div>
-                <button type="submit" class="btn btn-success">Make bet</button>
-            </form>
+<%--            <form action="${pageContext.request.contextPath}/controller?command=make_bet" method="post">--%>
+<%--                <c:if test="${not empty sessionScope.event}">--%>
+<%--                    <p>${sessionScope.event.firstTeam} - ${sessionScope.event.firstTeamCoefficient}</p>--%>
+<%--                    <p>${sessionScope.event.secondTeam} - ${sessionScope.event.secondTeamCoefficient}</p>--%>
+<%--                    <p>Draw - ${sessionScope.event.drawCoefficient}</p>--%>
+<%--                </c:if>--%>
+<%--                <div class="form-group">--%>
+<%--                    <label for="prediction">Prediction</label>--%>
+<%--                    <select class="form-control" id="prediction" name="userResult" required>--%>
+<%--                        <option>${sessionScope.event.firstTeam}</option>--%>
+<%--                        <option>${sessionScope.event.secondTeam}</option>--%>
+<%--                        <option>Draw</option>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--                <div class="form-group">--%>
+<%--                    <label for="betMoney">Money</label>--%>
+<%--                    <input type="number" step="0.01" class="form-control" id="betMoney" name="betMoney" required>--%>
+<%--                </div>--%>
+<%--                <button type="submit" class="btn btn-success">Make bet</button>--%>
+<%--            </form>--%>
         </div>
     </div>
 

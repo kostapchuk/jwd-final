@@ -2,10 +2,10 @@ package com.epam.jwd_final.web.domain;
 
 public enum Result implements Entity {
 
-    FIRST_TEAM(1), // TODO
-    SECOND_TEAM(2), // TODO
-    DRAW(3), // TODO
-    NO_RESULT(4); // TODO
+    FIRST_TEAM(1),
+    SECOND_TEAM(2),
+    DRAW(3),
+    NO_RESULT(4);
 
     private final Integer id;
 
@@ -31,11 +31,9 @@ public enum Result implements Entity {
                 result = Result.DRAW;
                 break;
             case (4):
+            default:
                 result = Result.NO_RESULT;
                 break;
-            default:
-                throw new IllegalArgumentException("Cannot resolve result");
-                // TODO log or throw UnknownEntityException
         }
         return result;
     }
