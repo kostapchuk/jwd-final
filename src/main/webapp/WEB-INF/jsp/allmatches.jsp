@@ -37,16 +37,21 @@
                                         <td>
                                             <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#makeBet" data-whatever-result="FIRST_TEAM"
                                                     data-whatever-id="${event.matchId}" data-whatever-coef="${event.firstTeamCoefficient}">
+
                                                     ${event.firstTeamCoefficient}
                                             </button>
                                         </td>
                                         <td>
-                                            <button class="btn btn-primary btn-block">
+                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#makeBet" data-whatever-result="DRAW"
+                                                    data-whatever-id="${event.matchId}" data-whatever-coef="${event.drawCoefficient}">
+
                                                     ${event.drawCoefficient}
                                             </button>
                                         </td>
                                         <td>
-                                            <button class="btn btn-primary btn-block">
+                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#makeBet" data-whatever-result="SECOND_TEAM"
+                                                    data-whatever-id="${event.matchId}" data-whatever-coef="${event.secondTeamCoefficient}">
+
                                                     ${event.secondTeamCoefficient}
                                             </button>
                                         </td>
@@ -96,7 +101,6 @@
             var recipient = button.data('whatever-coef')
             var matchId = button.data('whatever-id')
             var result = button.data('whatever-result')
-            var modal = $(this)
             document.getElementById('matchInput').value = matchId
             document.getElementById('resultInput').value = result
 
