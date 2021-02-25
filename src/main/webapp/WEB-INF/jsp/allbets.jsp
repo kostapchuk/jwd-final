@@ -13,23 +13,25 @@
     <jsp:include page="header.jsp"/>
     <div class="container">
         <div class="offset-lg-1 col-lg-10">
-            <c:if test="${not empty requestScope.bets}">
+            <c:if test="${not empty requestScope.placedBets}">
                 <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Bet $</th>
-                            <%--                    <th scope="col">Coefficient</th>--%>
-                        <th scope="col">To return $</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
+<%--                    <thead>--%>
+<%--                    <tr>--%>
+<%--                        <th scope="col">Bet $</th>--%>
+<%--                            &lt;%&ndash;                    <th scope="col">Coefficient</th>&ndash;%&gt;--%>
+<%--                        <th scope="col">To return $</th>--%>
+<%--                        <th scope="col"></th>--%>
+<%--                        <th scope="col"></th>--%>
+<%--                    </tr>--%>
+<%--                    </thead>--%>
                     <tbody>
-                    <c:forEach var="bet" items="${requestScope.bets}">
+                    <c:forEach var="bet" items="${requestScope.placedBets}">
                         <tr>
-                            <td>${bet.betMoney}</td>
-                                <%--                        <td>${requestScope.coefficient}</td>--%>
-                            <td>${bet.expectedWin}</td>
+                            <td >${bet.start}</td>
+                            <td>${bet.opponents}</td>
+                            <td class="font-weight-bold">${bet.placedTeam}</td>
+                            <td>${bet.placedCoefficient}</td>
+                            <td ><span class="text-muted">To return</span> <span class="font-weight-bold">${bet.expectedWin}</span>  <span class="text-muted">$</span></td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/controller?command=update_bet" method="post">
                                     <input type="hidden" name="betId" value="${bet.id}" />
@@ -40,7 +42,7 @@
                                 <form action="${pageContext.request.contextPath}/controller?command=cancel_bet" method="post">
                                     <input type="hidden" name="betId" value="${bet.id}" />
                                     <input type="hidden" name="matchId" value="${requestScope.matchId}" />
-                                    <button class="btn btn-primary btn-block">Cancel</button>
+                                    <button class="btn btn-outline-primary btn-block">Cancel</button>
                                 </form>
                             </td>
                         </tr>

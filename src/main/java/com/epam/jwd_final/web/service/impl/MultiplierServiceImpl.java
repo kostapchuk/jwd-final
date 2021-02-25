@@ -55,4 +55,29 @@ public enum MultiplierServiceImpl {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
     }
+
+    public int findMatchIdByMultiplierId(int multiplierId) throws ServiceException {
+        try {
+            return multiplierDao.findOneById(multiplierId).orElseThrow(ServiceException::new).getMatchId();
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }
+    }
+
+    public BigDecimal findCoefficientById(int id) throws ServiceException {
+        try {
+            return multiplierDao.findOneById(id).orElseThrow(ServiceException::new).getCoefficient();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
+    public Result findResultById(int id) throws ServiceException {
+        try {
+            return multiplierDao.findOneById(id).orElseThrow(ServiceException::new).getResult();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
 }

@@ -9,7 +9,7 @@ public enum UpdateBetCommand implements Command {
 
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
-        CancelBetCommand.INSTANCE.execute(req);
+//        CancelBetCommand.INSTANCE.execute(req);
         return ShowAllMatchesPage.INSTANCE.execute(req);
     }
 }

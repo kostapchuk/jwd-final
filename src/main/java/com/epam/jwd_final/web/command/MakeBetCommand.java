@@ -35,6 +35,9 @@ public enum MakeBetCommand implements Command {
             final String userResult = String.valueOf(req.getParameter("result"));
             final int multiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.valueOf(userResult));
             final String userName = String.valueOf(req.getSession().getAttribute("userName"));
+            if ("null".equals(userName)) {
+                return ShowAllMatchesPage.INSTANCE.execute(req);
+            }
             final int userId = userService.findUserIdByUserName(userName);
             if (!betService.isBetExist(userId, multiplierId)) {
                 final BigDecimal betMoney = new BigDecimal(String.valueOf(req.getParameter("betMoney")));

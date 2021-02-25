@@ -2,6 +2,7 @@ package com.epam.jwd_final.web.domain;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class MatchDto {
 
@@ -26,7 +27,7 @@ public class MatchDto {
     }
 
     public String getStart() {
-        return start.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER));
+        return start.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER, Locale.getDefault()));
     }
 
     public String getFirstTeam() {

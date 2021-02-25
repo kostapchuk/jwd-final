@@ -4,14 +4,28 @@ import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.domain.BetDto;
+import com.epam.jwd_final.web.domain.EventDto;
+import com.epam.jwd_final.web.domain.Match;
+import com.epam.jwd_final.web.domain.MatchDto;
+import com.epam.jwd_final.web.domain.PlacedBetDto;
+import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.BetService;
+import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.impl.BetServiceImpl;
+import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
+import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 public enum ShowAllBetsPage implements Command {
 
@@ -19,13 +33,18 @@ public enum ShowAllBetsPage implements Command {
 
     public static final String NAME_PARAMETER = "userName";
     public static final String BETS_PARAMETER = "bets";
+    public static final String PLACED_BETS_PARAMETER = "placedBets";
 
     private final UserServiceImpl userService;
     private final BetService betService;
+    private final MultiplierServiceImpl multiplierService;
+    private final MatchService matchService;
 
     ShowAllBetsPage() {
             this.userService = UserServiceImpl.INSTANCE;
             this.betService = BetServiceImpl.INSTANCE;
+            this.multiplierService = MultiplierServiceImpl.INSTANCE;
+            this.matchService = MatchServiceImpl.INSTANCE;
     }
 
     public static final ResponseContext ALL_BETS_PAGE_RESPONSE = new ResponseContext() {
@@ -46,11 +65,32 @@ public enum ShowAllBetsPage implements Command {
         try {
             final String name = String.valueOf(req.getSession().getAttribute(NAME_PARAMETER));
             req.setSessionAttribute("userBalance", userService.findBalanceById(userService.findUserIdByUserName(name)));
+
             final List<BetDto> betDtos = betService.findAllByUserName(name).orElse(Collections.emptyList());
+            List<PlacedBetDto> placedBetDtos = new ArrayList<>();
             for (BetDto bet : betDtos) {
-                bet.setExpectedWin(userService.calculateExpectedWin(name, betService.findMultiplierIdById(bet.getId())));
+                final int multiplierId = betService.findMultiplierIdById(bet.getId());
+                final int matchId = multiplierService.findMatchIdByMultiplierId(multiplierId);
+                final Match match = matchService.findById(matchId);
+                final BigDecimal placedCoefficient = multiplierService.findCoefficientById(multiplierId);
+                final Result placedResult = multiplierService.findResultById(multiplierId);
+                String placedTeam;
+                if (Result.FIRST_TEAM.equals(placedResult)) {
+                    placedTeam = match.getFirstTeam();
+                } else if (Result.SECOND_TEAM.equals(placedResult)) {
+                    placedTeam = match.getSecondTeam();
+                } else if (Result.DRAW.equals(placedResult)) {
+                    placedTeam = "Draw";
+                } else {
+                    placedTeam = "";
+                }
+                placedBetDtos.add(new PlacedBetDto(bet.getId(),
+                        match.getStart().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm", Locale.getDefault())),
+                        placedTeam, placedCoefficient, userService.calculateExpectedWin(name, multiplierId),
+                        match.getFirstTeam() + " - " + match.getSecondTeam()));
             }
             req.setAttribute(BETS_PARAMETER, betDtos);
+            req.setAttribute(PLACED_BETS_PARAMETER, placedBetDtos);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }
