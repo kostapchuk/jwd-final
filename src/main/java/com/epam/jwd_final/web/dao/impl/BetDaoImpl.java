@@ -29,6 +29,9 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     private static final String DELETE_BY_ID_SQL =
             "delete from bet where id = ?";
 
+    private static final String DELETE_ALL_BY_MULTIPLIER_ID_SQL =
+            "delete from bet where multiplier_id = ?";
+
     @Override
     public Optional<Bet> findOneById(int id) throws DaoException {
         return querySelectOne(
@@ -66,6 +69,14 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
         queryUpdate(
                 DELETE_BY_ID_SQL,
                 Collections.singletonList(id)
+        );
+    }
+
+    @Override
+    public void deleteAllByMultiplierId(int multiplierId) throws DaoException {
+        queryUpdate(
+                DELETE_ALL_BY_MULTIPLIER_ID_SQL,
+                Collections.singletonList(multiplierId)
         );
     }
 

@@ -78,6 +78,15 @@ public enum BetServiceImpl implements BetService {
     }
 
     @Override
+    public void deleteAllByMultiplierId(int multiplierId) throws ServiceException {
+        try {
+            betDao.deleteAllByMultiplierId(multiplierId);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
     public int findMultiplierIdById(int id) throws ServiceException {
         try {
             return betDao.findOneById(id)

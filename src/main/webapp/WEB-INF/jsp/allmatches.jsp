@@ -108,7 +108,7 @@
             const log = document.getElementById('toReturn');
             input.addEventListener('input', updateValue);
             function updateValue(e) {
-                log.textContent = 'To return ' + e.target.value * recipient;
+                log.textContent = 'To return ' + Math.round(e.target.value * recipient);
             }
 
         })

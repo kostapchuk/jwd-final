@@ -17,4 +17,6 @@ public interface BetDao {
     void save(Bet bet) throws DaoException;
 
     void deleteById(int id) throws DaoException;
+
+    void deleteAllByMultiplierId(int multiplierId) throws DaoException;
 }

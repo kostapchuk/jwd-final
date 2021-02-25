@@ -2,6 +2,7 @@ package com.epam.jwd_final.web.command;
 
 import com.epam.jwd_final.web.command.page.ShowAllBetsPage;
 import com.epam.jwd_final.web.command.page.ShowAllMatchesPage;
+import com.epam.jwd_final.web.command.page.ShowBookmakerPage;
 import com.epam.jwd_final.web.command.page.ShowMainPage;
 import com.epam.jwd_final.web.domain.EventDto;
 import com.epam.jwd_final.web.domain.Result;
@@ -40,6 +41,9 @@ public enum CreateMatchCommand implements Command {
             final String start = String.valueOf(req.getParameter(START_TIME_PARAMETER));
             final String firstTeam = String.valueOf(req.getParameter(FIRST_TEAM_PARAMETER));
             final String secondTeam = String.valueOf(req.getParameter(SECOND_TEAM_PARAMETER));
+            if (firstTeam.equals(secondTeam)) {
+                return ShowBookmakerPage.INSTANCE.execute(req);
+            }
             matchService.saveMatch(matchService.createMatch(start, firstTeam, secondTeam));
 
             final BigDecimal firstTeamCoefficient =

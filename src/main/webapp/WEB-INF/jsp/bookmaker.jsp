@@ -53,20 +53,49 @@
                 </div>
                 <button type="submit" class="btn btn-success">Create match</button>
             </form>
-
-
+        </div>
+        <div class="offset-lg-1 col-lg-10">
             <c:if test="${not empty requestScope.matches}">
-                <h2>Matches list</h2>
-                <c:forEach var="match" items="${requestScope.matches}">
-                    <li>${match.firstTeam} vs ${match.secondTeam}</li>
-                    <form action="${pageContext.request.contextPath}/controller?command=set_result" method="post">
-                        New Result: <input type="text" name="resultType" required>
-                        <input type="hidden" name="matchId" value="${match.id}" />
-                        <input type="submit" value="Submit" />
-                    </form>
-                </c:forEach>
+                <h5>Available matches</h5>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">First team</th>
+                            <%--                    <th scope="col">Coefficient</th>--%>
+                        <th scope="col">Second team</th>
+                        <th scope="col">New result</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="match" items="${requestScope.matches}">
+                        <tr>
+                            <td>${match.firstTeam}</td>
+                                <%--                        <td>${requestScope.coefficient}</td>--%>
+                            <td>${match.secondTeam}</td>
+                            <td>
+                                <form action="${pageContext.request.contextPath}/controller?command=set_result" method="post">
+                                        <%--                                    <input type="text" name="resultType" required>--%>
+                                    <div class="form-group">
+                                        <select class="form-control" id="result" name="resultType" required>
+                                            <option>${match.firstTeam}</option>
+                                            <option>${match.secondTeam}</option>
+                                            <option>Draw</option>
+                                        </select>
+                                    </div>
+                                    <input type="hidden" name="matchId" value="${match.id}" />
+                                    <button class="btn btn-primary">Submit</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${empty requestScope.matches}">
+                <h5>No matches</h5>
             </c:if>
         </div>
+
     </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
