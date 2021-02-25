@@ -92,6 +92,15 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
+    public void deleteById(int id) throws ServiceException {
+        try {
+            matchDao.deleteById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
     public void saveMatch(Match match) throws ServiceException {
         try {
             matchDao.save(match);

@@ -98,7 +98,7 @@
     <script>
         $('#makeBet').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
-            var recipient = button.data('whatever-coef')
+            var coefficient = button.data('whatever-coef')
             var matchId = button.data('whatever-id')
             var result = button.data('whatever-result')
             document.getElementById('matchInput').value = matchId
@@ -108,8 +108,9 @@
             const log = document.getElementById('toReturn');
             input.addEventListener('input', updateValue);
             function updateValue(e) {
-                log.textContent = 'To return ' + Math.round(e.target.value * recipient);
+                log.textContent = 'To return ' + Math.round((e.target.value * coefficient + Number.EPSILON) * 100) / 100;
             }
+
 
         })
     </script>

@@ -47,4 +47,12 @@ public enum MultiplierServiceImpl {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
     }
+
+    public void deleteById(int id) throws ServiceException {
+        try {
+            multiplierDao.deleteById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
 }

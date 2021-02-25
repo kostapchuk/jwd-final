@@ -52,7 +52,7 @@ public enum SetResultCommand implements Command {
                 result = Result.NO_RESULT;
             }
             matchService.updateResult(matchId, result);
-            new PayoutUserWinListener().update("payoutUserWin", matchId);
+            new PayoutUserWinListener().update("payoutUserWin", req); // TODO: add to everyone setting userBalance
 
             betService.deleteAllByMultiplierId(
                     multiplierService.findIdByMatchIdAndResult(matchId, Result.FIRST_TEAM)

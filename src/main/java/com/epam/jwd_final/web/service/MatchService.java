@@ -25,4 +25,6 @@ public interface MatchService {
     Result findResultTypeById(int id) throws ServiceException;
 
     Match findById(int id) throws ServiceException;
+
+    void deleteById(int id) throws ServiceException;
 }

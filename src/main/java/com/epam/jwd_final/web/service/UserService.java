@@ -33,4 +33,6 @@ public interface UserService {
     BigDecimal calculateExpectedWin(String name, int multiplierId) throws ServiceException;
 
     boolean isUserWinner(String userName, int matchId) throws ServiceException;
+
+    String findNameById(int userId) throws ServiceException;
 }

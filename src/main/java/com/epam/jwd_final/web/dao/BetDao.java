@@ -19,4 +19,6 @@ public interface BetDao {
     void deleteById(int id) throws DaoException;
 
     void deleteAllByMultiplierId(int multiplierId) throws DaoException;
+
+    Optional<List<Bet>> findAllByMultiplierId(int multiplierId) throws DaoException;
 }

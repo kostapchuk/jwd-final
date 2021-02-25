@@ -13,6 +13,7 @@ import com.epam.jwd_final.web.service.BetService;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -81,6 +82,32 @@ public enum BetServiceImpl implements BetService {
     public void deleteAllByMultiplierId(int multiplierId) throws ServiceException {
         try {
             betDao.deleteAllByMultiplierId(multiplierId);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public Optional<List<Integer>> findAllUserIdByMultiplierId(int multiplierId) throws ServiceException {
+        try {
+            return betDao.findAllByMultiplierId(multiplierId)
+                    .map(bets -> bets
+                            .stream()
+                            .map(Bet::getUserId)
+                            .collect(Collectors.toList())
+                    );
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public BigDecimal findBetMoneyByUserIdByMultiplierId(int userId, int multiplierId) throws ServiceException {
+        try {
+            return betDao
+                    .findOneByUserIdByMultiplierId(userId, multiplierId)
+                    .orElseThrow(ServiceException::new)
+                    .getBetMoney();
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }

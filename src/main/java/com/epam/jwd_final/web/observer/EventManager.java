@@ -1,5 +1,6 @@
 package com.epam.jwd_final.web.observer;
 
+import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.exception.ListenerException;
 
 import java.io.File;
@@ -29,10 +30,10 @@ public class EventManager {
         users.remove(listener);
     }
 
-    public void notify(String eventType, int matchId) throws ListenerException {
+    public void notify(String eventType, RequestContext req) throws ListenerException {
         List<EventListener> users = listeners.get(eventType);
         for (EventListener listener : users) {
-            listener.update(eventType, matchId);
+            listener.update(eventType, req);
         }
     }
 }

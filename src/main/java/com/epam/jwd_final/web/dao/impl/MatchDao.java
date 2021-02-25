@@ -31,6 +31,9 @@ public class MatchDao extends AbstractDao<Match> {
     private static final String UPDATE_RESULT_TYPE_ID_SQL =
             "update `match` set result_type_id = ? where id = ?";
 
+    private static final String DELETE_BY_ID_SQL =
+            "delete from `match` where id = ?";
+
     private final TeamDao teamDao = new TeamDao();
 
     public Optional<Match> findOneById(int id) throws DaoException {
@@ -69,6 +72,13 @@ public class MatchDao extends AbstractDao<Match> {
         return queryUpdate(
                 UPDATE_RESULT_TYPE_ID_SQL,
                 Arrays.asList(resultId, matchId)
+        );
+    }
+
+    public void deleteById(int id) throws DaoException {
+        queryUpdate(
+                DELETE_BY_ID_SQL,
+                Collections.singletonList(id)
         );
     }
 

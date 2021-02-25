@@ -1,5 +1,6 @@
 package com.epam.jwd_final.web.observer;
 
+import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.dao.impl.MultiplierDao;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.domain.UserDto;
@@ -29,8 +30,9 @@ public class PayoutUserWinListener implements EventListener {
     }
 
     @Override
-    public void update(String eventType, int matchId) throws ListenerException {
+    public void update(String eventType, RequestContext req) throws ListenerException {
         try {
+            final int matchId = Integer.parseInt(String.valueOf(req.getParameter("matchId")));
             final List<UserDto> userDtos = userService.findAll().orElseThrow(IllegalArgumentException::new);
             for (UserDto user : userDtos) {
                 if (userService.isUserWinner(user.getName(), matchId)) {

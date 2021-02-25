@@ -24,6 +24,7 @@ public enum CommandManager {
     UPDATE_BET(UpdateBetCommand.INSTANCE),
     DEPOSIT(DepositCommand.INSTANCE),
     WITHDRAW(WithdrawCommand.INSTANCE),
+    CANCEL_MATCH(CancelMatchCommand.INSTANCE),
     SHOW_WITHDRAW_PAGE(ShowWithdrawPage.INSTANCE),
     SHOW_DEPOSIT_PAGE(ShowDepositPage.INSTANCE),
     SHOW_MAKE_BET_PAGE(ShowMakeBetPage.INSTANCE),

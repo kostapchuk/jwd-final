@@ -23,6 +23,9 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     private static final String FIND_ALL_BY_USER_ID_SQL =
             "select id, user_id, multiplier_id, bet_money from bet where user_id = ?";
 
+    private static final String FIND_ALL_BY_MULTIPLIER_ID_SQL =
+            "select id, user_id, multiplier_id, bet_money from bet where multiplier_id = ?";
+
     private static final String SAVE_SQL =
             "insert into bet (user_id, multiplier_id, bet_money) values (?, ?, ?)";
 
@@ -76,6 +79,14 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     public void deleteAllByMultiplierId(int multiplierId) throws DaoException {
         queryUpdate(
                 DELETE_ALL_BY_MULTIPLIER_ID_SQL,
+                Collections.singletonList(multiplierId)
+        );
+    }
+
+    @Override
+    public Optional<List<Bet>> findAllByMultiplierId(int multiplierId) throws DaoException {
+        return querySelectAll(
+                FIND_ALL_BY_MULTIPLIER_ID_SQL,
                 Collections.singletonList(multiplierId)
         );
     }

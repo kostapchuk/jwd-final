@@ -64,6 +64,7 @@
                             <%--                    <th scope="col">Coefficient</th>--%>
                         <th scope="col">Second team</th>
                         <th scope="col">New result</th>
+                        <th scope="col">Cancel</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -84,6 +85,12 @@
                                     </div>
                                     <input type="hidden" name="matchId" value="${match.id}" />
                                     <button class="btn btn-primary">Submit</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="${pageContext.request.contextPath}/controller?command=cancel_match" method="post">
+                                    <input type="hidden" name="matchId" value="${match.id}" />
+                                    <button class="btn btn-primary">Cancel</button>
                                 </form>
                             </td>
                         </tr>

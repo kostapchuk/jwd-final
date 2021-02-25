@@ -196,6 +196,15 @@ public enum UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public String findNameById(int userId) throws ServiceException {
+        try {
+            return userDao.findOneById(userId).orElseThrow(ServiceException::new).getName();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
     private UserDto convertToDto(User user) {
         return new UserDto(user.getName(), user.getRole().name(), user.getBalance());
     }

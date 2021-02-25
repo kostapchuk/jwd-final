@@ -21,6 +21,9 @@ public class MultiplierDao extends AbstractDao<Multiplier> {
     private static final String SAVE_SQL =
             "insert into `multiplier` (match_id, result_type_id, coefficient) values (?, ?, ?)";
 
+    private static final String DELETE_BY_ID_SQL =
+            "delete from `multiplier` where id = ?";
+
 
     public Optional<Multiplier> findOneById(int id) throws DaoException {
         return querySelectOne(
@@ -40,6 +43,13 @@ public class MultiplierDao extends AbstractDao<Multiplier> {
         queryUpdate(
                 SAVE_SQL,
                 Arrays.asList(multiplier.getMatchId(), multiplier.getResult().getId(), multiplier.getCoefficient())
+        );
+    }
+
+    public void deleteById(int id) throws DaoException {
+        queryUpdate(
+                DELETE_BY_ID_SQL,
+                Collections.singletonList(id)
         );
     }
 
