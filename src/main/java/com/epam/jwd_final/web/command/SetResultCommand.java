@@ -63,10 +63,7 @@ public enum SetResultCommand implements Command {
             betService.deleteAllByMultiplierId(
                     multiplierService.findIdByMatchIdAndResult(matchId, Result.DRAW)
             );
-            final BigDecimal currentBalance =
-                    userService.findBalanceById(userService.findUserIdByUserName(String.valueOf(req.getSession().getAttribute("userName"))));
 
-            req.setSessionAttribute("userBalance", currentBalance);
             return ShowBookmakerPage.INSTANCE.execute(req);
         } catch (ListenerException | ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

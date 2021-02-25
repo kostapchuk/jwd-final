@@ -8,8 +8,10 @@ import com.epam.jwd_final.web.domain.MatchDto;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
+import com.epam.jwd_final.web.service.UserService;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
+import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,10 +29,12 @@ public enum ShowAllMatchesPage implements Command {
     public static final String EVENTS_PARAMETER = "events";
 
     private final MatchServiceImpl matchService;
+    private final UserService userService;
     private final MultiplierServiceImpl multiplierService;
 
     ShowAllMatchesPage() {
         this.matchService = MatchServiceImpl.INSTANCE;
+        this.userService = UserServiceImpl.INSTANCE;
         this.multiplierService = MultiplierServiceImpl.INSTANCE;
     }
 
@@ -52,8 +56,12 @@ public enum ShowAllMatchesPage implements Command {
         try {
 //            req.setAttribute(MATCHES_PARAMETER,
 //                    matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT).orElse(Collections.emptyList()));
-//
-
+            if (req.getSession() != null) {
+                final String userName = String.valueOf(req.getSession().getAttribute("userName"));
+                if (!userName.equals("null")) {
+                    req.setSessionAttribute("userBalance", userService.findBalanceById(userService.findUserIdByUserName(userName)));
+                }
+            }
 
             final Optional<List<MatchDto>> matchDtos = matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT);
             List<EventDto> eventDtos = new ArrayList<>();

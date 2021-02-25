@@ -32,7 +32,7 @@ public enum CancelBetCommand implements Command {
             betService.deleteById(betId);
             final int userId = userService.findUserIdByUserName(userName);
             final BigDecimal newBalance = userService.findBalanceById(userId);
-            req.setSessionAttribute("userBalance", newBalance);
+//            req.setSessionAttribute("userBalance", userService.findBalanceById(userService.findUserIdByUserName("userName")));
             return ShowAllBetsPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

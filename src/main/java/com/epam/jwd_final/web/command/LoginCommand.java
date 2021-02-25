@@ -1,13 +1,11 @@
 package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.web.command.page.ShowMainPage;
-import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.command.page.ShowAllMatchesPage;
 import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 public enum LoginCommand implements Command {
@@ -40,7 +38,7 @@ public enum LoginCommand implements Command {
                 req.setSessionAttribute("errorMessage", "invalid credentials");
                 // TODO: forward
             }
-            return ShowMainPage.INSTANCE.execute(req);
+            return ShowAllMatchesPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

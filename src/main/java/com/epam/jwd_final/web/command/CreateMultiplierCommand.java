@@ -1,16 +1,10 @@
 package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.web.command.page.ShowMainPage;
-import com.epam.jwd_final.web.dao.impl.MultiplierDao;
-import com.epam.jwd_final.web.domain.Result;
+import com.epam.jwd_final.web.command.page.ShowAllMatchesPage;
 import com.epam.jwd_final.web.exception.CommandException;
-import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 public enum CreateMultiplierCommand implements Command {
 
@@ -37,7 +31,7 @@ public enum CreateMultiplierCommand implements Command {
 //        try {
 
 
-            return ShowMainPage.INSTANCE.execute(req); // TODO: write successfully create
+        return ShowAllMatchesPage.INSTANCE.execute(req); // TODO: write successfully create
 //        } catch (ServiceException e) {
 //            throw new CommandException(e.getMessage(), e.getCause());
 //        }

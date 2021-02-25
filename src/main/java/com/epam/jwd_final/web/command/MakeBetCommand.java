@@ -45,7 +45,6 @@ public enum MakeBetCommand implements Command {
                     betService.save(
                             betService.createBet(userId, multiplierId, betMoney));
                     userService.withdrawFromBalance(userName, betMoney); // TODO: the same as update user
-                    req.setSessionAttribute("userBalance", finalBalance);
                 }
             }
         } catch (ServiceException e) {

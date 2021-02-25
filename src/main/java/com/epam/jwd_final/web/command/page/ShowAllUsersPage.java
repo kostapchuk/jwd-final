@@ -40,6 +40,8 @@ public enum ShowAllUsersPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
+            final String userName = String.valueOf(req.getSession().getAttribute("userName"));
+            req.setSessionAttribute("userBalance", userService.findBalanceById(userService.findUserIdByUserName(userName)));
             final List<UserDto> userDtos = userService.findAll().orElse(Collections.emptyList());
             req.setAttribute(USERS_PARAMETER, userDtos);
             return ALL_USERS_PAGE_RESPONSE;

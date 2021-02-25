@@ -74,9 +74,9 @@ public enum CancelMatchCommand implements Command {
 
             matchService.deleteById(matchId);
 
-            final String userName = String.valueOf(req.getSession().getAttribute("userName"));
-            final BigDecimal currentBalance = userService.findBalanceById(userService.findUserIdByUserName(userName));
-            req.setSessionAttribute("userBalance", currentBalance); // TODO: update all users balance on page
+//            final String userName = String.valueOf(req.getSession().getAttribute("userName"));
+//            final BigDecimal currentBalance = userService.findBalanceById(userService.findUserIdByUserName(userName));
+//            req.setSessionAttribute("userBalance", currentBalance); // TODO: update all users balance on page
             return ShowBookmakerPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

@@ -23,21 +23,21 @@ public class AuthenticationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        final String requestURI = httpServletRequest.getRequestURI();
-        HttpSession session = httpServletRequest.getSession(false);
-        final String command = servletRequest.getParameter("command");
-        final String roleName = String.valueOf(session.getAttribute("userRole"));
-        if (command.equals("show_all_users_page")) {
-            if (!Role.ADMIN.name().equals(roleName)) {
-                servletRequest.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(servletRequest, servletResponse);
-            }
-        }
-        if (command.equals("show_bookmaker_page")) {
-            if (!(Role.ADMIN.name().equals(roleName) || Role.BOOKMAKER.name().equals(roleName))) {
-                servletRequest.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(servletRequest, servletResponse);
-            }
-        }
+//        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+//        final String requestURI = httpServletRequest.getRequestURI();
+//        HttpSession session = httpServletRequest.getSession(false);
+//        final String command = servletRequest.getParameter("command");
+//        final String roleName = String.valueOf(session.getAttribute("userRole"));
+//        if (command.equals("show_all_users_page")) {
+//            if (!Role.ADMIN.name().equals(roleName)) {
+//                servletRequest.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(servletRequest, servletResponse);
+//            }
+//        }
+//        if (command.equals("show_bookmaker_page")) {
+//            if (!(Role.ADMIN.name().equals(roleName) || Role.BOOKMAKER.name().equals(roleName))) {
+//                servletRequest.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(servletRequest, servletResponse);
+//            }
+//        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

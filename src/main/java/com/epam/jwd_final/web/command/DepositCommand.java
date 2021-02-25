@@ -25,8 +25,8 @@ public enum DepositCommand implements Command {
             final String userName = String.valueOf(req.getSession().getAttribute("userName"));
             final BigDecimal depositMoney = new BigDecimal(String.valueOf(req.getParameter("depositMoney")));
             userService.topUpBalance(userName, depositMoney);
-            final BigDecimal currentBalance = new BigDecimal(String.valueOf(req.getSession().getAttribute("userBalance")));
-            req.setSessionAttribute("userBalance", currentBalance.add(depositMoney));
+//            final BigDecimal currentBalance = new BigDecimal(String.valueOf(req.getSession().getAttribute("userBalance")));
+//            req.setSessionAttribute("userBalance", currentBalance.add(depositMoney));
             return ShowAllBetsPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

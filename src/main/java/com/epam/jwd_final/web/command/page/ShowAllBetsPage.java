@@ -45,6 +45,7 @@ public enum ShowAllBetsPage implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final String name = String.valueOf(req.getSession().getAttribute(NAME_PARAMETER));
+            req.setSessionAttribute("userBalance", userService.findBalanceById(userService.findUserIdByUserName(name)));
             final List<BetDto> betDtos = betService.findAllByUserName(name).orElse(Collections.emptyList());
             for (BetDto bet : betDtos) {
                 bet.setExpectedWin(userService.calculateExpectedWin(name, betService.findMultiplierIdById(bet.getId())));

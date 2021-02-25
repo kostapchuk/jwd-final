@@ -1,6 +1,7 @@
 package com.epam.jwd_final.web.command;
 
 import com.epam.jwd_final.web.exception.CommandException;
+import com.epam.jwd_final.web.exception.ServiceException;
 
 public interface Command {
 

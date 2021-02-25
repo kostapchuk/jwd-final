@@ -27,7 +27,6 @@ public enum WithdrawCommand implements Command {
             final BigDecimal currentBalance = new BigDecimal(String.valueOf(req.getSession().getAttribute("userBalance")));
             if (currentBalance.subtract(depositMoney).compareTo(new BigDecimal("0.00")) != -1) {
                 userService.withdrawFromBalance(userName, depositMoney);
-                req.setSessionAttribute("userBalance", currentBalance.subtract(depositMoney));
             }
             return ShowWithdrawPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
