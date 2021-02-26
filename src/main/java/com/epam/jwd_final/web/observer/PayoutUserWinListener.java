@@ -6,6 +6,7 @@ import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.exception.ListenerException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.MatchService;
+import com.epam.jwd_final.web.service.MultiplierService;
 import com.epam.jwd_final.web.service.UserService;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
@@ -18,7 +19,7 @@ public class PayoutUserWinListener implements EventListener {
 
     private final UserService userService;
     private final MatchService matchService;
-    private final MultiplierServiceImpl multiplierService;
+    private final MultiplierService multiplierService;
 
     public PayoutUserWinListener() {
         this.userService = UserServiceImpl.INSTANCE;
