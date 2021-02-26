@@ -4,11 +4,8 @@ import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
-import com.epam.jwd_final.web.command.page.ShowErrorPage;
 import com.epam.jwd_final.web.command.page.ShowMatchesPage;
 import com.epam.jwd_final.web.command.page.ShowBookmakerPage;
-import com.epam.jwd_final.web.domain.Match;
-import com.epam.jwd_final.web.domain.Multiplier;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
@@ -19,6 +16,8 @@ import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public enum CreateMatchCommand implements Command {
 
@@ -40,34 +39,38 @@ public enum CreateMatchCommand implements Command {
             if (firstTeam.equals(secondTeam)) {
                 return ShowBookmakerPage.INSTANCE.execute(req);
             }
-            final String start = req.getStringParameter(Parameter.START_TIME.getValue());
+            final LocalDateTime start = LocalDateTime.parse(req.getStringParameter(Parameter.START_TIME.getValue()));
+
             matchService.saveMatch(matchService.createMatch(start, firstTeam, secondTeam));
 
-            final int matchId = matchService
-                    .findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime.parse(start), firstTeam, secondTeam);
-
-            final BigDecimal firstTeamCoefficient =
-                    new BigDecimal(req.getStringParameter(Parameter.FIRST_TEAM_COEFFICIENT.getValue()));
-            final BigDecimal secondTeamCoefficient =
-                    new BigDecimal(req.getStringParameter(Parameter.SECOND_TEAM_COEFFICIENT.getValue()));
-            final BigDecimal drawCoefficient =
-                    new BigDecimal(req.getStringParameter(Parameter.DRAW_COEFFICIENT.getValue()));
-
-            multiplierService.saveMultiplier(
-                    multiplierService.createMultiplier(matchId, Result.FIRST_TEAM, firstTeamCoefficient)
+            Map<Result, BigDecimal> coefficients = new HashMap<>();
+            coefficients.put(
+                    Result.FIRST_TEAM,
+                    new BigDecimal(req.getStringParameter(Parameter.FIRST_TEAM_COEFFICIENT.getValue()))
+            );
+            coefficients.put(
+                    Result.SECOND_TEAM,
+                    new BigDecimal(req.getStringParameter(Parameter.SECOND_TEAM_COEFFICIENT.getValue()))
+            );
+            coefficients.put(
+                    Result.DRAW,
+                    new BigDecimal(req.getStringParameter(Parameter.DRAW_COEFFICIENT.getValue()))
             );
 
-            multiplierService.saveMultiplier(
-                    multiplierService.createMultiplier(matchId, Result.SECOND_TEAM, secondTeamCoefficient)
+            createMultipliers(
+                    coefficients,
+                    matchService.findMatchIdByStartByFirstTeamBySecondTeam(start, firstTeam, secondTeam)
             );
-
-            multiplierService.saveMultiplier(
-                    multiplierService.createMultiplier(matchId, Result.DRAW, drawCoefficient)
-            );
-
             return ShowMatchesPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
+        }
+    }
+
+    void createMultipliers(Map<Result, BigDecimal> coefficients, int matchId) throws ServiceException {
+        for (Result result : coefficients.keySet()) {
+            multiplierService.saveMultiplier(
+                    multiplierService.createMultiplier(matchId, result, coefficients.get(result)));
         }
     }
 }

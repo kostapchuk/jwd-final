@@ -8,17 +8,18 @@ import com.epam.jwd_final.web.exception.ServiceException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public interface MatchService {
 
     Optional<List<MatchDto>> findAllByStartOfDateByResult(LocalDate date, Result result) throws ServiceException;
 
-    Match createMatch(String startTime, String firstTeam, String secondTeam);
+    Match createMatch(LocalDateTime start, String firstTeam, String secondTeam);
 
     void saveMatch(Match match) throws ServiceException;
 
-    int findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime start, String firstTeam, String secondTeam) throws ServiceException;
+    int findMatchIdByStartByFirstTeamBySecondTeam(LocalDateTime start, String firstTeam, String secondTeam) throws ServiceException;
 
     boolean updateResult(int matchId, Result result) throws ServiceException;
 

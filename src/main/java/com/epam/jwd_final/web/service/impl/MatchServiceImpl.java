@@ -55,16 +55,12 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Match createMatch(String startTime, String firstTeam, String secondTeam) {
-        return new Match(
-                LocalDateTime.parse(startTime),
-                firstTeam,
-                secondTeam
-        );
+    public Match createMatch(LocalDateTime start, String firstTeam, String secondTeam) {
+        return new Match(start, firstTeam, secondTeam);
     }
 
     @Override
-    public int findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime start, String firstTeam, String secondTeam) throws ServiceException {
+    public int findMatchIdByStartByFirstTeamBySecondTeam(LocalDateTime start, String firstTeam, String secondTeam) throws ServiceException {
         try {
             return matchDao.findOneByStartByFirstTeamIdBySecondTeamId(
                     Timestamp.valueOf(start),
