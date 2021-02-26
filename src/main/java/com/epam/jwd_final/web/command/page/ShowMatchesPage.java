@@ -1,6 +1,8 @@
 package com.epam.jwd_final.web.command.page;
 
 import com.epam.jwd_final.web.command.Command;
+import com.epam.jwd_final.web.command.Page;
+import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.domain.EventDto;
@@ -24,9 +26,6 @@ public enum ShowMatchesPage implements Command {
 
     INSTANCE;
 
-    public static final String MATCHES_PARAMETER = "matches";
-    public static final String EVENTS_PARAMETER = "events";
-
     private final MatchServiceImpl matchService;
     private final UserService userService;
     private final MultiplierServiceImpl multiplierService;
@@ -41,7 +40,7 @@ public enum ShowMatchesPage implements Command {
 
         @Override
         public String getPage() {
-            return "/WEB-INF/jsp/matches.jsp";
+            return Page.MATCHES.getLink();
         }
 
         @Override
@@ -56,9 +55,9 @@ public enum ShowMatchesPage implements Command {
 //            req.setAttribute(MATCHES_PARAMETER,
 //                    matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT).orElse(Collections.emptyList()));
             if (req.getSession() != null) {
-                final String userName = String.valueOf(req.getSession().getAttribute("userName"));
+                final String userName = String.valueOf(req.getSession().getAttribute(Parameter.USER_NAME.getParameter()));
                 if (!userName.equals("null")) {
-                    req.setSessionAttribute("userBalance", userService.findBalanceById(userService.findUserIdByUserName(userName)));
+                    req.setSessionAttribute(Parameter.USER_BALANCE.getParameter(), userService.findBalanceById(userService.findUserIdByUserName(userName)));
                 }
             }
 
@@ -78,7 +77,7 @@ public enum ShowMatchesPage implements Command {
             } else {
                 eventDtos = Collections.emptyList();
             }
-            req.setAttribute(EVENTS_PARAMETER, eventDtos);
+            req.setAttribute(Parameter.EVENTS.getParameter(), eventDtos);
 
             return ALL_MATCHES_PAGE_RESPONSE;
         } catch (ServiceException e) {

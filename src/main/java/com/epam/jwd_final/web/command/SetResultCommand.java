@@ -21,25 +21,21 @@ public enum SetResultCommand implements Command {
 
     INSTANCE;
 
-    private static final String MATCH_ID_PARAMETER = "matchId";
-    private static final String RESULT_TYPE_PARAMETER = "resultType";
     private final MatchService matchService;
     private final MultiplierServiceImpl multiplierService;
     private final BetService betService;
-    private final UserService userService;
 
     SetResultCommand() {
         this.matchService = MatchServiceImpl.INSTANCE;
         this.multiplierService = MultiplierServiceImpl.INSTANCE;
         this.betService = BetServiceImpl.INSTANCE;
-        this.userService = UserServiceImpl.INSTANCE;
     }
 
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final int matchId = Integer.parseInt(String.valueOf(req.getParameter(MATCH_ID_PARAMETER)));
-            final String newResultStr = String.valueOf(req.getParameter(RESULT_TYPE_PARAMETER));
+            final int matchId = Integer.parseInt(String.valueOf(req.getParameter(Parameter.MATCH_ID.getParameter())));
+            final String newResultStr = String.valueOf(req.getParameter(Parameter.RESULT_TYPE.getParameter()));
             Result result;
             final Match match = matchService.findById(matchId);
             if (match.getFirstTeam().equals(newResultStr)) {

@@ -1,6 +1,8 @@
 package com.epam.jwd_final.web.command.page;
 
 import com.epam.jwd_final.web.command.Command;
+import com.epam.jwd_final.web.command.Page;
+import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.domain.Result;
@@ -18,9 +20,6 @@ public enum ShowBookmakerPage implements Command {
 
     INSTANCE;
 
-    public static final String MATCHES_PARAMETER = "matches";
-    public static final String TEAMS_PARAMETER = "teams";
-
     private final MatchServiceImpl matchService;
     private final TeamService teamService;
     private final UserService userService;
@@ -34,7 +33,7 @@ public enum ShowBookmakerPage implements Command {
     public static final ResponseContext BOOKMAKER_PAGE_RESPONSE = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/WEB-INF/jsp/bookmaker.jsp";
+            return Page.BOOKMAKER.getLink();
         }
 
         @Override
@@ -46,10 +45,10 @@ public enum ShowBookmakerPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String userName = String.valueOf(req.getSession().getAttribute("userName"));
-            req.setSessionAttribute("userBalance", userService.findBalanceById(userService.findUserIdByUserName(userName)));
-            req.setAttribute(MATCHES_PARAMETER, matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT).orElse(Collections.emptyList()));
-            req.setAttribute(TEAMS_PARAMETER, teamService.findAll());
+            final String userName = String.valueOf(req.getSession().getAttribute(Parameter.USER_NAME.getParameter()));
+            req.setSessionAttribute(Parameter.USER_BALANCE.getParameter(), userService.findBalanceById(userService.findUserIdByUserName(userName)));
+            req.setAttribute(Parameter.MATCHES.getParameter(), matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT).orElse(Collections.emptyList()));
+            req.setAttribute(Parameter.TEAMS.getParameter(), teamService.findAll());
             return BOOKMAKER_PAGE_RESPONSE;
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

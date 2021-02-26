@@ -12,11 +12,6 @@ public enum LoginCommand implements Command {
 
     INSTANCE;
 
-    private static final String USER_ROLE_ATTRIBUTE = "userRole";
-    private static final String USER_NAME_PARAMETER = "userName";
-    private static final String USER_PASSWORD_PARAMETER = "userPassword";
-    private static final String USER_BALANCE_ATTRIBUTE = "userBalance";
-
     private final UserServiceImpl userService;
 
     LoginCommand() {
@@ -26,13 +21,13 @@ public enum LoginCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String name = String.valueOf(req.getParameter(USER_NAME_PARAMETER));
-            final String password = String.valueOf(req.getParameter(USER_PASSWORD_PARAMETER));
+            final String name = String.valueOf(req.getParameter(Parameter.USER_NAME.getParameter()));
+            final String password = String.valueOf(req.getParameter(Parameter.USER_PASSWORD.getParameter()));
             final Optional<UserDto> userDto = userService.login(name, password);
             if (userDto.isPresent()) {
-                req.setSessionAttribute(USER_NAME_PARAMETER, name);
-                req.setSessionAttribute(USER_ROLE_ATTRIBUTE, userDto.get().getRole());
-                req.setSessionAttribute(USER_BALANCE_ATTRIBUTE, userDto.get().getBalance());
+                req.setSessionAttribute(Parameter.USER_NAME.getParameter(), name);
+                req.setSessionAttribute(Parameter.USER_ROLE.getParameter(), userDto.get().getRole());
+                req.setSessionAttribute(Parameter.USER_BALANCE.getParameter(), userDto.get().getBalance());
                 // TODO: redirect
             } else {
                 req.setSessionAttribute("errorMessage", "invalid credentials");

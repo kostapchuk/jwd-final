@@ -12,7 +12,6 @@ import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public enum CancelMatchCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final int matchId = Integer.parseInt(String.valueOf(req.getParameter("matchId")));
+            final int matchId = Integer.parseInt(String.valueOf(req.getParameter(Parameter.MATCH_ID.getParameter())));
 
             final int firstTeamMultiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.FIRST_TEAM);
             final int secondTeamMultiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.SECOND_TEAM);
@@ -74,9 +73,6 @@ public enum CancelMatchCommand implements Command {
 
             matchService.deleteById(matchId);
 
-//            final String userName = String.valueOf(req.getSession().getAttribute("userName"));
-//            final BigDecimal currentBalance = userService.findBalanceById(userService.findUserIdByUserName(userName));
-//            req.setSessionAttribute("userBalance", currentBalance); // TODO: update all users balance on page
             return ShowBookmakerPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

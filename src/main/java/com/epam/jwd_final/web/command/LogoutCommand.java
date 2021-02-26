@@ -1,6 +1,5 @@
 package com.epam.jwd_final.web.command;
 
-
 import com.epam.jwd_final.web.command.page.ShowMatchesPage;
 import com.epam.jwd_final.web.exception.CommandException;
 

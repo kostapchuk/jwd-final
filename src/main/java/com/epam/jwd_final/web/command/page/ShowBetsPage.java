@@ -1,6 +1,7 @@
 package com.epam.jwd_final.web.command.page;
 
 import com.epam.jwd_final.web.command.Command;
+import com.epam.jwd_final.web.command.Page;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
@@ -34,17 +35,17 @@ public enum ShowBetsPage implements Command {
     private final MatchService matchService;
 
     ShowBetsPage() {
-            this.userService = UserServiceImpl.INSTANCE;
-            this.betService = BetServiceImpl.INSTANCE;
-            this.multiplierService = MultiplierServiceImpl.INSTANCE;
-            this.matchService = MatchServiceImpl.INSTANCE;
+        this.userService = UserServiceImpl.INSTANCE;
+        this.betService = BetServiceImpl.INSTANCE;
+        this.multiplierService = MultiplierServiceImpl.INSTANCE;
+        this.matchService = MatchServiceImpl.INSTANCE;
     }
 
     public static final ResponseContext ALL_BETS_PAGE_RESPONSE = new ResponseContext() {
 
         @Override
         public String getPage() {
-            return "/WEB-INF/jsp/bets.jsp";
+            return Page.BETS.getLink();
         }
 
         @Override
@@ -56,8 +57,8 @@ public enum ShowBetsPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String name = String.valueOf(req.getSession().getAttribute(Parameter.NAME.getParameter()));
-            req.setSessionAttribute(Parameter.BALANCE.getParameter(), userService.findBalanceById(userService.findUserIdByUserName(name)));
+            final String name = String.valueOf(req.getSession().getAttribute(Parameter.USER_NAME.getParameter()));
+            req.setSessionAttribute(Parameter.USER_BALANCE.getParameter(), userService.findBalanceById(userService.findUserIdByUserName(name)));
 
             final List<BetDto> betDtos = betService.findAllByUserName(name).orElse(Collections.emptyList());
             List<PlacedBetDto> placedBetDtos = new ArrayList<>();

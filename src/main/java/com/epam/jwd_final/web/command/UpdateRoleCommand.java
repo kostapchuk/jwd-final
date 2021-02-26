@@ -10,7 +10,6 @@ public enum UpdateRoleCommand implements Command {
 
     INSTANCE;
 
-    private static final String USER_NAME_ATTRIBUTE = "userName";
     private final UserService userService;
 
     UpdateRoleCommand() {
@@ -20,8 +19,7 @@ public enum UpdateRoleCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            //final String userName = String.valueOf(req.getSession().getAttribute(USER_NAME_ATTRIBUTE));
-            final String userName = String.valueOf(req.getParameter(USER_NAME_ATTRIBUTE));
+            final String userName = String.valueOf(req.getParameter(Parameter.USER_NAME.getParameter()));
             userService.updateRole(userName);
             return ShowUsersPage.INSTANCE.execute(req);
         } catch (ServiceException e) {

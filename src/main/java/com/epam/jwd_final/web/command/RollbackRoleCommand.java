@@ -10,8 +10,6 @@ public enum RollbackRoleCommand implements Command {
 
     INSTANCE;
 
-    private static final String USER_NAME_ATTRIBUTE = "userName";
-
     private final UserService userService;
 
     RollbackRoleCommand() {
@@ -21,7 +19,7 @@ public enum RollbackRoleCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String userName = String.valueOf(req.getParameter(USER_NAME_ATTRIBUTE));
+            final String userName = String.valueOf(req.getParameter(Parameter.USER_NAME.getParameter()));
             userService.rollbackRole(userName);
             return ShowUsersPage.INSTANCE.execute(req);
         } catch (ServiceException e) {

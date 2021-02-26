@@ -1,11 +1,11 @@
 package com.epam.jwd_final.web.command;
 
 import com.epam.jwd_final.web.command.page.ShowBetsPage;
-import com.epam.jwd_final.web.command.page.ShowMatchesPage;
-import com.epam.jwd_final.web.command.page.ShowUsersPage;
 import com.epam.jwd_final.web.command.page.ShowBookmakerPage;
 import com.epam.jwd_final.web.command.page.ShowDepositPage;
 import com.epam.jwd_final.web.command.page.ShowErrorPage;
+import com.epam.jwd_final.web.command.page.ShowMatchesPage;
+import com.epam.jwd_final.web.command.page.ShowUsersPage;
 import com.epam.jwd_final.web.command.page.ShowWithdrawPage;
 
 public enum CommandManager {
