@@ -39,22 +39,13 @@ public enum SetResultCommand implements Command {
             final String userResult = req.getStringParameter(Parameter.RESULT_TYPE.getValue());
 
             final Match match = matchService.findById(matchId);
-            Result result = parseResult(match,userResult);
 
-            matchService.updateResult(matchId, result);
+            Result newResult = parseResult(match,userResult);
+            matchService.updateResult(matchId, newResult);
+
             new PayoutUserWinListener().update("payoutUserWin", req); // TODO: add to everyone setting userBalance
 
-            betService.deleteAllByMultiplierId(
-                    multiplierService.findIdByMatchIdAndResult(matchId, Result.FIRST_TEAM)
-            );
-
-            betService.deleteAllByMultiplierId(
-                    multiplierService.findIdByMatchIdAndResult(matchId, Result.SECOND_TEAM)
-            );
-
-            betService.deleteAllByMultiplierId(
-                    multiplierService.findIdByMatchIdAndResult(matchId, Result.DRAW)
-            );
+            deleteAllBets(matchId);
 
             return ShowBookmakerPage.INSTANCE.execute(req);
         } catch (ListenerException | ServiceException e) {
@@ -74,5 +65,16 @@ public enum SetResultCommand implements Command {
             result = Result.NO_RESULT;
         }
         return result;
+    }
+
+    void deleteAllBets(int matchId) throws ServiceException {
+        for (Result value : Result.values()) {
+            if (value.equals(Result.NO_RESULT)) {
+                break;
+            }
+            betService.deleteAllByMultiplierId(
+                    multiplierService.findIdByMatchIdAndResult(matchId, value)
+            );
+        }
     }
 }

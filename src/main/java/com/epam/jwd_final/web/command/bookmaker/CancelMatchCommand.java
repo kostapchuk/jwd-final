@@ -39,7 +39,5 @@ public enum CancelMatchCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }
-
     }
-
 }
