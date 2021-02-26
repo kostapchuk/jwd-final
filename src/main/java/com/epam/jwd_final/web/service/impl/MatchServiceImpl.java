@@ -8,11 +8,15 @@ import com.epam.jwd_final.web.domain.MatchDto;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ServiceException;
+import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.MatchService;
+import com.epam.jwd_final.web.service.MultiplierService;
+import com.epam.jwd_final.web.service.UserService;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,10 +28,16 @@ public enum MatchServiceImpl implements MatchService {
 
     private final MatchDao matchDao;
     private final TeamDao teamDao;
+    private final BetService betService;
+    private final MultiplierService multiplierService;
+    private final UserService userService;
 
     MatchServiceImpl() {
         this.matchDao = new MatchDaoImpl();
         this.teamDao = new TeamDao();
+        this.betService = BetServiceImpl.INSTANCE;
+        this.multiplierService = MultiplierServiceImpl.INSTANCE;
+        this.userService = UserServiceImpl.INSTANCE;
     }
 
     @Override
@@ -100,6 +110,22 @@ public enum MatchServiceImpl implements MatchService {
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
+    }
+
+    @Override
+    public void cancelByIdByResult(int id, Result result) throws ServiceException {
+        final int multiplierId = multiplierService.findIdByMatchIdAndResult(id, result);
+        final List<Integer> userIds = betService.findAllUserIdByMultiplierId(multiplierId).orElse(Collections.emptyList());
+
+        for (Integer userId : userIds) {
+            userService.topUpBalance(
+                    userService.findNameById(userId),
+                    betService.findBetMoneyByUserIdByMultiplierId(userId, multiplierId)
+            );
+        }
+
+        betService.deleteAllByMultiplierId(multiplierId);
+        multiplierService.deleteById(multiplierId);
     }
 
     @Override

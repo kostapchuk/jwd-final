@@ -25,15 +25,10 @@ public enum CancelMatchCommand implements Command {
     INSTANCE;
 
     private final MatchService matchService;
-    private final BetService betService;
-    private final MultiplierService multiplierService;
-    private final UserService userService;
+
 
     CancelMatchCommand() {
         this.matchService = MatchServiceImpl.INSTANCE;
-        this.betService = BetServiceImpl.INSTANCE;
-        this.multiplierService = MultiplierServiceImpl.INSTANCE;
-        this.userService = UserServiceImpl.INSTANCE;
     }
 
     @Override
@@ -41,40 +36,9 @@ public enum CancelMatchCommand implements Command {
         try {
             final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
 
-            final int firstTeamMultiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.FIRST_TEAM);
-            final int secondTeamMultiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.SECOND_TEAM);
-            final int drawMultiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.DRAW);
-
-            final List<Integer> userIdsFirstTeam = betService.findAllUserIdByMultiplierId(firstTeamMultiplierId).orElse(Collections.emptyList());
-            final List<Integer> userIdsSecondTeam = betService.findAllUserIdByMultiplierId(secondTeamMultiplierId).orElse(Collections.emptyList());
-            final List<Integer> userIdsDraw = betService.findAllUserIdByMultiplierId(drawMultiplierId).orElse(Collections.emptyList());
-
-            for (Integer userId : userIdsFirstTeam) {
-                userService.topUpBalance(
-                        userService.findNameById(userId),
-                        betService.findBetMoneyByUserIdByMultiplierId(userId, firstTeamMultiplierId)
-                );
-            }
-            for (Integer userId : userIdsSecondTeam) {
-                userService.topUpBalance(
-                        userService.findNameById(userId),
-                        betService.findBetMoneyByUserIdByMultiplierId(userId, secondTeamMultiplierId)
-                );
-            }
-            for (Integer userId : userIdsDraw) {
-                userService.topUpBalance(
-                        userService.findNameById(userId),
-                        betService.findBetMoneyByUserIdByMultiplierId(userId, drawMultiplierId)
-                );
-            }
-
-            betService.deleteAllByMultiplierId(firstTeamMultiplierId);
-            betService.deleteAllByMultiplierId(secondTeamMultiplierId);
-            betService.deleteAllByMultiplierId(drawMultiplierId);
-
-            multiplierService.deleteById(firstTeamMultiplierId);
-            multiplierService.deleteById(secondTeamMultiplierId);
-            multiplierService.deleteById(drawMultiplierId);
+            matchService.cancelByIdByResult(matchId, Result.FIRST_TEAM);
+            matchService.cancelByIdByResult(matchId, Result.SECOND_TEAM);
+            matchService.cancelByIdByResult(matchId, Result.DRAW);
 
             matchService.deleteById(matchId);
 
@@ -84,4 +48,5 @@ public enum CancelMatchCommand implements Command {
         }
 
     }
+
 }

@@ -27,4 +27,6 @@ public interface MatchService {
     Match findById(int id) throws ServiceException;
 
     void deleteById(int id) throws ServiceException;
+
+    void cancelByIdByResult(int id, Result result) throws ServiceException;
 }

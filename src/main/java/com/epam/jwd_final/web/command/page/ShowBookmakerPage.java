@@ -40,7 +40,7 @@ public enum ShowBookmakerPage implements Command {
             req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userService.findBalanceById(userService.findUserIdByUserName(userName)));
             req.setAttribute(Parameter.MATCHES.getValue(), matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT).orElse(Collections.emptyList()));
             req.setAttribute(Parameter.TEAMS.getValue(), teamService.findAll());
-            return ResponseContextResult.redirect(Page.BOOKMAKER.getLink());
+            return ResponseContextResult.forward(Page.BOOKMAKER.getLink());
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

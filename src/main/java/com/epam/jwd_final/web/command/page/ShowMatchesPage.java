@@ -67,7 +67,7 @@ public enum ShowMatchesPage implements Command {
             }
             req.setAttribute(Parameter.EVENTS.getValue(), eventDtos);
 
-            return ResponseContextResult.redirect(Page.MATCHES.getLink());
+            return ResponseContextResult.forward(Page.MATCHES.getLink());
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

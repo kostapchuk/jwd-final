@@ -78,6 +78,6 @@ public enum ShowBetsPage implements Command {
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }
-        return ResponseContextResult.redirect(Page.BETS.getLink());
+        return ResponseContextResult.forward(Page.BETS.getLink());
     }
 }
