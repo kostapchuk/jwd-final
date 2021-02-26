@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
 
 <fmt:setLocale value="${language}"/>
@@ -20,15 +20,6 @@
         <div class="offset-lg-1 col-lg-10">
             <c:if test="${not empty requestScope.placedBets}">
                 <table class="table">
-<%--                    <thead>--%>
-<%--                    <tr>--%>
-<%--                        <th scope="col">Bet $</th>--%>
-<%--                            &lt;%&ndash;                    <th scope="col">Coefficient</th>&ndash;%&gt;--%>
-<%--                        <th scope="col">To return $</th>--%>
-<%--                        <th scope="col"></th>--%>
-<%--                        <th scope="col"></th>--%>
-<%--                    </tr>--%>
-<%--                    </thead>--%>
                     <tbody>
                     <c:forEach var="bet" items="${requestScope.placedBets}">
                         <tr>
@@ -47,12 +38,6 @@
                                 <span class="text-muted"><fmt:message key="return" bundle="${bundle}"/></span>
                                 <span class="font-weight-bold">${bet.expectedWin}</span>
                                 <span class="text-muted">$</span>
-                            </td>
-                            <td>
-                                <form action="${pageContext.request.contextPath}/controller?command=update_bet" method="post">
-                                    <input type="hidden" name="betId" value="${bet.id}" />
-                                    <button class="btn btn-primary btn-block"><fmt:message key="bets.update" bundle="${bundle}"/></button>
-                                </form>
                             </td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/controller?command=cancel_bet" method="post">

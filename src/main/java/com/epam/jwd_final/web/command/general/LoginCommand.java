@@ -4,6 +4,7 @@ import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
+import com.epam.jwd_final.web.command.page.ShowErrorPage;
 import com.epam.jwd_final.web.command.page.ShowMatchesPage;
 import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.exception.CommandException;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public enum LoginCommand implements Command {
 
     INSTANCE;
+
+    private static final String ERROR_MSG = "Invalid credentials";
 
     private final UserServiceImpl userService;
 
@@ -32,10 +35,11 @@ public enum LoginCommand implements Command {
                 req.setSessionAttribute(Parameter.USER_NAME.getValue(), name);
                 req.setSessionAttribute(Parameter.USER_ROLE.getValue(), userDto.get().getRole());
                 req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userDto.get().getBalance());
-                // TODO: redirect
             } else {
-                req.setSessionAttribute("errorMessage", "invalid credentials");
-                // TODO: forward
+                req.setSessionAttribute(Parameter.ERROR.getValue(), ERROR_MSG);
+                // TODO: or just validate with js and write "incorrect login or password"
+
+                return ShowErrorPage.INSTANCE.execute(req);
             }
             return ShowMatchesPage.INSTANCE.execute(req);
         } catch (ServiceException e) {

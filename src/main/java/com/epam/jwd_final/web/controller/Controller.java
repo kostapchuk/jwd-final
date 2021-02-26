@@ -3,9 +3,12 @@ package com.epam.jwd_final.web.controller;
 import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.command.WrappingRequestContext;
+import com.epam.jwd_final.web.connection.ConnectionPool;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.observer.Payout;
 import com.epam.jwd_final.web.observer.PayoutUserWinListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,10 +17,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
+
+    private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
     private static final String COMMAND_PARAMETER_NAME = "command";
 
@@ -51,9 +55,10 @@ public class Controller extends HttpServlet {
                 dispatcher.forward(req, resp);
             }
         } catch (CommandException e) {
-            e.printStackTrace();
-//            LOGGER.error(e.getMessage(), e);
-//            request.setAttribute(ERROR, e.getMessage());
+            LOGGER.error(e.getMessage(), e);
+            req.setAttribute("error", e.getMessage());
+//            final RequestDispatcher dispatcher = req.getRequestDispatcher(result.getPage());
+//            dispatcher.forward(req, resp);
 //            commandResult = CommandResult.forward(Page.ERROR.getValue());
         }
     }

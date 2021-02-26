@@ -3,6 +3,7 @@ package com.epam.jwd_final.web.command;
 public enum Parameter {
 
     BETS("bets"),
+    ERROR("error"),
     MATCHES("matches"),
     TEAMS("teams"),
     EVENTS("events"),

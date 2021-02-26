@@ -8,5 +8,5 @@ import java.sql.SQLException;
 
 public interface ModelMapper<E extends Entity> {
 
-    E mapToEntity(ResultSet rs) throws SQLException, ModelMapperException;
+    E mapToEntity(ResultSet rs) throws ModelMapperException;
 }

@@ -18,7 +18,6 @@ import com.epam.jwd_final.web.command.page.ShowWithdrawPage;
 import com.epam.jwd_final.web.command.user.CancelBetCommand;
 import com.epam.jwd_final.web.command.user.DepositCommand;
 import com.epam.jwd_final.web.command.user.MakeBetCommand;
-import com.epam.jwd_final.web.command.user.UpdateBetCommand;
 import com.epam.jwd_final.web.command.user.WithdrawCommand;
 
 public enum CommandManager {
@@ -32,7 +31,6 @@ public enum CommandManager {
     SET_RESULT(SetResultCommand.INSTANCE),
     CANCEL_BET(CancelBetCommand.INSTANCE),
     MAKE_BET(MakeBetCommand.INSTANCE),
-    UPDATE_BET(UpdateBetCommand.INSTANCE),
     DEPOSIT(DepositCommand.INSTANCE),
     WITHDRAW(WithdrawCommand.INSTANCE),
     CANCEL_MATCH(CancelMatchCommand.INSTANCE),
