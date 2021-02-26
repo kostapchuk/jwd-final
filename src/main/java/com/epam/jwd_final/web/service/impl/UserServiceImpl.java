@@ -169,6 +169,7 @@ public enum UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public BigDecimal calculateExpectedWin(String name, int multiplierId) throws ServiceException {
         try {
             final int userId = userDao.findOneByName(name).orElseThrow(ServiceException::new).getId();
@@ -180,6 +181,7 @@ public enum UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public boolean isUserWinner(String userName, int matchId) throws ServiceException {
         try {
             final int userId = userDao.findOneByName(userName).orElseThrow(ServiceException::new).getId();

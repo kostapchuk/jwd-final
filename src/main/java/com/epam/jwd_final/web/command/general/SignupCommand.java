@@ -8,13 +8,14 @@ import com.epam.jwd_final.web.command.page.ShowMatchesPage;
 import com.epam.jwd_final.web.command.page.ShowErrorPage;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
+import com.epam.jwd_final.web.service.UserService;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
 public enum SignupCommand implements Command {
 
     INSTANCE;
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     SignupCommand() {
         this.userService = UserServiceImpl.INSTANCE;

@@ -20,7 +20,6 @@ public enum ShowWithdrawPage implements Command {
         this.userService = UserServiceImpl.INSTANCE;
     }
 
-
     private static final ResponseContext WITHDRAW_PAGE_RESPONSE = new ResponseContext() {
         @Override
         public String getPage() {

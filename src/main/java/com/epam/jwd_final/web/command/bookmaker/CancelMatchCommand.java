@@ -10,6 +10,7 @@ import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.MatchService;
+import com.epam.jwd_final.web.service.MultiplierService;
 import com.epam.jwd_final.web.service.UserService;
 import com.epam.jwd_final.web.service.impl.BetServiceImpl;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
@@ -25,7 +26,7 @@ public enum CancelMatchCommand implements Command {
 
     private final MatchService matchService;
     private final BetService betService;
-    private final MultiplierServiceImpl multiplierService;
+    private final MultiplierService multiplierService;
     private final UserService userService;
 
     CancelMatchCommand() {

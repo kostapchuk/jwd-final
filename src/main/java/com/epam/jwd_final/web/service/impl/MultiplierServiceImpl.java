@@ -6,10 +6,11 @@ import com.epam.jwd_final.web.domain.Multiplier;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ServiceException;
+import com.epam.jwd_final.web.service.MultiplierService;
 
 import java.math.BigDecimal;
 
-public enum MultiplierServiceImpl {
+public enum MultiplierServiceImpl implements MultiplierService {
 
     INSTANCE;
 
@@ -19,10 +20,12 @@ public enum MultiplierServiceImpl {
         this.multiplierDao = new MultiplierDaoImpl();
     }
 
+    @Override
     public Multiplier createMultiplier(int matchId, Result result, BigDecimal coefficient) {
         return new Multiplier(matchId, result, coefficient);
     }
 
+    @Override
     public void saveMultiplier(Multiplier multiplier) throws ServiceException {
         try {
             multiplierDao.save(multiplier);
@@ -31,6 +34,7 @@ public enum MultiplierServiceImpl {
         }
     }
 
+    @Override
     public BigDecimal findCoefficientByMatchIdByResult(int matchId, Result result) throws ServiceException {
         try {
             return multiplierDao.findOneByMatchIdByResultId(matchId, result.getId()).orElseThrow(ServiceException::new).getCoefficient();
@@ -39,6 +43,7 @@ public enum MultiplierServiceImpl {
         }
     }
 
+    @Override
     public int findIdByMatchIdAndResult(int matchId, Result result) throws ServiceException {
         try {
             return multiplierDao.findOneByMatchIdByResultId(matchId, result.getId())
@@ -49,6 +54,7 @@ public enum MultiplierServiceImpl {
         }
     }
 
+    @Override
     public void deleteById(int id) throws ServiceException {
         try {
             multiplierDao.deleteById(id);
@@ -57,6 +63,7 @@ public enum MultiplierServiceImpl {
         }
     }
 
+    @Override
     public int findMatchIdByMultiplierId(int multiplierId) throws ServiceException {
         try {
             return multiplierDao.findOneById(multiplierId).orElseThrow(ServiceException::new).getMatchId();
@@ -65,6 +72,7 @@ public enum MultiplierServiceImpl {
         }
     }
 
+    @Override
     public BigDecimal findCoefficientById(int id) throws ServiceException {
         try {
             return multiplierDao.findOneById(id).orElseThrow(ServiceException::new).getCoefficient();
@@ -73,6 +81,7 @@ public enum MultiplierServiceImpl {
         }
     }
 
+    @Override
     public Result findResultById(int id) throws ServiceException {
         try {
             return multiplierDao.findOneById(id).orElseThrow(ServiceException::new).getResult();

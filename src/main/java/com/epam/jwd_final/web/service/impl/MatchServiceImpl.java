@@ -30,6 +30,7 @@ public enum MatchServiceImpl implements MatchService {
         this.teamDao = new TeamDao();
     }
 
+    @Override
     public Optional<List<MatchDto>> findAllByStartOfDateByResult(LocalDate date, Result result) throws ServiceException {
         try {
             return matchDao.findAllByStartOfDateByResultId(date, result.getId())

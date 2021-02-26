@@ -56,7 +56,7 @@ public class Controller extends HttpServlet {
             }
         } catch (CommandException e) {
             LOGGER.error(e.getMessage(), e);
-            req.setAttribute("error", e.getMessage());
+//            req.setAttribute("error", e.getMessage());
 //            final RequestDispatcher dispatcher = req.getRequestDispatcher(result.getPage());
 //            dispatcher.forward(req, resp);
 //            commandResult = CommandResult.forward(Page.ERROR.getValue());

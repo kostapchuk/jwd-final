@@ -13,6 +13,7 @@ import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.observer.PayoutUserWinListener;
 import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.MatchService;
+import com.epam.jwd_final.web.service.MultiplierService;
 import com.epam.jwd_final.web.service.impl.BetServiceImpl;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
@@ -22,7 +23,7 @@ public enum SetResultCommand implements Command {
     INSTANCE;
 
     private final MatchService matchService;
-    private final MultiplierServiceImpl multiplierService;
+    private final MultiplierService multiplierService;
     private final BetService betService;
 
     SetResultCommand() {
