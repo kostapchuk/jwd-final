@@ -52,12 +52,10 @@ public enum ShowMatchesPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-//            req.setAttribute(MATCHES_PARAMETER,
-//                    matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT).orElse(Collections.emptyList()));
             if (req.getSession() != null) {
-                final String userName = String.valueOf(req.getSession().getAttribute(Parameter.USER_NAME.getParameter()));
+                final String userName = req.getStringSessionAttribute(Parameter.USER_NAME.getValue());
                 if (!userName.equals("null")) {
-                    req.setSessionAttribute(Parameter.USER_BALANCE.getParameter(), userService.findBalanceById(userService.findUserIdByUserName(userName)));
+                    req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userService.findBalanceById(userService.findUserIdByUserName(userName)));
                 }
             }
 
@@ -77,7 +75,7 @@ public enum ShowMatchesPage implements Command {
             } else {
                 eventDtos = Collections.emptyList();
             }
-            req.setAttribute(Parameter.EVENTS.getParameter(), eventDtos);
+            req.setAttribute(Parameter.EVENTS.getValue(), eventDtos);
 
             return ALL_MATCHES_PAGE_RESPONSE;
         } catch (ServiceException e) {

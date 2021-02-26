@@ -41,6 +41,31 @@ public class WrappingRequestContext implements RequestContext {
     }
 
     @Override
+    public String getStringParameter(String name) {
+        return String.valueOf(getParameter(name));
+    }
+
+    @Override
+    public Integer getIntParameter(String name) {
+        return Integer.parseInt(getStringParameter(name));
+    }
+
+    @Override
+    public Object getSessionAttribute(String name) {
+        return getSession().getAttribute(name);
+    }
+
+    @Override
+    public String getStringSessionAttribute(String name) {
+        return String.valueOf(getSessionAttribute(name));
+    }
+
+    @Override
+    public Integer getIntSessionAttribute(String name) {
+        return Integer.parseInt(getStringSessionAttribute(name));
+    }
+
+    @Override
     public HttpSession getSession() {
         return request.getSession(false);
     }

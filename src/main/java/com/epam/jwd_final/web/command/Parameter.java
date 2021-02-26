@@ -26,13 +26,13 @@ public enum Parameter {
     USER_PASSWORD("userPassword"),
     USER_BALANCE("userBalance");
 
-    private final String parameter;
+    private final String value;
 
-    Parameter(String parameter) {
-        this.parameter = parameter;
+    Parameter(String value) {
+        this.value = value;
     }
 
-    public String getParameter() {
-        return parameter;
+    public String getValue() {
+        return value;
     }
 }

@@ -31,20 +31,20 @@ public enum CreateMatchCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String firstTeam = String.valueOf(req.getParameter(Parameter.FIRST_TEAM.getParameter()));
-            final String secondTeam = String.valueOf(req.getParameter(Parameter.SECOND_TEAM.getParameter()));
+            final String firstTeam = req.getStringParameter(Parameter.FIRST_TEAM.getValue());
+            final String secondTeam = req.getStringParameter(Parameter.SECOND_TEAM.getValue());
             if (firstTeam.equals(secondTeam)) {
                 return ShowBookmakerPage.INSTANCE.execute(req);
             }
-            final String start = String.valueOf(req.getParameter(Parameter.START_TIME.getParameter()));
+            final String start = req.getStringParameter(Parameter.START_TIME.getValue());
             matchService.saveMatch(matchService.createMatch(start, firstTeam, secondTeam));
 
             final BigDecimal firstTeamCoefficient =
-                    new BigDecimal(String.valueOf(req.getParameter(Parameter.FIRST_TEAM_COEFFICIENT.getParameter())));
+                    new BigDecimal(req.getStringParameter(Parameter.FIRST_TEAM_COEFFICIENT.getValue()));
             final BigDecimal secondTeamCoefficient =
-                    new BigDecimal(String.valueOf(req.getParameter(Parameter.SECOND_TEAM_COEFFICIENT.getParameter())));
+                    new BigDecimal(req.getStringParameter(Parameter.SECOND_TEAM_COEFFICIENT.getValue()));
             final BigDecimal drawCoefficient =
-                    new BigDecimal(String.valueOf(req.getParameter(Parameter.DRAW_COEFFICIENT.getParameter())));
+                    new BigDecimal(req.getStringParameter(Parameter.DRAW_COEFFICIENT.getValue()));
 
             final int matchId = matchService
                     .findMatchIdByStartAndFirstTeamAndSecondTeam(LocalDateTime.parse(start), firstTeam, secondTeam);

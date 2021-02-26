@@ -33,16 +33,16 @@ public enum MakeBetCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final int matchId = Integer.parseInt(String.valueOf(req.getParameter(Parameter.MATCH_ID.getParameter())));
-            final String userResult = String.valueOf(req.getParameter(Parameter.RESULT.getParameter()));
+            final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
+            final String userResult = req.getStringParameter(Parameter.RESULT.getValue());
             final int multiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.valueOf(userResult));
-            final String userName = String.valueOf(req.getSession().getAttribute(Parameter.USER_NAME.getParameter()));
+            final String userName = req.getStringSessionAttribute(Parameter.USER_NAME.getValue());
             if ("null".equals(userName)) {
                 return ShowMatchesPage.INSTANCE.execute(req);
             }
             final int userId = userService.findUserIdByUserName(userName);
             if (!betService.isBetExist(userId, multiplierId)) {
-                final BigDecimal betMoney = new BigDecimal(String.valueOf(req.getParameter(Parameter.BET_MONEY.getParameter())));
+                final BigDecimal betMoney = new BigDecimal(req.getStringParameter(Parameter.BET_MONEY.getValue()));
                 final BigDecimal currentBalance = userService.findBalanceById(userId);
                 final BigDecimal finalBalance = currentBalance.subtract(betMoney);
 

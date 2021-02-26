@@ -29,8 +29,8 @@ public enum CancelBetCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final int betId = Integer.parseInt(String.valueOf(req.getParameter(Parameter.BET_ID.getParameter())));
-            final String userName = String.valueOf(req.getSession().getAttribute(Parameter.USER_NAME.getParameter()));
+            final int betId = req.getIntParameter(Parameter.BET_ID.getValue());
+            final String userName = req.getStringSessionAttribute(Parameter.USER_NAME.getValue());
             final BigDecimal betMoney = betService.findBetMoneyById(betId);
             userService.topUpBalance(userName, betMoney);
             betService.deleteById(betId);

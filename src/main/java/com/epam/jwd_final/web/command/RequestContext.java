@@ -14,5 +14,15 @@ public interface RequestContext {
 
     void setSessionAttribute(String name, Object obj);
 
+    String getStringParameter(String name);
+
+    Integer getIntParameter(String name);
+
+    Object getSessionAttribute(String name);
+
+    String getStringSessionAttribute(String name);
+
+    Integer getIntSessionAttribute(String name);
+
     HttpSession getSession();
 }

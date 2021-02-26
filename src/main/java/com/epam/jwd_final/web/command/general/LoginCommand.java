@@ -25,13 +25,13 @@ public enum LoginCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String name = String.valueOf(req.getParameter(Parameter.USER_NAME.getParameter()));
-            final String password = String.valueOf(req.getParameter(Parameter.USER_PASSWORD.getParameter()));
+            final String name = req.getStringParameter(Parameter.USER_NAME.getValue());
+            final String password = req.getStringParameter(Parameter.USER_PASSWORD.getValue());
             final Optional<UserDto> userDto = userService.login(name, password);
             if (userDto.isPresent()) {
-                req.setSessionAttribute(Parameter.USER_NAME.getParameter(), name);
-                req.setSessionAttribute(Parameter.USER_ROLE.getParameter(), userDto.get().getRole());
-                req.setSessionAttribute(Parameter.USER_BALANCE.getParameter(), userDto.get().getBalance());
+                req.setSessionAttribute(Parameter.USER_NAME.getValue(), name);
+                req.setSessionAttribute(Parameter.USER_ROLE.getValue(), userDto.get().getRole());
+                req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userDto.get().getBalance());
                 // TODO: redirect
             } else {
                 req.setSessionAttribute("errorMessage", "invalid credentials");

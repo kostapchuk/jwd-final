@@ -38,7 +38,7 @@ public enum CancelMatchCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final int matchId = Integer.parseInt(String.valueOf(req.getParameter(Parameter.MATCH_ID.getParameter())));
+            final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
 
             final int firstTeamMultiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.FIRST_TEAM);
             final int secondTeamMultiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.SECOND_TEAM);

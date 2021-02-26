@@ -5,7 +5,6 @@ import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.command.page.ShowWithdrawPage;
-import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.UserService;
@@ -26,9 +25,9 @@ public enum WithdrawCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String userName = String.valueOf(req.getSession().getAttribute(Parameter.USER_NAME.getParameter()));
-            final BigDecimal depositMoney = new BigDecimal(String.valueOf(req.getParameter(Parameter.WITHDRAW_MONEY.getParameter())));
-            final BigDecimal currentBalance = new BigDecimal(String.valueOf(req.getSession().getAttribute(Parameter.USER_BALANCE.getParameter())));
+            final String userName = req.getStringSessionAttribute(Parameter.USER_NAME.getValue());
+            final BigDecimal depositMoney = new BigDecimal(req.getStringParameter(Parameter.WITHDRAW_MONEY.getValue()));
+            final BigDecimal currentBalance = new BigDecimal(req.getStringSessionAttribute(Parameter.USER_BALANCE.getValue()));
             if (currentBalance.subtract(depositMoney).compareTo(BigDecimal.ZERO) >= 0) {
                 userService.withdrawFromBalance(userName, depositMoney);
             }

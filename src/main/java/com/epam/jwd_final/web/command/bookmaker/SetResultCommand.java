@@ -13,13 +13,9 @@ import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.observer.PayoutUserWinListener;
 import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.MatchService;
-import com.epam.jwd_final.web.service.UserService;
 import com.epam.jwd_final.web.service.impl.BetServiceImpl;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
-import com.epam.jwd_final.web.service.impl.UserServiceImpl;
-
-import java.math.BigDecimal;
 
 public enum SetResultCommand implements Command {
 
@@ -38,8 +34,8 @@ public enum SetResultCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final int matchId = Integer.parseInt(String.valueOf(req.getParameter(Parameter.MATCH_ID.getParameter())));
-            final String newResultStr = String.valueOf(req.getParameter(Parameter.RESULT_TYPE.getParameter()));
+            final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
+            final String newResultStr = req.getStringParameter(Parameter.RESULT_TYPE.getValue());
             Result result;
             final Match match = matchService.findById(matchId);
             if (match.getFirstTeam().equals(newResultStr)) {

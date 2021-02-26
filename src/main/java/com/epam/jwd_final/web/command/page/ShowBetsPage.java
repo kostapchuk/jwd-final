@@ -57,8 +57,8 @@ public enum ShowBetsPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String name = String.valueOf(req.getSession().getAttribute(Parameter.USER_NAME.getParameter()));
-            req.setSessionAttribute(Parameter.USER_BALANCE.getParameter(), userService.findBalanceById(userService.findUserIdByUserName(name)));
+            final String name = req.getStringSessionAttribute(Parameter.USER_NAME.getValue());
+            req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userService.findBalanceById(userService.findUserIdByUserName(name)));
 
             final List<BetDto> betDtos = betService.findAllByUserName(name).orElse(Collections.emptyList());
             List<PlacedBetDto> placedBetDtos = new ArrayList<>();
@@ -83,8 +83,8 @@ public enum ShowBetsPage implements Command {
                         placedTeam, placedCoefficient, userService.calculateExpectedWin(name, multiplierId),
                         match.getFirstTeam() + " - " + match.getSecondTeam()));
             }
-            req.setAttribute(Parameter.BETS.getParameter(), betDtos);
-            req.setAttribute(Parameter.PLACED_BETS.getParameter(), placedBetDtos);
+            req.setAttribute(Parameter.BETS.getValue(), betDtos);
+            req.setAttribute(Parameter.PLACED_BETS.getValue(), placedBetDtos);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

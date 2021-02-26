@@ -23,8 +23,8 @@ public enum SignupCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String name = String.valueOf(req.getParameter(Parameter.USER_NAME.getParameter()));
-            final String password = String.valueOf(req.getParameter(Parameter.USER_PASSWORD.getParameter()));
+            final String name = req.getStringParameter(Parameter.USER_NAME.getValue());
+            final String password = req.getStringParameter(Parameter.USER_PASSWORD.getValue());
             ResponseContext result;
             if (userService.signup(name, password)) {
                 result = ShowMatchesPage.INSTANCE.execute(req);
