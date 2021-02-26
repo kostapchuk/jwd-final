@@ -19,7 +19,7 @@ public final class PropertyLoader {
     private static final Properties properties = new Properties();
 
     private static final String DATABASE_PROPERTY_FILE_NAME = "database.properties";
-    private static final String CONNECTION_POOL_PROPERTY_FILE_NAME = "connection_pool.properties";
+    private static final String CONNECTION_POOL_PROPERTY_FILE_NAME = "pool.properties";
 
     private PropertyLoader() {
     }

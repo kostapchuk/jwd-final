@@ -1,5 +1,11 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
+<c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="page" var="bundle"/>
 
 <div class="container-lg">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -12,48 +18,48 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/controller?command=show_all_matches_page"/>">
-                        Home
+                        <fmt:message key="header.home" bundle="${bundle}"/>
                     </a>
                 </li>
                 <c:if test="${not empty sessionScope.userName}">
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/controller?command=show_all_bets_page"/>">
-                            My bets
+                            <fmt:message key="header.my-bets" bundle="${bundle}"/>
                         </a>
                     </li>
                 </c:if>
                 <c:if test="${not empty sessionScope.userName}">
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/controller?command=show_deposit_page"/>">
-                            Deposit
+                            <fmt:message key="header.deposit" bundle="${bundle}"/>
                         </a>
                     </li>
                 </c:if>
                 <c:if test="${not empty sessionScope.userName}">
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/controller?command=show_withdraw_page"/>">
-                            Withdraw
+                            <fmt:message key="header.withdraw" bundle="${bundle}"/>
                         </a>
                     </li>
                 </c:if>
                 <c:if test="${sessionScope.userRole == 'BOOKMAKER' or sessionScope.userRole == 'ADMIN'}">
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/controller?command=show_bookmaker_page"/>">
-                            Bookmaker page
+                            <fmt:message key="header.bookmaker" bundle="${bundle}"/>
                         </a>
                     </li>
                 </c:if>
                 <c:if test="${sessionScope.userRole == 'ADMIN'}">
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/controller?command=show_all_users_page"/>">
-                            All users
+                            <fmt:message key="header.users" bundle="${bundle}"/>
                         </a>
                     </li>
                 </c:if>
                 <c:if test="${not empty sessionScope.userName}">
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/controller?command=logout"/>">
-                            Log out
+                            <fmt:message key="header.logout" bundle="${bundle}"/>
                         </a>
                     </li>
                 </c:if>
@@ -72,99 +78,12 @@
                 </li>
             </c:if>
             <button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
-                Sign in
+                <fmt:message key="signin" bundle="${bundle}"/>
             </button>
         </div>
     </nav>
 </div>
 
+    <jsp:include page="fragments/modal-signin.jsp"/>
+    <jsp:include page="fragments/modal-signup.jsp"/>
 
-    <!-- Sign in MODAL -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Sign in</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="${pageContext.request.contextPath}/controller?command=login" method="post">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter name" name="userName" required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">
-                                This name exists.
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" placeholder="Password" name="userPassword" required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">
-                                Invalid password.
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-success btn-lg btn-block">Login to account</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-dark btn-lg btn-block" data-toggle="modal" data-target="#signUpModal" data-dismiss="modal">Create an account</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-<%--    Sign up MODAL--%>
-    <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="signUpModalTitle">Sign up</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="${pageContext.request.contextPath}/controller?command=signup" method="post">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" aria-describedby="nameHelp" placeholder="Enter name" name="userName" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" placeholder="Password" name="userPassword" required>
-                        </div>
-                        <button type="submit" class="btn btn-dark btn-lg btn-block">Create an account</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <script>
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-                var forms = document.getElementsByClassName('needs-validation');
-                var validation = Array.prototype.filter.call(forms, function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-            }, false);
-        })();
-    </script>
