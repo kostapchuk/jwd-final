@@ -36,27 +36,22 @@ public enum SetResultCommand implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
-            final String newResultStr = req.getStringParameter(Parameter.RESULT_TYPE.getValue());
-            Result result;
+            final String userResult = req.getStringParameter(Parameter.RESULT_TYPE.getValue());
+
             final Match match = matchService.findById(matchId);
-            if (match.getFirstTeam().equals(newResultStr)) {
-                result = Result.FIRST_TEAM;
-            } else if (match.getSecondTeam().equals(newResultStr)) {
-                result = Result.SECOND_TEAM;
-            } else if (Result.DRAW.name().equals(newResultStr.toUpperCase())) {
-                result = Result.DRAW;
-            } else {
-                result = Result.NO_RESULT;
-            }
+            Result result = parseResult(match,userResult);
+
             matchService.updateResult(matchId, result);
             new PayoutUserWinListener().update("payoutUserWin", req); // TODO: add to everyone setting userBalance
 
             betService.deleteAllByMultiplierId(
                     multiplierService.findIdByMatchIdAndResult(matchId, Result.FIRST_TEAM)
             );
+
             betService.deleteAllByMultiplierId(
                     multiplierService.findIdByMatchIdAndResult(matchId, Result.SECOND_TEAM)
             );
+
             betService.deleteAllByMultiplierId(
                     multiplierService.findIdByMatchIdAndResult(matchId, Result.DRAW)
             );
@@ -65,5 +60,19 @@ public enum SetResultCommand implements Command {
         } catch (ListenerException | ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }
+    }
+
+    Result parseResult(Match match, String userResult) {
+        Result result;
+        if (match.getFirstTeam().equals(userResult)) {
+            result = Result.FIRST_TEAM;
+        } else if (match.getSecondTeam().equals(userResult)) {
+            result = Result.SECOND_TEAM;
+        } else if (Result.DRAW.name().equals(userResult.toUpperCase())) {
+            result = Result.DRAW;
+        } else {
+            result = Result.NO_RESULT;
+        }
+        return result;
     }
 }
