@@ -113,19 +113,27 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public void cancelByIdByResult(int id, Result result) throws ServiceException {
-        final int multiplierId = multiplierService.findIdByMatchIdAndResult(id, result);
-        final List<Integer> userIds = betService.findAllUserIdByMultiplierId(multiplierId).orElse(Collections.emptyList());
+    public void cancel(int id) throws ServiceException {
+        for (Result value : Result.values()) {
+            if (value.equals(Result.NO_RESULT)) {
+                break;
+            }
 
-        for (Integer userId : userIds) {
-            userService.topUpBalance(
-                    userService.findNameById(userId),
-                    betService.findBetMoneyByUserIdByMultiplierId(userId, multiplierId)
-            );
+            final int multiplierId = multiplierService.findIdByMatchIdAndResult(id, value);
+            final List<Integer> userIds = betService
+                    .findAllUserIdByMultiplierId(multiplierId).orElse(Collections.emptyList());
+
+            for (Integer userId : userIds) {
+                userService.topUpBalance(
+                        userService.findNameById(userId),
+                        betService.findBetMoneyByUserIdByMultiplierId(userId, multiplierId)
+                );
+            }
+            betService.deleteAllByMultiplierId(multiplierId);
+            multiplierService.deleteById(multiplierId);
         }
 
-        betService.deleteAllByMultiplierId(multiplierId);
-        multiplierService.deleteById(multiplierId);
+        deleteById(id);
     }
 
     @Override

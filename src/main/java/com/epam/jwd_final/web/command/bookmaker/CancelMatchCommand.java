@@ -35,13 +35,7 @@ public enum CancelMatchCommand implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
-
-            matchService.cancelByIdByResult(matchId, Result.FIRST_TEAM);
-            matchService.cancelByIdByResult(matchId, Result.SECOND_TEAM);
-            matchService.cancelByIdByResult(matchId, Result.DRAW);
-
-            matchService.deleteById(matchId);
-
+            matchService.cancel(matchId);
             return ShowBookmakerPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
