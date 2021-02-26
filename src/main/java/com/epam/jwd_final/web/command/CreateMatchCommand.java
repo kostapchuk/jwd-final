@@ -1,9 +1,7 @@
 package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.web.command.page.ShowAllBetsPage;
-import com.epam.jwd_final.web.command.page.ShowAllMatchesPage;
+import com.epam.jwd_final.web.command.page.ShowMatchesPage;
 import com.epam.jwd_final.web.command.page.ShowBookmakerPage;
-import com.epam.jwd_final.web.domain.EventDto;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
@@ -63,7 +61,7 @@ public enum CreateMatchCommand implements Command {
 
             multiplierService.saveMultiplier(
                     multiplierService.createMultiplier(matchId, Result.DRAW, drawCoefficient));
-            return ShowAllMatchesPage.INSTANCE.execute(req);
+            return ShowMatchesPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

@@ -13,16 +13,16 @@ import java.time.LocalDateTime;
 
 public class MatchModelMapper implements ModelMapper<Match> {
 
-    public static final String FIRST_TEAM_ID_COLUMN = "first_team_id";
-    public static final String SECOND_TEAM_ID_COLUMN = "second_team_id";
-    public static final String START_COLUMN = "start";
-    public static final String RESULT_TYPE_ID_COLUMN = "result_type_id";
     private static final String ID_COLUMN = "id";
+    private static final String START_COLUMN = "start";
+    private static final String FIRST_TEAM_ID_COLUMN = "first_team_id";
+    private static final String SECOND_TEAM_ID_COLUMN = "second_team_id";
+    private static final String RESULT_TYPE_ID_COLUMN = "result_type_id";
 
     private final TeamDao teamDao = new TeamDao();
 
     @Override
-    public Match mapToEntity(ResultSet rs) throws SQLException, ModelMapperException {
+    public Match mapToEntity(ResultSet rs) throws ModelMapperException {
         try {
             final int id = rs.getInt(ID_COLUMN);
             final LocalDateTime startTime = rs.getTimestamp(START_COLUMN).toLocalDateTime();
@@ -32,11 +32,11 @@ public class MatchModelMapper implements ModelMapper<Match> {
             return new Match(
                     id,
                     startTime,
-                    teamDao.findTeamById(firstTeamId).orElseThrow(ModelMapperException::new),
-                    teamDao.findTeamById(secondTeamId).orElseThrow(ModelMapperException::new),
+                    teamDao.findOneById(firstTeamId).orElseThrow(ModelMapperException::new).getName(), // TODO: use service
+                    teamDao.findOneById(secondTeamId).orElseThrow(ModelMapperException::new).getName(), // TODO: use service
                     Result.resolveResultById(resultTypeId)
             );
-        } catch (DaoException e) {
+        } catch (DaoException | SQLException e) {
             throw new ModelMapperException(e.getMessage(), e.getCause());
         }
     }

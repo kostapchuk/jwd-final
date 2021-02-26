@@ -68,7 +68,7 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
         final Connection connection = ConnectionPool.getInstance().retrieveConnection();
         try {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(querySQL); // TODO return connection
+                    connection.prepareStatement(querySQL);
             int length = parameters.size();
             for (int i = 0; i < length; i++) {
                 preparedStatement.setString(i + 1, String.valueOf(parameters.get(i)));

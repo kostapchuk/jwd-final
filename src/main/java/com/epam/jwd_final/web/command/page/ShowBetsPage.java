@@ -1,12 +1,11 @@
 package com.epam.jwd_final.web.command.page;
 
 import com.epam.jwd_final.web.command.Command;
+import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.domain.BetDto;
-import com.epam.jwd_final.web.domain.EventDto;
 import com.epam.jwd_final.web.domain.Match;
-import com.epam.jwd_final.web.domain.MatchDto;
 import com.epam.jwd_final.web.domain.PlacedBetDto;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
@@ -19,28 +18,22 @@ import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
-public enum ShowAllBetsPage implements Command {
+public enum ShowBetsPage implements Command {
 
     INSTANCE;
-
-    public static final String NAME_PARAMETER = "userName";
-    public static final String BETS_PARAMETER = "bets";
-    public static final String PLACED_BETS_PARAMETER = "placedBets";
 
     private final UserServiceImpl userService;
     private final BetService betService;
     private final MultiplierServiceImpl multiplierService;
     private final MatchService matchService;
 
-    ShowAllBetsPage() {
+    ShowBetsPage() {
             this.userService = UserServiceImpl.INSTANCE;
             this.betService = BetServiceImpl.INSTANCE;
             this.multiplierService = MultiplierServiceImpl.INSTANCE;
@@ -51,7 +44,7 @@ public enum ShowAllBetsPage implements Command {
 
         @Override
         public String getPage() {
-            return "/WEB-INF/jsp/allbets.jsp";
+            return "/WEB-INF/jsp/bets.jsp";
         }
 
         @Override
@@ -63,8 +56,8 @@ public enum ShowAllBetsPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String name = String.valueOf(req.getSession().getAttribute(NAME_PARAMETER));
-            req.setSessionAttribute("userBalance", userService.findBalanceById(userService.findUserIdByUserName(name)));
+            final String name = String.valueOf(req.getSession().getAttribute(Parameter.NAME.getParameter()));
+            req.setSessionAttribute(Parameter.BALANCE.getParameter(), userService.findBalanceById(userService.findUserIdByUserName(name)));
 
             final List<BetDto> betDtos = betService.findAllByUserName(name).orElse(Collections.emptyList());
             List<PlacedBetDto> placedBetDtos = new ArrayList<>();
@@ -89,8 +82,8 @@ public enum ShowAllBetsPage implements Command {
                         placedTeam, placedCoefficient, userService.calculateExpectedWin(name, multiplierId),
                         match.getFirstTeam() + " - " + match.getSecondTeam()));
             }
-            req.setAttribute(BETS_PARAMETER, betDtos);
-            req.setAttribute(PLACED_BETS_PARAMETER, placedBetDtos);
+            req.setAttribute(Parameter.BETS.getParameter(), betDtos);
+            req.setAttribute(Parameter.PLACED_BETS.getParameter(), placedBetDtos);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

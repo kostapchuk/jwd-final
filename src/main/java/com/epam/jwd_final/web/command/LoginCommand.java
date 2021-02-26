@@ -1,6 +1,6 @@
 package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.web.command.page.ShowAllMatchesPage;
+import com.epam.jwd_final.web.command.page.ShowMatchesPage;
 import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
@@ -38,7 +38,7 @@ public enum LoginCommand implements Command {
                 req.setSessionAttribute("errorMessage", "invalid credentials");
                 // TODO: forward
             }
-            return ShowAllMatchesPage.INSTANCE.execute(req);
+            return ShowMatchesPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

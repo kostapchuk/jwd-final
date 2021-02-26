@@ -1,15 +1,12 @@
 package com.epam.jwd_final.web.observer;
 
 import com.epam.jwd_final.web.command.RequestContext;
-import com.epam.jwd_final.web.dao.impl.MultiplierDao;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.exception.ListenerException;
 import com.epam.jwd_final.web.exception.ServiceException;
-import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.UserService;
-import com.epam.jwd_final.web.service.impl.BetServiceImpl;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;

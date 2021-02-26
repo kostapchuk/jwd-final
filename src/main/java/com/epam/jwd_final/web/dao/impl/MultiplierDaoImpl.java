@@ -1,6 +1,7 @@
 package com.epam.jwd_final.web.dao.impl;
 
 import com.epam.jwd_final.web.dao.AbstractDao;
+import com.epam.jwd_final.web.dao.MultiplierDao;
 import com.epam.jwd_final.web.domain.Multiplier;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
@@ -10,7 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
-public class MultiplierDao extends AbstractDao<Multiplier> {
+public class MultiplierDaoImpl extends AbstractDao<Multiplier> implements MultiplierDao {
 
     private static final String FIND_ONE_BY_ID_SQL =
             "select id, match_id, result_type_id, coefficient from multiplier where id = ?";
@@ -25,6 +26,7 @@ public class MultiplierDao extends AbstractDao<Multiplier> {
             "delete from `multiplier` where id = ?";
 
 
+    @Override
     public Optional<Multiplier> findOneById(int id) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_ID_SQL,
@@ -32,6 +34,7 @@ public class MultiplierDao extends AbstractDao<Multiplier> {
         );
     }
 
+    @Override
     public Optional<Multiplier> findOneByMatchIdByResultId(int matchId, int resultId) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_MATCH_ID_BY_RESULT_TYPE_ID_SQL,
@@ -39,6 +42,7 @@ public class MultiplierDao extends AbstractDao<Multiplier> {
         );
     }
 
+    @Override
     public void save(Multiplier multiplier) throws DaoException {
         queryUpdate(
                 SAVE_SQL,
@@ -46,6 +50,7 @@ public class MultiplierDao extends AbstractDao<Multiplier> {
         );
     }
 
+    @Override
     public void deleteById(int id) throws DaoException {
         queryUpdate(
                 DELETE_BY_ID_SQL,

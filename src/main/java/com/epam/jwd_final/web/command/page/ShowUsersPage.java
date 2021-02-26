@@ -3,7 +3,6 @@ package com.epam.jwd_final.web.command.page;
 import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
-import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
@@ -13,7 +12,7 @@ import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 import java.util.Collections;
 import java.util.List;
 
-public enum ShowAllUsersPage implements Command {
+public enum ShowUsersPage implements Command {
 
     INSTANCE;
 
@@ -21,14 +20,14 @@ public enum ShowAllUsersPage implements Command {
 
     private final UserService userService;
 
-    ShowAllUsersPage() {
+    ShowUsersPage() {
         this.userService = UserServiceImpl.INSTANCE;
     }
 
     private static final ResponseContext ALL_USERS_PAGE_RESPONSE = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/WEB-INF/jsp/allusers.jsp";
+            return "/WEB-INF/jsp/users.jsp";
         }
 
         @Override

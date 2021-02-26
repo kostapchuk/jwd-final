@@ -1,6 +1,6 @@
 package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.web.command.page.ShowAllBetsPage;
+import com.epam.jwd_final.web.command.page.ShowBetsPage;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.BetService;
@@ -33,7 +33,7 @@ public enum CancelBetCommand implements Command {
             final int userId = userService.findUserIdByUserName(userName);
             final BigDecimal newBalance = userService.findBalanceById(userId);
 //            req.setSessionAttribute("userBalance", userService.findBalanceById(userService.findUserIdByUserName("userName")));
-            return ShowAllBetsPage.INSTANCE.execute(req);
+            return ShowBetsPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

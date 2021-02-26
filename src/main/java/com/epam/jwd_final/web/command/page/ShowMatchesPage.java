@@ -16,12 +16,11 @@ import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public enum ShowAllMatchesPage implements Command {
+public enum ShowMatchesPage implements Command {
 
     INSTANCE;
 
@@ -32,7 +31,7 @@ public enum ShowAllMatchesPage implements Command {
     private final UserService userService;
     private final MultiplierServiceImpl multiplierService;
 
-    ShowAllMatchesPage() {
+    ShowMatchesPage() {
         this.matchService = MatchServiceImpl.INSTANCE;
         this.userService = UserServiceImpl.INSTANCE;
         this.multiplierService = MultiplierServiceImpl.INSTANCE;
@@ -42,7 +41,7 @@ public enum ShowAllMatchesPage implements Command {
 
         @Override
         public String getPage() {
-            return "/WEB-INF/jsp/allmatches.jsp";
+            return "/WEB-INF/jsp/matches.jsp";
         }
 
         @Override

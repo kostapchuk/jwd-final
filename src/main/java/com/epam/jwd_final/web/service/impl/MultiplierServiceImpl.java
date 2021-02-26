@@ -1,6 +1,7 @@
 package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.web.dao.impl.MultiplierDao;
+import com.epam.jwd_final.web.dao.MultiplierDao;
+import com.epam.jwd_final.web.dao.impl.MultiplierDaoImpl;
 import com.epam.jwd_final.web.domain.Multiplier;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.DaoException;
@@ -15,7 +16,7 @@ public enum MultiplierServiceImpl {
     private final MultiplierDao multiplierDao;
 
     MultiplierServiceImpl() {
-        this.multiplierDao = new MultiplierDao();
+        this.multiplierDao = new MultiplierDaoImpl();
     }
 
     public Multiplier createMultiplier(int matchId, Result result, BigDecimal coefficient) {

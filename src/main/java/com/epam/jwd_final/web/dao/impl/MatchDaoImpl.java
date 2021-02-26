@@ -1,8 +1,8 @@
 package com.epam.jwd_final.web.dao.impl;
 
 import com.epam.jwd_final.web.dao.AbstractDao;
+import com.epam.jwd_final.web.dao.MatchDao;
 import com.epam.jwd_final.web.domain.Match;
-import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
 import com.epam.jwd_final.web.mapper.impl.MatchModelMapper;
@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class MatchDao extends AbstractDao<Match> {
+public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
 
     private static final String FIND_ONE_BY_ID_SQL =
             "select id, start, first_team_id, second_team_id, result_type_id from `match` where id = ?";
@@ -36,6 +36,7 @@ public class MatchDao extends AbstractDao<Match> {
 
     private final TeamDao teamDao = new TeamDao();
 
+    @Override
     public Optional<Match> findOneById(int id) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_ID_SQL,
@@ -43,6 +44,7 @@ public class MatchDao extends AbstractDao<Match> {
         );
     }
 
+    @Override
     public Optional<Match> findOneByStartByFirstTeamIdBySecondTeamId(Timestamp start, int firstTeamId, int secondTeamId) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_START_BY_FIRST_TEAM_ID_BY_SECOND_TEAM_ID_SQL,
@@ -50,6 +52,7 @@ public class MatchDao extends AbstractDao<Match> {
         );
     }
 
+    @Override
     public Optional<List<Match>> findAllByStartOfDateByResultId(LocalDate date, int resultId) throws DaoException {
         return querySelectAll(
                 FIND_ALL_BY_DATE_BY_RESULT_SQL,
@@ -57,17 +60,19 @@ public class MatchDao extends AbstractDao<Match> {
         );
     }
 
+    @Override
     public void save(Match match) throws DaoException {
         queryUpdate(
                 SAVE_SQL,
                 Arrays.asList(
                         java.sql.Timestamp.valueOf(match.getStart()),
-                        teamDao.findIdByName(match.getFirstTeam()).orElseThrow(DaoException::new),
-                        teamDao.findIdByName(match.getSecondTeam()).orElseThrow(DaoException::new)
+                        teamDao.findOneByName(match.getFirstTeam()).orElseThrow(DaoException::new).getId(),
+                        teamDao.findOneByName(match.getSecondTeam()).orElseThrow(DaoException::new).getId()
                 )
         );
     }
 
+    @Override
     public boolean updateResultId(int matchId, int resultId) throws DaoException {
         return queryUpdate(
                 UPDATE_RESULT_TYPE_ID_SQL,
@@ -75,6 +80,7 @@ public class MatchDao extends AbstractDao<Match> {
         );
     }
 
+    @Override
     public void deleteById(int id) throws DaoException {
         queryUpdate(
                 DELETE_BY_ID_SQL,

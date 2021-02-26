@@ -89,7 +89,7 @@
             const log = document.getElementById('toReturn');
             input.addEventListener('input', updateValue);
             function updateValue(e) {
-                log.textContent = '<fmt:message key="return" bundle="${bundle}"/>' + Math.round((e.target.value * coefficient + Number.EPSILON) * 100) / 100;
+                log.textContent = '<fmt:message key="return" bundle="${bundle}"/> ' + Math.round((e.target.value * coefficient + Number.EPSILON) * 100) / 100;
             }
         })
     </script>

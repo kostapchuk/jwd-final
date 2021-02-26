@@ -1,6 +1,6 @@
 package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.web.command.page.ShowAllMatchesPage;
+import com.epam.jwd_final.web.command.page.ShowMatchesPage;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
@@ -31,7 +31,7 @@ public enum CreateMultiplierCommand implements Command {
 //        try {
 
 
-        return ShowAllMatchesPage.INSTANCE.execute(req); // TODO: write successfully create
+        return ShowMatchesPage.INSTANCE.execute(req); // TODO: write successfully create
 //        } catch (ServiceException e) {
 //            throw new CommandException(e.getMessage(), e.getCause());
 //        }

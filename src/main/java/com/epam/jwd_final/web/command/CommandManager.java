@@ -1,8 +1,8 @@
 package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.web.command.page.ShowAllBetsPage;
-import com.epam.jwd_final.web.command.page.ShowAllMatchesPage;
-import com.epam.jwd_final.web.command.page.ShowAllUsersPage;
+import com.epam.jwd_final.web.command.page.ShowBetsPage;
+import com.epam.jwd_final.web.command.page.ShowMatchesPage;
+import com.epam.jwd_final.web.command.page.ShowUsersPage;
 import com.epam.jwd_final.web.command.page.ShowBookmakerPage;
 import com.epam.jwd_final.web.command.page.ShowDepositPage;
 import com.epam.jwd_final.web.command.page.ShowErrorPage;
@@ -25,12 +25,12 @@ public enum CommandManager {
     CANCEL_MATCH(CancelMatchCommand.INSTANCE),
     SHOW_WITHDRAW_PAGE(ShowWithdrawPage.INSTANCE),
     SHOW_DEPOSIT_PAGE(ShowDepositPage.INSTANCE),
-    SHOW_ALL_USERS_PAGE(ShowAllUsersPage.INSTANCE),
+    SHOW_ALL_USERS_PAGE(ShowUsersPage.INSTANCE),
     SHOW_BOOKMAKER_PAGE(ShowBookmakerPage.INSTANCE),
-    SHOW_ALL_BETS_PAGE(ShowAllBetsPage.INSTANCE),
-    SHOW_ALL_MATCHES_PAGE(ShowAllMatchesPage.INSTANCE),
+    SHOW_ALL_BETS_PAGE(ShowBetsPage.INSTANCE),
+    SHOW_ALL_MATCHES_PAGE(ShowMatchesPage.INSTANCE),
     SHOW_ERROR_PAGE(ShowErrorPage.INSTANCE),
-    DEFAULT(ShowAllMatchesPage.INSTANCE);
+    DEFAULT(ShowMatchesPage.INSTANCE);
 
     private final Command command;
 

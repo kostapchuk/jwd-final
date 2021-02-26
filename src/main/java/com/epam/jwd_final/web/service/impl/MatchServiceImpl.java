@@ -1,6 +1,7 @@
 package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.web.dao.impl.MatchDao;
+import com.epam.jwd_final.web.dao.impl.MatchDaoImpl;
+import com.epam.jwd_final.web.dao.MatchDao;
 import com.epam.jwd_final.web.dao.impl.TeamDao;
 import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.domain.MatchDto;
@@ -25,7 +26,7 @@ public enum MatchServiceImpl implements MatchService {
     private final TeamDao teamDao;
 
     MatchServiceImpl() {
-        this.matchDao = new MatchDao();
+        this.matchDao = new MatchDaoImpl();
         this.teamDao = new TeamDao();
     }
 
@@ -56,8 +57,8 @@ public enum MatchServiceImpl implements MatchService {
         try {
             return matchDao.findOneByStartByFirstTeamIdBySecondTeamId(
                     Timestamp.valueOf(start),
-                    teamDao.findIdByName(firstTeam).orElseThrow(IllegalArgumentException::new), // TODO: redo exception
-                    teamDao.findIdByName(secondTeam).orElseThrow(IllegalArgumentException::new) // TODO: redo exception
+                    teamDao.findOneByName(firstTeam).orElseThrow(IllegalArgumentException::new).getId(), // TODO: redo exception
+                    teamDao.findOneByName(secondTeam).orElseThrow(IllegalArgumentException::new).getId() // TODO: redo exception
             ).orElseThrow(ServiceException::new).getId();
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());

@@ -1,7 +1,6 @@
 package com.epam.jwd_final.web.command;
 
-import com.epam.jwd_final.web.command.page.ShowAllBetsPage;
-import com.epam.jwd_final.web.dao.UserDao;
+import com.epam.jwd_final.web.command.page.ShowBetsPage;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.UserService;
@@ -27,7 +26,7 @@ public enum DepositCommand implements Command {
             userService.topUpBalance(userName, depositMoney);
 //            final BigDecimal currentBalance = new BigDecimal(String.valueOf(req.getSession().getAttribute("userBalance")));
 //            req.setSessionAttribute("userBalance", currentBalance.add(depositMoney));
-            return ShowAllBetsPage.INSTANCE.execute(req);
+            return ShowBetsPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

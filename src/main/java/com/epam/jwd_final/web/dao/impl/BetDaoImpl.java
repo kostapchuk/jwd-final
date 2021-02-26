@@ -68,7 +68,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     }
 
     @Override
-    public void deleteById(int id) throws DaoException { // TODO: replace id with Bet bet
+    public void deleteById(int id) throws DaoException {
         queryUpdate(
                 DELETE_BY_ID_SQL,
                 Collections.singletonList(id)
