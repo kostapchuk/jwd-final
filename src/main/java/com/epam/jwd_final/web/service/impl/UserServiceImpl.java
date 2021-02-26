@@ -170,10 +170,9 @@ public enum UserServiceImpl implements UserService {
     }
 
     @Override
-    public BigDecimal calculateExpectedWin(String name, int multiplierId) throws ServiceException {
+    public BigDecimal calculateExpectedWin(int id, int multiplierId) throws ServiceException {
         try {
-            final int userId = userDao.findOneByName(name).orElseThrow(ServiceException::new).getId();
-            final Bet bet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId).orElseThrow(ServiceException::new);
+            final Bet bet = betDao.findOneByUserIdByMultiplierId(id, multiplierId).orElseThrow(ServiceException::new);
             final BigDecimal betMoney = bet.getBetMoney();
             return multiplierDao.findOneById(bet.getMultiplierId()).orElseThrow(ServiceException::new).getCoefficient().multiply(betMoney);
         } catch (DaoException e) {

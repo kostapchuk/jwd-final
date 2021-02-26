@@ -30,16 +30,12 @@ public enum BetServiceImpl implements BetService {
     }
 
     @Override
-    public Optional<List<BetDto>> findAllByUserName(String name) throws ServiceException {
+    public Optional<List<Bet>> findAllByUserId(int id) throws ServiceException {
         try {
-            final Integer userId = userDao.findOneByName(name)
+            final Integer userId = userDao.findOneById(id)
                     .orElseThrow(ServiceException::new)
                     .getId();
-            return betDao.findAllByUserId(userId)
-                    .map(bets -> bets.stream()
-                            .map(this::convertToDto)
-                            .collect(toList())
-                    );
+            return betDao.findAllByUserId(userId);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
@@ -135,7 +131,7 @@ public enum BetServiceImpl implements BetService {
         }
     }
 
-    private BetDto convertToDto(Bet bet) {
-        return new BetDto(bet.getId(), bet.getBetMoney());
-    }
+//    private BetDto convertToDto(Bet bet) {
+//        return new BetDto(bet.getId(), bet.getBetMoney());
+//    }
 }

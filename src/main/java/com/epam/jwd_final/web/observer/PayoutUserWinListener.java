@@ -36,7 +36,7 @@ public class PayoutUserWinListener implements EventListener {
                 if (userService.isUserWinner(user.getName(), matchId)) {
                     final Result result = matchService.findResultTypeById(matchId);
                     final int multiplierId = multiplierService.findIdByMatchIdAndResult(matchId, result);
-                    final BigDecimal winMoneyAmount = userService.calculateExpectedWin(user.getName(), multiplierId);
+                    final BigDecimal winMoneyAmount = userService.calculateExpectedWin(user.getId(), multiplierId);
                     userService.topUpBalance(user.getName(), winMoneyAmount);
                     // TODO: update balance near userName
                 }

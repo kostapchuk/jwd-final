@@ -30,7 +30,7 @@ public interface UserService {
 
     BigDecimal findBalanceById(int id) throws ServiceException;
 
-    BigDecimal calculateExpectedWin(String name, int multiplierId) throws ServiceException;
+    BigDecimal calculateExpectedWin(int id, int multiplierId) throws ServiceException;
 
     boolean isUserWinner(String userName, int matchId) throws ServiceException;
 

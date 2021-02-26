@@ -6,7 +6,7 @@ import com.epam.jwd_final.web.command.Page;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
-import com.epam.jwd_final.web.domain.BetDto;
+import com.epam.jwd_final.web.domain.Bet;
 import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.domain.PlacedBetDto;
 import com.epam.jwd_final.web.domain.Result;
@@ -47,37 +47,44 @@ public enum ShowBetsPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String name = req.getStringSessionAttribute(Parameter.USER_NAME.getValue());
-            req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userService.findBalanceById(userService.findUserIdByUserName(name)));
+            final int id = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
+            req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userService.findBalanceById(id));
 
-            final List<BetDto> betDtos = betService.findAllByUserName(name).orElse(Collections.emptyList());
             List<PlacedBetDto> placedBetDtos = new ArrayList<>();
-            for (BetDto bet : betDtos) {
+            final List<Bet> bets = betService.findAllByUserId(id).orElse(Collections.emptyList());
+            for (Bet bet : bets) {
                 final int multiplierId = betService.findMultiplierIdById(bet.getId());
                 final int matchId = multiplierService.findMatchIdByMultiplierId(multiplierId);
                 final Match match = matchService.findById(matchId);
                 final BigDecimal placedCoefficient = multiplierService.findCoefficientById(multiplierId);
                 final Result placedResult = multiplierService.findResultById(multiplierId);
-                String placedTeam;
-                if (Result.FIRST_TEAM.equals(placedResult)) {
-                    placedTeam = match.getFirstTeam();
-                } else if (Result.SECOND_TEAM.equals(placedResult)) {
-                    placedTeam = match.getSecondTeam();
-                } else if (Result.DRAW.equals(placedResult)) {
-                    placedTeam = "Draw";
-                } else {
-                    placedTeam = "";
-                }
+                String placedResultStr = parseResult(placedResult, match);
+
                 placedBetDtos.add(new PlacedBetDto(bet.getId(),
                         match.getStart().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm", Locale.getDefault())),
-                        placedTeam, placedCoefficient, userService.calculateExpectedWin(name, multiplierId),
+                        placedResultStr, placedCoefficient, userService.calculateExpectedWin(id, multiplierId),
                         match.getFirstTeam() + " - " + match.getSecondTeam()));
             }
-            req.setAttribute(Parameter.BETS.getValue(), betDtos);
+
             req.setAttribute(Parameter.PLACED_BETS.getValue(), placedBetDtos);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }
         return ResponseContextResult.forward(Page.BETS.getLink());
     }
+
+    String parseResult(Result placedResult, Match match) {
+        String result;
+        if (Result.FIRST_TEAM.equals(placedResult)) {
+            result = match.getFirstTeam();
+        } else if (Result.SECOND_TEAM.equals(placedResult)) {
+            result = match.getSecondTeam();
+        } else if (Result.DRAW.equals(placedResult)) {
+            result = "Draw";
+        } else {
+            result = "";
+        }
+        return result;
+    }
+
 }

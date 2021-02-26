@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface BetService {
 
-    Optional<List<BetDto>> findAllByUserName(String name) throws ServiceException;
+    Optional<List<Bet>> findAllByUserId(int id) throws ServiceException;
 
     Bet createBet(int userId, int multiplierId, BigDecimal betMoney);
 
