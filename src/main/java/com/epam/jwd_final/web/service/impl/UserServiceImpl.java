@@ -95,10 +95,10 @@ public enum UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateRole(String userName) throws ServiceException {
+    public void updateRole(int id) throws ServiceException {
         try {
             userDao.updateRole(
-                    userDao.findOneByName(userName)
+                    userDao.findOneById(id)
                             .orElseThrow(ServiceException::new)
             );
         } catch (DaoException e) {
@@ -107,10 +107,10 @@ public enum UserServiceImpl implements UserService {
     }
 
     @Override
-    public void rollbackRole(String userName) throws ServiceException {
+    public void rollbackRole(int id) throws ServiceException {
         try {
             userDao.rollbackRole(
-                    userDao.findOneByName(userName)
+                    userDao.findOneById(id)
                             .orElseThrow(ServiceException::new)
             );
         } catch (DaoException e) {
@@ -210,6 +210,6 @@ public enum UserServiceImpl implements UserService {
     }
 
     private UserDto convertToDto(User user) {
-        return new UserDto(user.getName(), user.getRole().name(), user.getBalance());
+        return new UserDto(user.getId(), user.getName(), user.getRole().name(), user.getBalance());
     }
 }

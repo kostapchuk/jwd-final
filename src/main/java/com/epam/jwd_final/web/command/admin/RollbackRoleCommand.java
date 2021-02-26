@@ -23,8 +23,8 @@ public enum RollbackRoleCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String userName = req.getStringParameter(Parameter.USER_NAME.getValue());
-            userService.rollbackRole(userName);
+            final int id = req.getIntParameter(Parameter.USER_ID.getValue());
+            userService.rollbackRole(id);
             return ShowUsersPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

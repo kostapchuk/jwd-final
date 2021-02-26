@@ -26,7 +26,6 @@ public enum CancelMatchCommand implements Command {
 
     private final MatchService matchService;
 
-
     CancelMatchCommand() {
         this.matchService = MatchServiceImpl.INSTANCE;
     }

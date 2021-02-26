@@ -18,9 +18,9 @@ public interface UserService {
 
     boolean signup(String name, String password) throws ServiceException;
 
-    void updateRole(String userName) throws ServiceException;
+    void updateRole(int id) throws ServiceException;
 
-    void rollbackRole(String userName) throws ServiceException;
+    void rollbackRole(int id) throws ServiceException;
 
     int findUserIdByUserName(String userName) throws ServiceException;
 

@@ -34,6 +34,7 @@ public enum LoginCommand implements Command {
             final String password = req.getStringParameter(Parameter.USER_PASSWORD.getValue());
             final Optional<UserDto> userDto = userService.login(name, password);
             if (userDto.isPresent()) {
+                req.setSessionAttribute(Parameter.USER_ID.getValue(), userDto.get().getId());
                 req.setSessionAttribute(Parameter.USER_NAME.getValue(), name);
                 req.setSessionAttribute(Parameter.USER_ROLE.getValue(), userDto.get().getRole());
                 req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userDto.get().getBalance());

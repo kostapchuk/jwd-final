@@ -22,6 +22,7 @@ public enum Parameter {
     BET_MONEY("betMoney"),
     RESULT("result"),
     RESULT_TYPE("resultType"),
+    USER_ID("userId"),
     USER_NAME("userName"),
     USER_ROLE("userRole"),
     USER_PASSWORD("userPassword"),
