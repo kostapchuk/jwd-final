@@ -1,5 +1,13 @@
 package com.epam.jwd_final.web.command;
 
+import com.epam.jwd_final.web.command.admin.RollbackRoleCommand;
+import com.epam.jwd_final.web.command.admin.UpdateRoleCommand;
+import com.epam.jwd_final.web.command.bookmaker.CancelMatchCommand;
+import com.epam.jwd_final.web.command.bookmaker.CreateMatchCommand;
+import com.epam.jwd_final.web.command.bookmaker.SetResultCommand;
+import com.epam.jwd_final.web.command.general.LoginCommand;
+import com.epam.jwd_final.web.command.general.LogoutCommand;
+import com.epam.jwd_final.web.command.general.SignupCommand;
 import com.epam.jwd_final.web.command.page.ShowBetsPage;
 import com.epam.jwd_final.web.command.page.ShowBookmakerPage;
 import com.epam.jwd_final.web.command.page.ShowDepositPage;
@@ -7,6 +15,11 @@ import com.epam.jwd_final.web.command.page.ShowErrorPage;
 import com.epam.jwd_final.web.command.page.ShowMatchesPage;
 import com.epam.jwd_final.web.command.page.ShowUsersPage;
 import com.epam.jwd_final.web.command.page.ShowWithdrawPage;
+import com.epam.jwd_final.web.command.user.CancelBetCommand;
+import com.epam.jwd_final.web.command.user.DepositCommand;
+import com.epam.jwd_final.web.command.user.MakeBetCommand;
+import com.epam.jwd_final.web.command.user.UpdateBetCommand;
+import com.epam.jwd_final.web.command.user.WithdrawCommand;
 
 public enum CommandManager {
 

@@ -1,5 +1,9 @@
-package com.epam.jwd_final.web.command;
+package com.epam.jwd_final.web.command.admin;
 
+import com.epam.jwd_final.web.command.Command;
+import com.epam.jwd_final.web.command.Parameter;
+import com.epam.jwd_final.web.command.RequestContext;
+import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.command.page.ShowUsersPage;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
