@@ -14,12 +14,6 @@ public enum ShowDepositPage implements Command {
 
     INSTANCE;
 
-    private final UserService userService;
-
-    ShowDepositPage() {
-        this.userService = UserServiceImpl.INSTANCE;
-    }
-
     private static final ResponseContext DEPOSIT_PAGE_RESPONSE = new ResponseContext() {
         @Override
         public String getPage() {
@@ -34,12 +28,6 @@ public enum ShowDepositPage implements Command {
 
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
-        try {
-            final String userName = req.getStringSessionAttribute(Parameter.USER_NAME.getValue());
-            req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userService.findBalanceById(userService.findUserIdByUserName(userName)));
-            return DEPOSIT_PAGE_RESPONSE;
-        } catch (ServiceException e) {
-            throw new CommandException(e.getMessage(), e.getCause());
-        }
+        return DEPOSIT_PAGE_RESPONSE;
     }
 }

@@ -30,25 +30,16 @@ public enum ShowMatchesPage implements Command {
     INSTANCE;
 
     private final MatchService matchService;
-    private final UserService userService;
     private final MultiplierService multiplierService;
 
     ShowMatchesPage() {
         this.matchService = MatchServiceImpl.INSTANCE;
-        this.userService = UserServiceImpl.INSTANCE;
         this.multiplierService = MultiplierServiceImpl.INSTANCE;
     }
 
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            if (req.getSession() != null) {
-                final String userName = req.getStringSessionAttribute(Parameter.USER_NAME.getValue());
-                if (!userName.equals("null")) {
-                    req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userService.findBalanceById(userService.findUserIdByUserName(userName)));
-                }
-            }
-
             final Optional<List<MatchDto>> matchDtos = matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT);
             List<EventDto> eventDtos = new ArrayList<>();
             if (matchDtos.isPresent()) {

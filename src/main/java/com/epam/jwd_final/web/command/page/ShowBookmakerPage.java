@@ -25,19 +25,15 @@ public enum ShowBookmakerPage implements Command {
 
     private final MatchService matchService;
     private final TeamService teamService;
-    private final UserService userService;
 
     ShowBookmakerPage() {
         this.matchService = MatchServiceImpl.INSTANCE;
         this.teamService = TeamServiceImpl.INSTANCE;
-        this.userService = UserServiceImpl.INSTANCE;
     }
 
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String userName = req.getStringSessionAttribute(Parameter.USER_NAME.getValue());
-            req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userService.findBalanceById(userService.findUserIdByUserName(userName)));
             req.setAttribute(Parameter.MATCHES.getValue(), matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT).orElse(Collections.emptyList()));
             req.setAttribute(Parameter.TEAMS.getValue(), teamService.findAll());
             return ResponseContextResult.forward(Page.BOOKMAKER.getLink());

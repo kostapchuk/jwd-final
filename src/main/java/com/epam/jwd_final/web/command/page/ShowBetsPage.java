@@ -48,7 +48,6 @@ public enum ShowBetsPage implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final int id = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
-            req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userService.findBalanceById(id));
 
             List<PlacedBetDto> placedBetDtos = new ArrayList<>();
             final List<Bet> bets = betService.findAllByUserId(id).orElse(Collections.emptyList());
