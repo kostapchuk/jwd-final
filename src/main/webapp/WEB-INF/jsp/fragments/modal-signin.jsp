@@ -24,7 +24,7 @@
                         <label>
                             <fmt:message key="name" bundle="${bundle}"/>
                         </label>
-                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter name" name="userName" required>
+                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="<fmt:message key="enter-name" bundle="${bundle}"/>" name="userName" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -36,7 +36,7 @@
                         <label>
                             <fmt:message key="password" bundle="${bundle}"/>
                         </label>
-                        <input type="password" class="form-control" placeholder="Password" name="userPassword" required>
+                        <input type="password" class="form-control" placeholder="<fmt:message key="enter-password" bundle="${bundle}"/>" name="userPassword" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>

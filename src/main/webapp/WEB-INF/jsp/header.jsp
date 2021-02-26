@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
 <c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
 
@@ -31,14 +30,14 @@
                 <c:if test="${not empty sessionScope.userName}">
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/controller?command=show_deposit_page"/>">
-                            <fmt:message key="header.deposit" bundle="${bundle}"/>
+                            <fmt:message key="deposit" bundle="${bundle}"/>
                         </a>
                     </li>
                 </c:if>
                 <c:if test="${not empty sessionScope.userName}">
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/controller?command=show_withdraw_page"/>">
-                            <fmt:message key="header.withdraw" bundle="${bundle}"/>
+                            <fmt:message key="withdraw" bundle="${bundle}"/>
                         </a>
                     </li>
                 </c:if>
@@ -52,7 +51,7 @@
                 <c:if test="${sessionScope.userRole == 'ADMIN'}">
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/controller?command=show_all_users_page"/>">
-                            <fmt:message key="header.users" bundle="${bundle}"/>
+                            <fmt:message key="users" bundle="${bundle}"/>
                         </a>
                     </li>
                 </c:if>

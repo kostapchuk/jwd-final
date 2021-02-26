@@ -1,5 +1,11 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
+<c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="page" var="bundle"/>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -14,10 +20,10 @@
     <div class="container col-lg-5">
         <form action="${pageContext.request.contextPath}/controller?command=withdraw" method="post">
             <div class="form-group">
-                <label for="withdrawMoney">Amount of money ($)</label>
+                <label for="withdrawMoney"><fmt:message key="money-amount" bundle="${bundle}"/> ($)</label>
                 <input type="number" step="0.01" name="withdrawMoney" required class="form-control" id="withdrawMoney" aria-describedby="emailHelp">
             </div>
-            <button type="submit" class="btn btn-warning">Withdraw</button>
+            <button type="submit" class="btn btn-warning"><fmt:message key="withdraw" bundle="${bundle}"/></button>
         </form>
     </div>
 

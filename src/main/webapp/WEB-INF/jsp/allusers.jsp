@@ -1,5 +1,10 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
+<c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="page" var="bundle"/>
 <html>
 <head>
     <meta charset="utf-8">
@@ -12,7 +17,7 @@
 
     <jsp:include page="header.jsp"/>
     <div class="container">
-        <h2>Users</h2>
+        <h2><fmt:message key="users" bundle="${bundle}"/></h2>
         <c:if test="${not empty requestScope.users}">
             <div class="row">
                 <c:forEach var="user" items="${requestScope.users}">
@@ -20,14 +25,14 @@
                         <div class="card">
                             <div class="card-body">
                                 <form action="${pageContext.request.contextPath}/controller?command=update_role" method="post">
-                                    <h5 class="card-title"><strong>Username:</strong> ${user.name}</h5>
-                                    <h5 class="card-title"><strong>Role:</strong> ${user.role}</h5>
+                                    <h5 class="card-title"><strong><fmt:message key="name" bundle="${bundle}"/>:</strong> ${user.name}</h5>
+                                    <h5 class="card-title"><strong><fmt:message key="users.role" bundle="${bundle}"/>:</strong> ${user.role}</h5>
                                     <input type="hidden" name="userName" value="${user.name}" />
-                                    <button class="btn btn-primary">Update role</button>
+                                    <button class="btn btn-primary"><fmt:message key="users.update-role" bundle="${bundle}"/></button>
                                 </form>
                                 <form action="${pageContext.request.contextPath}/controller?command=rollback_role" method="post">
                                     <input type="hidden" name="userName" value="${user.name}" />
-                                    <button class="btn btn-primary">Rollback role</button>
+                                    <button class="btn btn-primary"><fmt:message key="users.rollback-role" bundle="${bundle}"/></button>
                                 </form>
                             </div>
                         </div>

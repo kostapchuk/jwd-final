@@ -1,5 +1,10 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
+<c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="page" var="bundle"/>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,7 +27,7 @@
                                         ${event.firstTeam} vs ${event.secondTeam}
                                 </h5>
                                 <p>
-                                    Start: <c:out value="${event.start}"/>
+                                    <fmt:message key="start" bundle="${bundle}"/>: <c:out value="${event.start}"/>
                                 </p>
                                 <table class="table table-bordered">
                                     <thead>
@@ -66,31 +71,7 @@
         </c:if>
     </div>
 
-    <div class="modal fade" id="makeBet" tabindex="-1" role="dialog" aria-labelledby="makeBet" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Set stake</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="${pageContext.request.contextPath}/controller?command=make_bet" method="post">
-                    <input type="hidden" id="matchInput" name="matchId"/>
-                    <input type="hidden" id="resultInput" name="result"/>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <input type="number" step="0.01" class="form-control" id="betMoney" name="betMoney" required>
-                        </div>
-                        <span id="toReturn"></span>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success btn-block">Place bet</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <jsp:include page="fragments/modal-setstake.jsp"/>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
@@ -108,10 +89,8 @@
             const log = document.getElementById('toReturn');
             input.addEventListener('input', updateValue);
             function updateValue(e) {
-                log.textContent = 'To return ' + Math.round((e.target.value * coefficient + Number.EPSILON) * 100) / 100;
+                log.textContent = '<fmt:message key="return" bundle="${bundle}"/>' + Math.round((e.target.value * coefficient + Number.EPSILON) * 100) / 100;
             }
-
-
         })
     </script>
 

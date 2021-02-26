@@ -1,5 +1,10 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
+<c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="page" var="bundle"/>
 <html>
 <head>
     <meta charset="utf-8">
@@ -13,14 +18,14 @@
     <jsp:include page="header.jsp"/>
     <div class="container">
         <div class="offset-md-2 col-md-8">
-            <h2>Create match</h2>
+            <h2><fmt:message key="bookmaker.create" bundle="${bundle}"/></h2>
             <form action="${pageContext.request.contextPath}/controller?command=create_match" method="post">
                 <div class="form-group">
-                    <label for="start">Start</label>
+                    <label for="start"><fmt:message key="start" bundle="${bundle}"/></label>
                     <input type="datetime-local" name="startTime" class="form-control" id="start" required>
                 </div>
                 <div class="form-group">
-                    <label for="firstTeam">Opponent</label>
+                    <label for="firstTeam"><fmt:message key="bookmaker.opponent" bundle="${bundle}"/></label>
                     <select class="form-control" id="firstTeam" name="firstTeam" required>
                         <c:if test="${not empty requestScope.teams}">
                             <c:forEach var="team" items="${requestScope.teams}">
@@ -30,7 +35,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="secondTeam">Opponent</label>
+                    <label for="secondTeam"><fmt:message key="bookmaker.opponent" bundle="${bundle}"/></label>
                     <select class="form-control" id="secondTeam" name="secondTeam" required>
                         <c:if test="${not empty requestScope.teams}">
                             <c:forEach var="team" items="${requestScope.teams}">
@@ -40,31 +45,31 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="firstTeamCoefficientId">First team coefficient</label>
+                    <label for="firstTeamCoefficientId"><fmt:message key="bookmaker.first-team-coefficient" bundle="${bundle}"/></label>
                     <input type="number" step="0.01" class="form-control" id="firstTeamCoefficientId" name="firstTeamCoefficient" required>
                 </div>
                 <div class="form-group">
-                    <label for="secondTeamCoefficientId">Second team coefficient</label>
+                    <label for="secondTeamCoefficientId"><fmt:message key="bookmaker.second-team-coefficient" bundle="${bundle}"/></label>
                     <input type="number" step="0.01" class="form-control" id="secondTeamCoefficientId" name="secondTeamCoefficient" required>
                 </div>
                 <div class="form-group">
-                    <label for="drawCoefficientId">Draw coefficient</label>
+                    <label for="drawCoefficientId"><fmt:message key="bookmaker.draw-coefficient" bundle="${bundle}"/></label>
                     <input type="number" step="0.01" class="form-control" id="drawCoefficientId" name="drawCoefficient" required>
                 </div>
-                <button type="submit" class="btn btn-success">Create match</button>
+                <button type="submit" class="btn btn-success"><fmt:message key="bookmaker.create" bundle="${bundle}"/></button>
             </form>
         </div>
         <div class="offset-lg-1 col-lg-10">
             <c:if test="${not empty requestScope.matches}">
-                <h5>Available matches</h5>
+                <h5><fmt:message key="bookmaker.available-matches" bundle="${bundle}"/></h5>
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">First team</th>
+                        <th scope="col"><fmt:message key="bookmaker.first-team" bundle="${bundle}"/></th>
                             <%--                    <th scope="col">Coefficient</th>--%>
-                        <th scope="col">Second team</th>
-                        <th scope="col">New result</th>
-                        <th scope="col">Cancel</th>
+                        <th scope="col"><fmt:message key="bookmaker.second-team" bundle="${bundle}"/></th>
+                        <th scope="col"><fmt:message key="bookmaker.new-result" bundle="${bundle}"/></th>
+                        <th scope="col"><fmt:message key="cancel" bundle="${bundle}"/></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -80,17 +85,17 @@
                                         <select class="form-control" id="result" name="resultType" required>
                                             <option>${match.firstTeam}</option>
                                             <option>${match.secondTeam}</option>
-                                            <option>Draw</option>
+                                            <option><fmt:message key="draw" bundle="${bundle}"/></option>
                                         </select>
                                     </div>
                                     <input type="hidden" name="matchId" value="${match.id}" />
-                                    <button class="btn btn-primary">Submit</button>
+                                    <button class="btn btn-primary"><fmt:message key="bookmaker.submit" bundle="${bundle}"/></button>
                                 </form>
                             </td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/controller?command=cancel_match" method="post">
                                     <input type="hidden" name="matchId" value="${match.id}" />
-                                    <button class="btn btn-primary">Cancel</button>
+                                    <button class="btn btn-primary"><fmt:message key="cancel" bundle="${bundle}"/></button>
                                 </form>
                             </td>
                         </tr>
@@ -99,7 +104,7 @@
                 </table>
             </c:if>
             <c:if test="${empty requestScope.matches}">
-                <h5>No matches</h5>
+                <h5><fmt:message key="bookmaker.no-matches" bundle="${bundle}"/></h5>
             </c:if>
         </div>
 

@@ -1,5 +1,10 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
+<c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="page" var="bundle"/>
 
 <head>
     <meta charset="utf-8">
@@ -27,22 +32,33 @@
                     <tbody>
                     <c:forEach var="bet" items="${requestScope.placedBets}">
                         <tr>
-                            <td >${bet.start}</td>
+                            <td>${bet.start}</td>
                             <td>${bet.opponents}</td>
-                            <td class="font-weight-bold">${bet.placedTeam}</td>
-                            <td>${bet.placedCoefficient}</td>
-                            <td ><span class="text-muted">To return</span> <span class="font-weight-bold">${bet.expectedWin}</span>  <span class="text-muted">$</span></td>
+                            <td class="font-weight-bold">
+                                <c:if test="${'Draw' eq bet.placedTeam}">
+                                    <fmt:message key="draw" bundle="${bundle}"/>
+                                </c:if>
+                                <c:if test="${'Draw' ne bet.placedTeam}">
+                                    ${bet.placedTeam}
+                                </c:if>
+                            </td>
+                            <td>x${bet.placedCoefficient}</td>
+                            <td >
+                                <span class="text-muted"><fmt:message key="return" bundle="${bundle}"/></span>
+                                <span class="font-weight-bold">${bet.expectedWin}</span>
+                                <span class="text-muted">$</span>
+                            </td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/controller?command=update_bet" method="post">
                                     <input type="hidden" name="betId" value="${bet.id}" />
-                                    <button class="btn btn-primary btn-block">Update</button>
+                                    <button class="btn btn-primary btn-block"><fmt:message key="bets.update" bundle="${bundle}"/></button>
                                 </form>
                             </td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/controller?command=cancel_bet" method="post">
                                     <input type="hidden" name="betId" value="${bet.id}" />
                                     <input type="hidden" name="matchId" value="${requestScope.matchId}" />
-                                    <button class="btn btn-outline-primary btn-block">Cancel</button>
+                                    <button class="btn btn-outline-primary btn-block"><fmt:message key="cancel" bundle="${bundle}"/></button>
                                 </form>
                             </td>
                         </tr>
