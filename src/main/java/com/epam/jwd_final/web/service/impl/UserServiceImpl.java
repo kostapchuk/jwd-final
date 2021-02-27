@@ -26,6 +26,8 @@ public enum UserServiceImpl implements UserService {
 
     INSTANCE;
 
+    private static final int MIN_NAME_LENGTH = 4;
+    private static final int MIN_PASSWORD_LENGTH = 6;
     private final UserDao userDao;
     private final BetDao betDao;
     private final MultiplierDao multiplierDao;
@@ -83,13 +85,16 @@ public enum UserServiceImpl implements UserService {
     @Override
     public boolean signup(String name, String password) throws ServiceException {
         try {
-            return save(new User(
-                    name,
-                    BCrypt.hashpw(password, BCrypt.gensalt())
-            ));
+            if (name.length() >= MIN_NAME_LENGTH && password.length() >= MIN_PASSWORD_LENGTH) {
+                return save(new User(
+                        name,
+                        BCrypt.hashpw(password, BCrypt.gensalt())
+                ));
+            }
         } catch (ServiceException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
+        return false;
     }
 
     @Override
