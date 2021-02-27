@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public enum ShowMatchesPage implements Command {
@@ -40,24 +41,16 @@ public enum ShowMatchesPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final Optional<List<MatchDto>> matchDtos = matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT);
+            final List<MatchDto> matchDtos = matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT).orElse(Collections.emptyList());
             List<EventDto> eventDtos = new ArrayList<>();
-            if (matchDtos.isPresent()) {
-                for (MatchDto matchDto : matchDtos.get()) {
-                    final BigDecimal firstTeamCoef = multiplierService.findCoefficientByMatchIdByResult(matchDto.getId(), Result.FIRST_TEAM);
-                    final BigDecimal secondTeamCoef = multiplierService.findCoefficientByMatchIdByResult(matchDto.getId(), Result.SECOND_TEAM);
-                    final BigDecimal drawCoef = multiplierService.findCoefficientByMatchIdByResult(matchDto.getId(), Result.DRAW);
-                    eventDtos.add(new EventDto(
-                            matchDto.getId(), matchDto.getStart(), matchDto.getFirstTeam(),
-                            matchDto.getSecondTeam(), firstTeamCoef, secondTeamCoef, drawCoef)
-                    );
-
-                }
-            } else {
-                eventDtos = Collections.emptyList();
+            for (MatchDto matchDto : matchDtos) {
+                final Map<Result, BigDecimal> coefficients = multiplierService.findCoefficientsByMatchId(matchDto.getId());
+                eventDtos.add(new EventDto(
+                        matchDto, coefficients.get(Result.FIRST_TEAM),
+                        coefficients.get(Result.SECOND_TEAM), coefficients.get(Result.DRAW))
+                );
             }
             req.setAttribute(Parameter.EVENTS.getValue(), eventDtos);
-
             return ResponseContextResult.forward(Page.MATCHES.getLink());
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

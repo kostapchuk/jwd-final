@@ -24,10 +24,10 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                        ${event.firstTeam} vs ${event.secondTeam}
+                                        ${event.matchDto.firstTeam} vs ${event.matchDto.secondTeam}
                                 </h5>
                                 <p>
-                                    <fmt:message key="start" bundle="${bundle}"/>: <c:out value="${event.start}"/>
+                                    <fmt:message key="start" bundle="${bundle}"/>: <c:out value="${event.matchDto.start}"/>
                                 </p>
                                 <table class="table table-bordered">
                                     <thead>
@@ -41,21 +41,21 @@
                                     <tr>
                                         <td>
                                             <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#makeBet" data-whatever-result="FIRST_TEAM"
-                                                    data-whatever-id="${event.matchId}" data-whatever-coef="${event.firstTeamCoefficient}">
+                                                    data-whatever-id="${event.matchDto.id}" data-whatever-coef="${event.firstTeamCoefficient}">
 
                                                     ${event.firstTeamCoefficient}
                                             </button>
                                         </td>
                                         <td>
                                             <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#makeBet" data-whatever-result="DRAW"
-                                                    data-whatever-id="${event.matchId}" data-whatever-coef="${event.drawCoefficient}">
+                                                    data-whatever-id="${event.matchDto.id}" data-whatever-coef="${event.drawCoefficient}">
 
                                                     ${event.drawCoefficient}
                                             </button>
                                         </td>
                                         <td>
                                             <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#makeBet" data-whatever-result="SECOND_TEAM"
-                                                    data-whatever-id="${event.matchId}" data-whatever-coef="${event.secondTeamCoefficient}">
+                                                    data-whatever-id="${event.matchDto.id}" data-whatever-coef="${event.secondTeamCoefficient}">
 
                                                     ${event.secondTeamCoefficient}
                                             </button>

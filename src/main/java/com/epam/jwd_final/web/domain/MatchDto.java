@@ -12,14 +12,12 @@ public class MatchDto {
     private final LocalDateTime start;
     private final String firstTeam;
     private final String secondTeam;
-    private final Result resultType;
 
-    public MatchDto(Integer id, LocalDateTime start, String firstTeam, String secondTeam, Result resultType) {
+    public MatchDto(Integer id, LocalDateTime start, String firstTeam, String secondTeam) {
         this.id = id;
         this.start = start;
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
-        this.resultType = resultType;
     }
 
     public Integer getId() {
@@ -38,8 +36,4 @@ public class MatchDto {
         return secondTeam;
     }
 
-
-    public String getResultType() {
-        return resultType.name();
-    }
 }

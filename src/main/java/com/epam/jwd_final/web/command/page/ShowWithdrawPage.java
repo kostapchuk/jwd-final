@@ -29,6 +29,5 @@ public enum ShowWithdrawPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         return WITHDRAW_PAGE_RESPONSE;
-
     }
 }

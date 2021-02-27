@@ -9,6 +9,8 @@ import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.MultiplierService;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 public enum MultiplierServiceImpl implements MultiplierService {
 
@@ -90,4 +92,15 @@ public enum MultiplierServiceImpl implements MultiplierService {
         }
     }
 
+    @Override
+    public Map<Result, BigDecimal> findCoefficientsByMatchId(int matchId) throws ServiceException {
+        Map<Result, BigDecimal> coefficients = new HashMap<>();
+        for (Result value : Result.values()) {
+            if (value.equals(Result.NO_RESULT)) {
+                break;
+            }
+            coefficients.put(value, findCoefficientByMatchIdByResult(matchId, value));
+        }
+        return coefficients;
+    }
 }

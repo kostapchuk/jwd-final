@@ -146,7 +146,7 @@ public enum MatchServiceImpl implements MatchService {
                 match.getId(),
                 match.getStart(),
                 match.getFirstTeam(),
-                match.getSecondTeam(),
-                match.getResultType());
+                match.getSecondTeam()
+        );
     }
 }

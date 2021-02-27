@@ -43,7 +43,7 @@ public enum SetResultCommand implements Command {
             Result newResult = parseResult(match,userResult);
             matchService.updateResult(matchId, newResult);
 
-            new PayoutUserWinListener().update("payoutUserWin", req); // TODO: add to everyone setting userBalance
+            new PayoutUserWinListener().update("payoutUserWin", req); // TODO: MOVE TO FILTER (add to everyone setting userBalance)
 
             deleteAllBets(matchId);
 

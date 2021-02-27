@@ -5,6 +5,7 @@ import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.ServiceException;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 public interface MultiplierService {
 
@@ -23,4 +24,6 @@ public interface MultiplierService {
     BigDecimal findCoefficientById(int id) throws ServiceException;
 
     Result findResultById(int id) throws ServiceException;
+
+    Map<Result, BigDecimal> findCoefficientsByMatchId(int matchId) throws ServiceException;
 }
