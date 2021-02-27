@@ -5,6 +5,7 @@ import com.epam.jwd_final.web.domain.MatchDto;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.BetService;
+import com.epam.jwd_final.web.service.EventService;
 import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.MultiplierService;
 
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public enum EventService {
+public enum EventServiceImpl implements EventService {
 
     INSTANCE;
 
@@ -25,13 +26,15 @@ public enum EventService {
     private final MultiplierService multiplierService;
     private final BetService betService;
 
-    EventService() {
+    EventServiceImpl() {
         matchService = MatchServiceImpl.INSTANCE;
         multiplierService = MultiplierServiceImpl.INSTANCE;
         betService = BetServiceImpl.INSTANCE;
     }
 
-    public void createEvent(LocalDateTime start, String firstTeam, String secondTeam, Map<Result, BigDecimal> coefficients) throws ServiceException {
+    @Override
+    public void createEvent(LocalDateTime start, String firstTeam, String secondTeam, Map<Result, BigDecimal> coefficients)
+            throws ServiceException {
         if (firstTeam.equals(secondTeam)) {
             throw new ServiceException("First team cannot be equal second team");
         }
@@ -51,17 +54,14 @@ public enum EventService {
         }
     }
 
-    public EventDto createEventDto(MatchDto matchDto) throws ServiceException {
-        final Map<Result, BigDecimal> coefficients = multiplierService.findCoefficientsByMatchId(matchDto.getId());
-        return new EventDto(matchDto, coefficients);
-    }
-
+    @Override
     public Optional<List<EventDto>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws ServiceException {
         final List<MatchDto> matchDtos =
                 matchService.findAllUnfinishedByDateBetween(from, to).orElse(Collections.emptyList());
         List<EventDto> eventDtos = new ArrayList<>();
         for (MatchDto matchDto : matchDtos) {
-            eventDtos.add(createEventDto(matchDto));
+            final Map<Result, BigDecimal> coefficients = multiplierService.findCoefficientsByMatchId(matchDto.getId());
+            eventDtos.add(new EventDto(matchDto, coefficients));
         }
         if (eventDtos.isEmpty()) {
             return Optional.empty();
@@ -69,6 +69,7 @@ public enum EventService {
         return Optional.of(eventDtos);
     }
 
+    @Override
     public void cancel(int id) throws ServiceException {
         for (Result value : Result.values()) {
             final int multiplierId = multiplierService.findIdByMatchIdByResult(id, value);

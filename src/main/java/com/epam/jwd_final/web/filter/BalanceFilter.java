@@ -22,6 +22,7 @@ import java.io.IOException;
 public class BalanceFilter implements Filter {
 
     private static final Logger LOGGER = LogManager.getLogger(BalanceFilter.class);
+    private static final String NULL = "null";
 
     private UserService userService;
 
@@ -37,7 +38,7 @@ public class BalanceFilter implements Filter {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             if (httpRequest.getSession(false) != null) {
                 final String userIdStr = String.valueOf(httpRequest.getSession().getAttribute(Parameter.USER_ID.getValue()));
-                if (!"null".equals(userIdStr)) {
+                if (!NULL.equals(userIdStr)) {
                     final int userId = Integer.parseInt(userIdStr);
                     httpRequest.getSession().setAttribute(Parameter.USER_BALANCE.getValue(), userService.findBalanceById(userId));
                 }

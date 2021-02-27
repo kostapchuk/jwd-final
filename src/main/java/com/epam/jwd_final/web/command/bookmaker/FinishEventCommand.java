@@ -10,13 +10,8 @@ import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ListenerException;
 import com.epam.jwd_final.web.exception.ServiceException;
-import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.MatchService;
-import com.epam.jwd_final.web.service.MultiplierService;
-import com.epam.jwd_final.web.service.impl.BetServiceImpl;
-import com.epam.jwd_final.web.service.impl.EventService;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
-import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
 
 import static com.epam.jwd_final.web.controller.Controller.payout;
 

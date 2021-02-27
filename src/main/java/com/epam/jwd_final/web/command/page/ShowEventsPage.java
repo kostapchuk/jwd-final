@@ -9,7 +9,7 @@ import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.domain.EventDto;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
-import com.epam.jwd_final.web.service.impl.EventService;
+import com.epam.jwd_final.web.service.impl.EventServiceImpl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,10 +20,10 @@ public enum ShowEventsPage implements Command {
 
     INSTANCE;
 
-    private final EventService eventService;
+    private final EventServiceImpl eventService;
 
     ShowEventsPage() {
-        this.eventService = EventService.INSTANCE;
+        this.eventService = EventServiceImpl.INSTANCE;
     }
 
     @Override

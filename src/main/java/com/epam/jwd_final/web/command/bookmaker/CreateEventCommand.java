@@ -8,7 +8,7 @@ import com.epam.jwd_final.web.command.page.ShowEventsPage;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
-import com.epam.jwd_final.web.service.impl.EventService;
+import com.epam.jwd_final.web.service.impl.EventServiceImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,10 +19,10 @@ public enum CreateEventCommand implements Command {
 
     INSTANCE;
 
-    private final EventService eventService;
+    private final EventServiceImpl eventService;
 
     CreateEventCommand() {
-        this.eventService = EventService.INSTANCE;
+        this.eventService = EventServiceImpl.INSTANCE;
     }
 
     @Override

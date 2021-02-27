@@ -8,7 +8,7 @@ import com.epam.jwd_final.web.command.page.ShowBookmakerPage;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ListenerException;
 import com.epam.jwd_final.web.exception.ServiceException;
-import com.epam.jwd_final.web.service.impl.EventService;
+import com.epam.jwd_final.web.service.impl.EventServiceImpl;
 
 import static com.epam.jwd_final.web.controller.Controller.payout;
 
@@ -16,10 +16,10 @@ public enum CancelEventCommand implements Command {
 
     INSTANCE;
 
-    private final EventService eventService;
+    private final EventServiceImpl eventService;
 
     CancelEventCommand() {
-        this.eventService = EventService.INSTANCE;
+        this.eventService = EventServiceImpl.INSTANCE;
     }
 
     @Override
