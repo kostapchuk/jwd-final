@@ -35,7 +35,7 @@ public enum EventService {
         if (firstTeam.equals(secondTeam)) {
             throw new ServiceException("First team cannot be equal second team");
         }
-        // TODO: create transaction (it should create match and multiplier or create nothing)
+        // TODO: create transaction (it should create match and multiplier or do nothing)
         matchService.saveMatch(matchService.createMatch(start, firstTeam, secondTeam));
 
         createMultipliers(
@@ -76,9 +76,5 @@ public enum EventService {
             multiplierService.deleteById(multiplierId);
         }
         matchService.deleteById(id);
-    }
-
-    public void finish(int matchId, Result newResult) {
-
     }
 }

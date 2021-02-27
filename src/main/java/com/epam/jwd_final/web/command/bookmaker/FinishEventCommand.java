@@ -25,15 +25,9 @@ public enum FinishEventCommand implements Command {
     INSTANCE;
 
     private final MatchService matchService;
-//    private final MultiplierService multiplierService;
-//    private final BetService betService;
-//    private final EventService eventService;
 
     FinishEventCommand() {
         this.matchService = MatchServiceImpl.INSTANCE;
-//        this.multiplierService = MultiplierServiceImpl.INSTANCE;
-//        this.betService = BetServiceImpl.INSTANCE;
-//        this.eventService = EventService.INSTANCE;
     }
 
     @Override
@@ -49,10 +43,6 @@ public enum FinishEventCommand implements Command {
             matchService.updateResult(matchId, newResult);
             payout.payoutUserWin(matchId);
 
-
-
-//            eventService.finish(matchId, newResult);
-//            deleteAllBets(matchId);
             return ShowBookmakerPage.INSTANCE.execute(req);
         } catch (ListenerException | ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
@@ -70,12 +60,4 @@ public enum FinishEventCommand implements Command {
         }
         return result;
     }
-
-//    void deleteAllBets(int matchId) throws ServiceException {
-//        for (Result value : Result.values()) {
-//            betService.deleteAllByMultiplierId(
-//                    multiplierService.findIdByMatchIdAndResult(matchId, value)
-//            );
-//        }
-//    }
 }
