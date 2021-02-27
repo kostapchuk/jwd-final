@@ -19,7 +19,7 @@
     <div class="container">
         <div class="offset-md-2 col-md-8">
             <h2><fmt:message key="bookmaker.create" bundle="${bundle}"/></h2>
-            <form action="${pageContext.request.contextPath}/controller?command=create_match" method="post">
+            <form action="${pageContext.request.contextPath}/controller?command=create_event" method="post">
                 <div class="form-group">
                     <label for="start"><fmt:message key="start" bundle="${bundle}"/></label>
                     <input type="datetime-local" name="startTime" class="form-control" id="start" required>
@@ -93,7 +93,7 @@
                                 </form>
                             </td>
                             <td>
-                                <form action="${pageContext.request.contextPath}/controller?command=cancel_match" method="post">
+                                <form action="${pageContext.request.contextPath}/controller?command=cancel_event" method="post">
                                     <input type="hidden" name="matchId" value="${match.id}" />
                                     <button class="btn btn-primary"><fmt:message key="cancel" bundle="${bundle}"/></button>
                                 </form>
