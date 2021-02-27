@@ -22,8 +22,8 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     private static final String FIND_ONE_BY_START_BY_FIRST_TEAM_ID_BY_SECOND_TEAM_ID_SQL =
             "select id, start, first_team_id, second_team_id, result_type_id from `match` where start = ? and first_team_id = ? and second_team_id = ?";
 
-    private static final String FIND_ALL_UNFINISHED_BY_DATE_SQL =
-            "select id, start, first_team_id, second_team_id, result_type_id from `match` where date(start) = ? and result_type_id IS NULL";
+    private static final String FIND_ALL_UNFINISHED_BY_DATE_BETWEEN_SQL =
+            "select id, start, first_team_id, second_team_id, result_type_id from `match` where date(start) between ? and ? and result_type_id IS NULL";
 
     private static final String SAVE_SQL =
             "insert into `match`(start, first_team_id, second_team_id) values(?, ?, ?)";
@@ -53,10 +53,12 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public Optional<List<Match>> findAllUnfinishedByDate(LocalDate date) throws DaoException {
+    public Optional<List<Match>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws DaoException {
         return querySelectAll(
-                FIND_ALL_UNFINISHED_BY_DATE_SQL,
-                Collections.singletonList(Timestamp.valueOf(date.atStartOfDay()))
+                FIND_ALL_UNFINISHED_BY_DATE_BETWEEN_SQL,
+                Arrays.asList(
+                        Timestamp.valueOf(from.atStartOfDay()),
+                        Timestamp.valueOf(to.atStartOfDay().plusDays(1).minusSeconds(1)))
         );
     }
 

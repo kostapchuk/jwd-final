@@ -45,7 +45,7 @@ public enum SetResultCommand implements Command {
 
             new PayoutUserWinListener().update("payoutUserWin", req); // TODO: MOVE TO FILTER (add to everyone setting userBalance)
 
-            deleteAllBets(matchId);
+//            deleteAllBets(matchId);
 
             return ShowBookmakerPage.INSTANCE.execute(req);
         } catch (ListenerException | ServiceException e) {

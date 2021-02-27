@@ -41,9 +41,9 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Optional<List<MatchDto>> findAllUnfinishedByDate(LocalDate date) throws ServiceException {
+    public Optional<List<MatchDto>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws ServiceException {
         try {
-            return matchDao.findAllUnfinishedByDate(date)
+            return matchDao.findAllUnfinishedByDateBetween(from, to)
                     .map(matches ->
                             matches.stream()
                                     .map(this::convertToDto)

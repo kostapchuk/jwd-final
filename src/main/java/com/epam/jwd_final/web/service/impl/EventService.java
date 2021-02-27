@@ -9,6 +9,7 @@ import com.epam.jwd_final.web.service.MultiplierService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,15 +28,36 @@ public enum EventService {
         multiplierService = MultiplierServiceImpl.INSTANCE;
     }
 
-    public Optional<List<EventDto>> findAll() throws ServiceException {
-        final List<MatchDto> matchDtos = matchService.findAllUnfinishedByDate(LocalDate.now()).orElse(Collections.emptyList());
+    public void createEvent(LocalDateTime start, String firstTeam, String secondTeam, Map<Result, BigDecimal> coefficients) throws ServiceException {
+        if (firstTeam.equals(secondTeam)) {
+            throw new ServiceException("First team cannot be equal to second team");
+        }
+        matchService.saveMatch(matchService.createMatch(start, firstTeam, secondTeam));
+
+        createMultipliers(
+                coefficients,
+                matchService.findMatchIdByStartByFirstTeamBySecondTeam(start, firstTeam, secondTeam)
+        );
+    }
+
+    void createMultipliers(Map<Result, BigDecimal> coefficients, int matchId) throws ServiceException {
+        for (Result result : coefficients.keySet()) {
+            multiplierService.saveMultiplier(
+                    multiplierService.createMultiplier(matchId, result, coefficients.get(result)));
+        }
+    }
+
+    public EventDto createEventDto(MatchDto matchDto) throws ServiceException {
+        final Map<Result, BigDecimal> coefficients = multiplierService.findCoefficientsByMatchId(matchDto.getId());
+        return new EventDto(matchDto, coefficients);
+    }
+
+    public Optional<List<EventDto>> findAllByDateBetween(LocalDate from, LocalDate to) throws ServiceException {
+        final List<MatchDto> matchDtos =
+                matchService.findAllUnfinishedByDateBetween(from, to).orElse(Collections.emptyList());
         List<EventDto> eventDtos = new ArrayList<>();
         for (MatchDto matchDto : matchDtos) {
-            final Map<Result, BigDecimal> coefficients = multiplierService.findCoefficientsByMatchId(matchDto.getId());
-            eventDtos.add(new EventDto(
-                    matchDto, coefficients.get(Result.FIRST_TEAM),
-                    coefficients.get(Result.SECOND_TEAM), coefficients.get(Result.DRAW))
-            );
+            eventDtos.add(createEventDto(matchDto));
         }
         if (eventDtos.isEmpty()) {
             return Optional.empty();

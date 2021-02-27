@@ -34,8 +34,9 @@ public enum ShowBookmakerPage implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final List<MatchDto> matchDtos =
-                    matchService.findAllUnfinishedByDate(LocalDate.now()).orElse(Collections.emptyList());
-            
+                    matchService.findAllUnfinishedByDateBetween(
+                            LocalDate.now().minusDays(1), LocalDate.now()).orElse(Collections.emptyList());
+
             req.setAttribute(Parameter.MATCHES.getValue(), matchDtos);
             req.setAttribute(Parameter.TEAMS.getValue(), teamService.findAll());
             return ResponseContextResult.forward(Page.BOOKMAKER.getLink());

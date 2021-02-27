@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface MatchService {
 
-    Optional<List<MatchDto>> findAllUnfinishedByDate(LocalDate date) throws ServiceException;
+    Optional<List<MatchDto>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws ServiceException;
 
     Match createMatch(LocalDateTime start, String firstTeam, String secondTeam);
 

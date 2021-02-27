@@ -1,20 +1,16 @@
 package com.epam.jwd_final.web.domain;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 public class EventDto {
 
     private final MatchDto matchDto;
-    private final BigDecimal firstTeamCoefficient;
-    private final BigDecimal secondTeamCoefficient;
-    private final BigDecimal drawCoefficient;
+    private final Map<Result, BigDecimal> coefficients;
 
-
-    public EventDto(MatchDto matchDto, BigDecimal firstTeamCoefficient, BigDecimal secondTeamCoefficient, BigDecimal drawCoefficient) {
+    public EventDto(MatchDto matchDto, Map<Result, BigDecimal> coefficients) {
         this.matchDto = matchDto;
-        this.firstTeamCoefficient = firstTeamCoefficient;
-        this.secondTeamCoefficient = secondTeamCoefficient;
-        this.drawCoefficient = drawCoefficient;
+        this.coefficients = coefficients;
     }
 
     public MatchDto getMatchDto() {
@@ -22,14 +18,14 @@ public class EventDto {
     }
 
     public BigDecimal getFirstTeamCoefficient() {
-        return firstTeamCoefficient;
+        return coefficients.get(Result.FIRST_TEAM);
     }
 
     public BigDecimal getSecondTeamCoefficient() {
-        return secondTeamCoefficient;
+        return coefficients.get(Result.SECOND_TEAM);
     }
 
     public BigDecimal getDrawCoefficient() {
-        return drawCoefficient;
+        return coefficients.get(Result.DRAW);
     }
 }
