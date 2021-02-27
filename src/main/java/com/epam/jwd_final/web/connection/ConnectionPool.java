@@ -137,7 +137,7 @@ public final class ConnectionPool {
 
     private static void registerDrivers() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(databaseProperties.getClassname());
             DriverManager.registerDriver(DriverManager.getDriver(databaseProperties.getUrl()));
         } catch (SQLException | ClassNotFoundException e) {
             LOGGER.error("Cannot register drivers");

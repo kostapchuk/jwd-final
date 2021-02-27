@@ -10,6 +10,7 @@ import static com.epam.jwd_final.web.property.ConnectionPoolProperty.POOL_INITIA
 import static com.epam.jwd_final.web.property.ConnectionPoolProperty.POOL_LOAD_FACTOR_PROPERTY;
 import static com.epam.jwd_final.web.property.ConnectionPoolProperty.POOL_MAX_SIZE_PROPERTY;
 import static com.epam.jwd_final.web.property.ConnectionPoolProperty.POOL_SHRINK_FACTOR_PROPERTY;
+import static com.epam.jwd_final.web.property.DatabaseProperty.DB_CLASSNAME_PROPERTY;
 import static com.epam.jwd_final.web.property.DatabaseProperty.DB_PASSWORD_PROPERTY;
 import static com.epam.jwd_final.web.property.DatabaseProperty.DB_URL_PROPERTY;
 import static com.epam.jwd_final.web.property.DatabaseProperty.DB_USER_PROPERTY;
@@ -34,7 +35,8 @@ public final class PropertyLoader {
         return new DatabaseProperty(
                 properties.getProperty(DB_URL_PROPERTY),
                 properties.getProperty(DB_USER_PROPERTY),
-                properties.getProperty(DB_PASSWORD_PROPERTY)
+                properties.getProperty(DB_PASSWORD_PROPERTY),
+                properties.getProperty(DB_CLASSNAME_PROPERTY)
         );
     }
 
