@@ -33,13 +33,13 @@ public class WinUserListener implements EventListener {
     public void update(String eventType, int matchId) throws ListenerException {
         try {
             final Result actualResult = matchService.findResultTypeById(matchId);
-            final int winMultiplier = multiplierService.findIdByMatchIdAndResult(matchId, actualResult);
+            final int winMultiplier = multiplierService.findIdByMatchIdByResult(matchId, actualResult);
             final List<Integer> usersId =
                     betService.findAllUserIdByMultiplierId(winMultiplier).orElse(Collections.emptyList());
             for (Integer userId : usersId) {
                 userService.topUpBalance(
                         userId,
-                        userService.calculateExpectedWin(userId, winMultiplier)
+                        userService.calculateToReturn(userId, winMultiplier)
                 );
             }
         } catch (ServiceException e) {

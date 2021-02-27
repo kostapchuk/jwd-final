@@ -22,17 +22,11 @@ public interface UserService {
 
     void rollbackRole(int id) throws ServiceException;
 
-    int findUserIdByUserName(String userName) throws ServiceException;
-
     void topUpBalance(int id, BigDecimal amount) throws ServiceException;
 
     void withdrawFromBalance(int id, BigDecimal amount) throws ServiceException;
 
     BigDecimal findBalanceById(int id) throws ServiceException;
 
-    BigDecimal calculateExpectedWin(int id, int multiplierId) throws ServiceException;
-
-    boolean isUserWinner(String userName, int matchId) throws ServiceException;
-
-    String findNameById(int userId) throws ServiceException;
+    BigDecimal calculateToReturn(int id, int multiplierId) throws ServiceException;
 }

@@ -28,7 +28,6 @@ public enum UserServiceImpl implements UserService {
 
     private final UserDao userDao;
     private final BetDao betDao;
-    private final MatchDao matchDao;
     private final MultiplierDao multiplierDao;
 
     private static final String DUMMY_PASSWORD = "defaultPwd";
@@ -37,7 +36,6 @@ public enum UserServiceImpl implements UserService {
     UserServiceImpl() {
         this.userDao = new UserDaoImpl();
         this.betDao = new BetDaoImpl();
-        this.matchDao = new MatchDaoImpl();
         this.multiplierDao = new MultiplierDaoImpl();
     }
 
@@ -115,17 +113,6 @@ public enum UserServiceImpl implements UserService {
     }
 
     @Override
-    public int findUserIdByUserName(String userName) throws ServiceException {
-        try {
-            return userDao.findOneByName(userName)
-                    .orElseThrow(ServiceException::new)
-                    .getId();
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e.getCause());
-        }
-    }
-
-    @Override
     public void topUpBalance(int id, BigDecimal amount) throws ServiceException {
         try {
             final BigDecimal previousBalance = userDao.findOneById(id)
@@ -165,7 +152,7 @@ public enum UserServiceImpl implements UserService {
     }
 
     @Override
-    public BigDecimal calculateExpectedWin(int id, int multiplierId) throws ServiceException {
+    public BigDecimal calculateToReturn(int id, int multiplierId) throws ServiceException {
         try {
             final Bet bet = betDao.findOneByUserIdByMultiplierId(id, multiplierId).orElseThrow(ServiceException::new);
             final BigDecimal betMoney = bet.getBetMoney();
@@ -175,33 +162,6 @@ public enum UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public boolean isUserWinner(String userName, int matchId) throws ServiceException {
-        try {
-            final int userId = userDao.findOneByName(userName).orElseThrow(ServiceException::new).getId();
-            final Result actualResultType = matchDao.findOneById(matchId).orElseThrow(ServiceException::new).getResultType();
-            final int multiplierId = multiplierDao.findOneByMatchIdByResultId(matchId, actualResultType.getId())
-                    .orElseThrow(ServiceException::new)
-                    .getId(); // TODO: redo
-            final Optional<Bet> optionalBet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId);
-            if (!optionalBet.isPresent()) {
-                return false;
-            }
-            final Result userResultType = multiplierDao.findOneById(optionalBet.get().getMultiplierId()).orElseThrow(ServiceException::new).getResult();
-            return userResultType.equals(actualResultType);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e.getCause());
-        }
-    }
-
-    @Override
-    public String findNameById(int userId) throws ServiceException {
-        try {
-            return userDao.findOneById(userId).orElseThrow(ServiceException::new).getName();
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e.getCause());
-        }
-    }
 
     private UserDto convertToDto(User user) {
         return new UserDto(user.getId(), user.getName(), user.getRole().name(), user.getBalance());

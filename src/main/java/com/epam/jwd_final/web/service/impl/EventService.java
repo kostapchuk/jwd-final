@@ -71,7 +71,7 @@ public enum EventService {
 
     public void cancel(int id) throws ServiceException {
         for (Result value : Result.values()) {
-            final int multiplierId = multiplierService.findIdByMatchIdAndResult(id, value);
+            final int multiplierId = multiplierService.findIdByMatchIdByResult(id, value);
             betService.deleteAllByMultiplierId(multiplierId);
             multiplierService.deleteById(multiplierId);
         }

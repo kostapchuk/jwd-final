@@ -16,7 +16,7 @@ public interface MultiplierService {
 
     BigDecimal findCoefficientByMatchIdByResult(int matchId, Result result) throws ServiceException;
 
-    int findIdByMatchIdAndResult(int matchId, Result result) throws ServiceException;
+    int findIdByMatchIdByResult(int matchId, Result result) throws ServiceException;
 
     void deleteById(int id) throws ServiceException;
 

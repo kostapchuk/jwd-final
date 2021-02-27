@@ -20,7 +20,7 @@ public interface MatchService {
 
     int findMatchIdByStartByFirstTeamBySecondTeam(LocalDateTime start, String firstTeam, String secondTeam) throws ServiceException;
 
-    boolean updateResult(int matchId, Result result) throws ServiceException;
+    void updateResult(int matchId, Result result) throws ServiceException;
 
     Result findResultTypeById(int id) throws ServiceException;
 

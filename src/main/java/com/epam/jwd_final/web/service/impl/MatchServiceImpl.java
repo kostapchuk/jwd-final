@@ -8,15 +8,11 @@ import com.epam.jwd_final.web.domain.MatchDto;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ServiceException;
-import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.MatchService;
-import com.epam.jwd_final.web.service.MultiplierService;
-import com.epam.jwd_final.web.service.UserService;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,9 +63,9 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public boolean updateResult(int matchId, Result result) throws ServiceException {
+    public void updateResult(int matchId, Result result) throws ServiceException {
         try {
-            return matchDao.updateResultId(matchId, result.getId());
+            matchDao.updateResultId(matchId, result.getId());
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }

@@ -10,10 +10,8 @@ import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.MultiplierService;
-import com.epam.jwd_final.web.service.UserService;
 import com.epam.jwd_final.web.service.impl.BetServiceImpl;
 import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
-import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
 import java.math.BigDecimal;
 
@@ -37,7 +35,7 @@ public enum PlaceBetCommand implements Command {
             final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
             final BigDecimal betMoney = new BigDecimal(req.getStringParameter(Parameter.BET_MONEY.getValue()));
 
-            final int multiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.valueOf(userResult));
+            final int multiplierId = multiplierService.findIdByMatchIdByResult(matchId, Result.valueOf(userResult));
 
             betService.placeBet(userId, multiplierId, betMoney);
         } catch (ServiceException e) {

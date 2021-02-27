@@ -22,8 +22,6 @@ public interface BetService {
 
     int findMultiplierIdById(int id) throws ServiceException;
 
-    boolean isBetExist(int userId, int multiplierId) throws ServiceException;
-
     void deleteAllByMultiplierId(int multiplierId) throws ServiceException;
 
     Optional<List<Integer>> findAllUserIdByMultiplierId(int multiplierId) throws ServiceException;

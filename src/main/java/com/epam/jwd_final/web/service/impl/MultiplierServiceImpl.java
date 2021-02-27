@@ -40,14 +40,16 @@ public enum MultiplierServiceImpl implements MultiplierService {
     @Override
     public BigDecimal findCoefficientByMatchIdByResult(int matchId, Result result) throws ServiceException {
         try {
-            return multiplierDao.findOneByMatchIdByResultId(matchId, result.getId()).orElseThrow(ServiceException::new).getCoefficient();
+            return multiplierDao.findOneByMatchIdByResultId(matchId, result.getId())
+                    .orElseThrow(ServiceException::new)
+                    .getCoefficient();
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
     }
 
     @Override
-    public int findIdByMatchIdAndResult(int matchId, Result result) throws ServiceException {
+    public int findIdByMatchIdByResult(int matchId, Result result) throws ServiceException {
         try {
             return multiplierDao.findOneByMatchIdByResultId(matchId, result.getId())
                     .orElseThrow(ServiceException::new)
@@ -69,7 +71,9 @@ public enum MultiplierServiceImpl implements MultiplierService {
     @Override
     public int findMatchIdByMultiplierId(int multiplierId) throws ServiceException {
         try {
-            return multiplierDao.findOneById(multiplierId).orElseThrow(ServiceException::new).getMatchId();
+            return multiplierDao.findOneById(multiplierId)
+                    .orElseThrow(ServiceException::new)
+                    .getMatchId();
         } catch (DaoException e) {
             throw new ServiceException();
         }
@@ -78,7 +82,9 @@ public enum MultiplierServiceImpl implements MultiplierService {
     @Override
     public BigDecimal findCoefficientById(int id) throws ServiceException {
         try {
-            return multiplierDao.findOneById(id).orElseThrow(ServiceException::new).getCoefficient();
+            return multiplierDao.findOneById(id)
+                    .orElseThrow(ServiceException::new)
+                    .getCoefficient();
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }

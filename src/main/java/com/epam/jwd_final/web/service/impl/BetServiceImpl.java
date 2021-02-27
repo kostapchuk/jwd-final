@@ -9,6 +9,7 @@ import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.BetService;
+import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.MultiplierService;
 import com.epam.jwd_final.web.service.UserService;
 
@@ -26,9 +27,13 @@ public enum BetServiceImpl implements BetService {
 
     private final BetDao betDao;
     private final UserService userService;
+    private final MultiplierService multiplierService;
+    private final MatchService matchService;
 
     BetServiceImpl() {
         this.userService = UserServiceImpl.INSTANCE;
+        this.multiplierService = MultiplierServiceImpl.INSTANCE;
+        this.matchService = MatchServiceImpl.INSTANCE;
         this.betDao = new BetDaoImpl();
     }
 
@@ -38,15 +43,15 @@ public enum BetServiceImpl implements BetService {
             List<BetDto> betDtos = new ArrayList<>();
             final List<Bet> bets = betDao.findAllByUserId(id).orElse(Collections.emptyList());
             for (Bet bet : bets) {
-                final int multiplierId = BetServiceImpl.INSTANCE.findMultiplierIdById(bet.getId());
-                final int matchId = MultiplierServiceImpl.INSTANCE.findMatchIdByMultiplierId(multiplierId);
-                final Match match = MatchServiceImpl.INSTANCE.findById(matchId);
+                final int multiplierId = findMultiplierIdById(bet.getId());
+                final int matchId = multiplierService.findMatchIdByMultiplierId(multiplierId);
+                final Match match = matchService.findById(matchId);
                 if (match.getResultType() == null) {
-                    final BigDecimal placedCoefficient = MultiplierServiceImpl.INSTANCE.findCoefficientById(multiplierId);
-                    final Result placedResult = MultiplierServiceImpl.INSTANCE.findResultById(multiplierId).orElseThrow(ServiceException::new);
+                    final BigDecimal placedCoefficient = multiplierService.findCoefficientById(multiplierId);
+                    final Result placedResult = multiplierService.findResultById(multiplierId).orElseThrow(ServiceException::new);
                     String placedResultStr = parseResult(placedResult, match);
                     betDtos.add(convertToDto(bet, match.getStart(),
-                            placedResultStr, placedCoefficient, UserServiceImpl.INSTANCE.calculateExpectedWin(id, multiplierId),
+                            placedResultStr, placedCoefficient, userService.calculateToReturn(id, multiplierId),
                             match.getFirstTeam() + " - " + match.getSecondTeam()));
                 }
             }
@@ -97,16 +102,6 @@ public enum BetServiceImpl implements BetService {
     }
 
     @Override
-    public boolean isBetExist(int userId, int multiplierId) throws ServiceException {
-        try {
-            final Optional<Bet> optionalBet = betDao.findOneByUserIdByMultiplierId(userId, multiplierId);
-            return optionalBet.isPresent();
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e.getCause());
-        }
-    }
-
-    @Override
     public void deleteAllByMultiplierId(int multiplierId) throws ServiceException {
         try {
             betDao.deleteAllByMultiplierId(multiplierId);
@@ -143,14 +138,18 @@ public enum BetServiceImpl implements BetService {
 
     @Override
     public void placeBet(int userId, int multiplierId, BigDecimal betMoney) throws ServiceException {
-        if (!isBetExist(userId, multiplierId)) {
-            final BigDecimal currentBalance = userService.findBalanceById(userId);
-            final BigDecimal finalBalance = currentBalance.subtract(betMoney);
+        try {
+            if (!betDao.findOneByUserIdByMultiplierId(userId, multiplierId).isPresent()) {
+                final BigDecimal currentBalance = userService.findBalanceById(userId);
+                final BigDecimal finalBalance = currentBalance.subtract(betMoney);
 
-            if (finalBalance.compareTo(BigDecimal.ZERO) >= 0) {
-                save(createBet(userId, multiplierId, betMoney));
-                userService.withdrawFromBalance(userId, betMoney); // TODO: try to make more general
+                if (finalBalance.compareTo(BigDecimal.ZERO) >= 0) {
+                    save(createBet(userId, multiplierId, betMoney));
+                    userService.withdrawFromBalance(userId, betMoney); // TODO: try to make more general
+                }
             }
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
         }
     }
 
@@ -176,7 +175,8 @@ public enum BetServiceImpl implements BetService {
         }
     }
 
-    private BetDto convertToDto(Bet bet, LocalDateTime start, String placedTeam, BigDecimal placedCoefficient, BigDecimal expectedWin, String opponents) {
+    private BetDto convertToDto(Bet bet, LocalDateTime start, String placedTeam,
+                                BigDecimal placedCoefficient, BigDecimal expectedWin, String opponents) {
         return new BetDto(bet.getId(), start, placedTeam, placedCoefficient, expectedWin, opponents);
     }
 }
