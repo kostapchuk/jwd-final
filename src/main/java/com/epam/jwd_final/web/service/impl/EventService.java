@@ -52,7 +52,7 @@ public enum EventService {
         return new EventDto(matchDto, coefficients);
     }
 
-    public Optional<List<EventDto>> findAllByDateBetween(LocalDate from, LocalDate to) throws ServiceException {
+    public Optional<List<EventDto>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws ServiceException {
         final List<MatchDto> matchDtos =
                 matchService.findAllUnfinishedByDateBetween(from, to).orElse(Collections.emptyList());
         List<EventDto> eventDtos = new ArrayList<>();

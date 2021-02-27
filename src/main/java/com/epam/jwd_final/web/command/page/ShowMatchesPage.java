@@ -33,7 +33,7 @@ public enum ShowMatchesPage implements Command {
             final LocalDate tomorrow = LocalDateTime.now().plusDays(1).toLocalDate();
 
             final List<EventDto> events =
-                    eventService.findAllByDateBetween(yesterday, tomorrow).orElse(Collections.emptyList());
+                    eventService.findAllUnfinishedByDateBetween(yesterday, tomorrow).orElse(Collections.emptyList());
             req.setAttribute(Parameter.EVENTS.getValue(), events);
             return ResponseContextResult.forward(Page.MATCHES.getLink());
         } catch (ServiceException e) {
