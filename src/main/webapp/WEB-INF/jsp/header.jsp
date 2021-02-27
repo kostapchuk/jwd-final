@@ -8,7 +8,7 @@
 
 <div class="container-lg">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="<c:url value="/controller?command=show_all_matches_page"/>">Tiger bet</a>
+        <a class="navbar-brand" href="<c:url value="/controller?command=show_events_page"/>">Tiger bet</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -16,13 +16,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/controller?command=show_all_matches_page"/>">
+                    <a class="nav-link" href="<c:url value="/controller?command=show_events_page"/>">
                         <fmt:message key="header.home" bundle="${bundle}"/>
                     </a>
                 </li>
                 <c:if test="${not empty sessionScope.userName}">
                     <li class="nav-item">
-                        <a class="nav-link" href="<c:url value="/controller?command=show_all_bets_page"/>">
+                        <a class="nav-link" href="<c:url value="/controller?command=show_bets_page"/>">
                             <fmt:message key="header.my-bets" bundle="${bundle}"/>
                         </a>
                     </li>
@@ -50,7 +50,7 @@
                 </c:if>
                 <c:if test="${sessionScope.userRole == 'ADMIN'}">
                     <li class="nav-item">
-                        <a class="nav-link" href="<c:url value="/controller?command=show_all_users_page"/>">
+                        <a class="nav-link" href="<c:url value="/controller?command=show_users_page"/>">
                             <fmt:message key="users" bundle="${bundle}"/>
                         </a>
                     </li>

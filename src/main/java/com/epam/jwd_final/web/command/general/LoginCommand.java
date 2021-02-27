@@ -6,7 +6,7 @@ import com.epam.jwd_final.web.command.Page;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
-import com.epam.jwd_final.web.command.page.ShowMatchesPage;
+import com.epam.jwd_final.web.command.page.ShowEventsPage;
 import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
@@ -38,7 +38,7 @@ public enum LoginCommand implements Command {
                 req.setSessionAttribute(Parameter.USER_NAME.getValue(), name);
                 req.setSessionAttribute(Parameter.USER_ROLE.getValue(), userDto.get().getRole());
                 req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userDto.get().getBalance());
-                return ShowMatchesPage.INSTANCE.execute(req);
+                return ShowEventsPage.INSTANCE.execute(req);
             } else {
                 req.setSessionAttribute(Parameter.ERROR.getValue(), ERROR_MSG);
                 // TODO: or just validate with js and write "incorrect login or password"

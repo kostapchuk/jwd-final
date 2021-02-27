@@ -16,13 +16,13 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
-public enum ShowMatchesPage implements Command {
+public enum ShowEventsPage implements Command {
 
     INSTANCE;
 
     private final EventService eventService;
 
-    ShowMatchesPage() {
+    ShowEventsPage() {
         this.eventService = EventService.INSTANCE;
     }
 
@@ -35,7 +35,7 @@ public enum ShowMatchesPage implements Command {
             final List<EventDto> events =
                     eventService.findAllUnfinishedByDateBetween(yesterday, tomorrow).orElse(Collections.emptyList());
             req.setAttribute(Parameter.EVENTS.getValue(), events);
-            return ResponseContextResult.forward(Page.MATCHES.getLink());
+            return ResponseContextResult.forward(Page.EVENTS.getLink());
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

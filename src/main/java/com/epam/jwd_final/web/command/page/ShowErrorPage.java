@@ -1,6 +1,7 @@
 package com.epam.jwd_final.web.command.page;
 
 import com.epam.jwd_final.web.command.Command;
+import com.epam.jwd_final.web.command.Page;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
 
@@ -12,7 +13,7 @@ public enum ShowErrorPage implements Command {
 
         @Override
         public String getPage() {
-            return "/WEB-INF/jsp/error.jsp";
+            return Page.ERROR.getLink();
         }
 
         @Override

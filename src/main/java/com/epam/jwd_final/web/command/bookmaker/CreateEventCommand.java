@@ -4,7 +4,7 @@ import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
-import com.epam.jwd_final.web.command.page.ShowMatchesPage;
+import com.epam.jwd_final.web.command.page.ShowEventsPage;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
@@ -39,7 +39,7 @@ public enum CreateEventCommand implements Command {
             );
 
             eventService.createEvent(start, firstTeam, secondTeam, coefficients);
-            return ShowMatchesPage.INSTANCE.execute(req);
+            return ShowEventsPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

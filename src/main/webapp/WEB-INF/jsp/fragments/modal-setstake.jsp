@@ -16,7 +16,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="${pageContext.request.contextPath}/controller?command=make_bet" method="post">
+            <form action="${pageContext.request.contextPath}/controller?command=place_bet" method="post">
                 <input type="hidden" id="matchInput" name="matchId"/>
                 <input type="hidden" id="resultInput" name="result"/>
                 <div class="modal-body">

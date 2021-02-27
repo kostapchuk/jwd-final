@@ -3,7 +3,7 @@ package com.epam.jwd_final.web.command.general;
 import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
-import com.epam.jwd_final.web.command.page.ShowMatchesPage;
+import com.epam.jwd_final.web.command.page.ShowEventsPage;
 import com.epam.jwd_final.web.exception.CommandException;
 
 public enum LogoutCommand implements Command {
@@ -13,6 +13,6 @@ public enum LogoutCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         req.invalidateSession();
-        return ShowMatchesPage.INSTANCE.execute(req);
+        return ShowEventsPage.INSTANCE.execute(req);
     }
 }

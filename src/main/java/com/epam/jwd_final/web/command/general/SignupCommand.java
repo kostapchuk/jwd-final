@@ -4,7 +4,7 @@ import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
-import com.epam.jwd_final.web.command.page.ShowMatchesPage;
+import com.epam.jwd_final.web.command.page.ShowEventsPage;
 import com.epam.jwd_final.web.command.page.ShowErrorPage;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
@@ -28,7 +28,7 @@ public enum SignupCommand implements Command {
             final String password = req.getStringParameter(Parameter.USER_PASSWORD.getValue());
             ResponseContext result;
             if (userService.signup(name, password)) {
-                result = ShowMatchesPage.INSTANCE.execute(req);
+                result = ShowEventsPage.INSTANCE.execute(req);
             } else {
                 result = ShowErrorPage.INSTANCE.execute(req);
             }

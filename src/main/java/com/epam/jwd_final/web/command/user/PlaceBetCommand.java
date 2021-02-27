@@ -4,7 +4,7 @@ import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
-import com.epam.jwd_final.web.command.page.ShowMatchesPage;
+import com.epam.jwd_final.web.command.page.ShowEventsPage;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
@@ -17,7 +17,7 @@ import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
 import java.math.BigDecimal;
 
-public enum MakeBetCommand implements Command {
+public enum PlaceBetCommand implements Command {
 
     INSTANCE;
 
@@ -25,7 +25,7 @@ public enum MakeBetCommand implements Command {
     private final MultiplierService multiplierService;
     private final BetService betService;
 
-    MakeBetCommand() {
+    PlaceBetCommand() {
         this.userService = UserServiceImpl.INSTANCE;
         this.multiplierService = MultiplierServiceImpl.INSTANCE;
         this.betService = BetServiceImpl.INSTANCE;
@@ -39,7 +39,7 @@ public enum MakeBetCommand implements Command {
             final int multiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.valueOf(userResult));
             final String userName = req.getStringSessionAttribute(Parameter.USER_NAME.getValue());
             if ("null".equals(userName)) {
-                return ShowMatchesPage.INSTANCE.execute(req);
+                return ShowEventsPage.INSTANCE.execute(req);
             }
             final int userId = userService.findUserIdByUserName(userName);
             if (!betService.isBetExist(userId, multiplierId)) {
@@ -56,6 +56,6 @@ public enum MakeBetCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }
-        return ShowMatchesPage.INSTANCE.execute(req);
+        return ShowEventsPage.INSTANCE.execute(req);
     }
 }
