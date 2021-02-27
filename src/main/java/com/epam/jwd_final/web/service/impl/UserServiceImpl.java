@@ -1,5 +1,6 @@
 package com.epam.jwd_final.web.service.impl;
 
+import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.dao.impl.BetDaoImpl;
 import com.epam.jwd_final.web.dao.BetDao;
 import com.epam.jwd_final.web.dao.impl.MatchDaoImpl;

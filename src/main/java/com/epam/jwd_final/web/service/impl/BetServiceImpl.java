@@ -9,6 +9,8 @@ import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.BetService;
+import com.epam.jwd_final.web.service.MultiplierService;
+import com.epam.jwd_final.web.service.UserService;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,8 +25,10 @@ public enum BetServiceImpl implements BetService {
     INSTANCE;
 
     private final BetDao betDao;
+    private final UserService userService;
 
     BetServiceImpl() {
+        this.userService = UserServiceImpl.INSTANCE;
         this.betDao = new BetDaoImpl();
     }
 
@@ -134,6 +138,19 @@ public enum BetServiceImpl implements BetService {
                     .getBetMoney();
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public void placeBet(int userId, int multiplierId, BigDecimal betMoney) throws ServiceException {
+        if (!isBetExist(userId, multiplierId)) {
+            final BigDecimal currentBalance = userService.findBalanceById(userId);
+            final BigDecimal finalBalance = currentBalance.subtract(betMoney);
+
+            if (finalBalance.compareTo(BigDecimal.ZERO) >= 0) {
+                save(createBet(userId, multiplierId, betMoney));
+                userService.withdrawFromBalance(userId, betMoney); // TODO: try to make more general
+            }
         }
     }
 

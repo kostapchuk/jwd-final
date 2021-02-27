@@ -21,12 +21,10 @@ public enum PlaceBetCommand implements Command {
 
     INSTANCE;
 
-    private final UserService userService;
     private final MultiplierService multiplierService;
     private final BetService betService;
 
     PlaceBetCommand() {
-        this.userService = UserServiceImpl.INSTANCE;
         this.multiplierService = MultiplierServiceImpl.INSTANCE;
         this.betService = BetServiceImpl.INSTANCE;
     }
@@ -34,25 +32,14 @@ public enum PlaceBetCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
+            final int userId = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
             final String userResult = req.getStringParameter(Parameter.RESULT.getValue());
-            final int multiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.valueOf(userResult));
-            final String userName = req.getStringSessionAttribute(Parameter.USER_NAME.getValue());
-            if ("null".equals(userName)) {
-                return ShowEventsPage.INSTANCE.execute(req);
-            }
-            final int userId = userService.findUserIdByUserName(userName);
-            if (!betService.isBetExist(userId, multiplierId)) {
-                final BigDecimal betMoney = new BigDecimal(req.getStringParameter(Parameter.BET_MONEY.getValue()));
-                final BigDecimal currentBalance = userService.findBalanceById(userId);
-                final BigDecimal finalBalance = currentBalance.subtract(betMoney);
+            final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
+            final BigDecimal betMoney = new BigDecimal(req.getStringParameter(Parameter.BET_MONEY.getValue()));
 
-                if (finalBalance.compareTo(BigDecimal.ZERO) >= 0) {
-                    betService.save(
-                            betService.createBet(userId, multiplierId, betMoney));
-                    userService.withdrawFromBalance(userId, betMoney); // TODO: try to make more general
-                }
-            }
+            final int multiplierId = multiplierService.findIdByMatchIdAndResult(matchId, Result.valueOf(userResult));
+
+            betService.placeBet(userId, multiplierId, betMoney);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

@@ -29,4 +29,6 @@ public interface BetService {
     Optional<List<Integer>> findAllUserIdByMultiplierId(int multiplierId) throws ServiceException;
 
     BigDecimal findBetMoneyByUserIdByMultiplierId(int userId, int multiplierId) throws ServiceException;
+
+    void placeBet(int userId, int multiplierId, BigDecimal betMoney) throws ServiceException;
 }

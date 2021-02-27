@@ -40,25 +40,46 @@
                                     <tbody>
                                     <tr>
                                         <td>
-                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#makeBet" data-whatever-result="FIRST_TEAM"
-                                                    data-whatever-id="${event.matchDto.id}" data-whatever-coef="${event.firstTeamCoefficient}">
+                                            <c:if test="${not empty sessionScope.userName}">
+                                                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#makeBet" data-whatever-result="FIRST_TEAM"
+                                                        data-whatever-id="${event.matchDto.id}" data-whatever-coef="${event.firstTeamCoefficient}">
 
-                                                    ${event.firstTeamCoefficient}
-                                            </button>
+                                                        ${event.firstTeamCoefficient}
+                                                </button>
+                                            </c:if>
+                                            <c:if test="${empty sessionScope.userName}">
+                                                <button class="btn btn-primary btn-block" data-toggle="modal" disabled>
+                                                        ${event.firstTeamCoefficient}
+                                                </button>
+                                            </c:if>
                                         </td>
                                         <td>
-                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#makeBet" data-whatever-result="DRAW"
-                                                    data-whatever-id="${event.matchDto.id}" data-whatever-coef="${event.drawCoefficient}">
+                                            <c:if test="${not empty sessionScope.userName}">
+                                                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#makeBet" data-whatever-result="DRAW"
+                                                        data-whatever-id="${event.matchDto.id}" data-whatever-coef="${event.drawCoefficient}">
 
-                                                    ${event.drawCoefficient}
-                                            </button>
+                                                        ${event.drawCoefficient}
+                                                </button>
+                                            </c:if>
+                                            <c:if test="${empty sessionScope.userName}">
+                                                <button class="btn btn-primary btn-block" data-toggle="modal" disabled>
+                                                        ${event.drawCoefficient}
+                                                </button>
+                                            </c:if>
                                         </td>
                                         <td>
-                                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#makeBet" data-whatever-result="SECOND_TEAM"
-                                                    data-whatever-id="${event.matchDto.id}" data-whatever-coef="${event.secondTeamCoefficient}">
+                                            <c:if test="${not empty sessionScope.userName}">
+                                                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#makeBet" data-whatever-result="SECOND_TEAM"
+                                                        data-whatever-id="${event.matchDto.id}" data-whatever-coef="${event.secondTeamCoefficient}">
 
-                                                    ${event.secondTeamCoefficient}
-                                            </button>
+                                                        ${event.secondTeamCoefficient}
+                                                </button>
+                                            </c:if>
+                                            <c:if test="${empty sessionScope.userName}">
+                                                <button class="btn btn-primary btn-block" data-toggle="modal" disabled>
+                                                        ${event.secondTeamCoefficient}
+                                                </button>
+                                            </c:if>
                                         </td>
                                     </tr>
                                     </tbody>
