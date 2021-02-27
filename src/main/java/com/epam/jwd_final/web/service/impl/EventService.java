@@ -4,6 +4,7 @@ import com.epam.jwd_final.web.domain.EventDto;
 import com.epam.jwd_final.web.domain.MatchDto;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.ServiceException;
+import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.MultiplierService;
 
@@ -22,10 +23,12 @@ public enum EventService {
 
     private final MatchService matchService;
     private final MultiplierService multiplierService;
+    private final BetService betService;
 
     EventService() {
         matchService = MatchServiceImpl.INSTANCE;
         multiplierService = MultiplierServiceImpl.INSTANCE;
+        betService = BetServiceImpl.INSTANCE;
     }
 
     public void createEvent(LocalDateTime start, String firstTeam, String secondTeam, Map<Result, BigDecimal> coefficients) throws ServiceException {
@@ -63,5 +66,14 @@ public enum EventService {
             return Optional.empty();
         }
         return Optional.of(eventDtos);
+    }
+
+    public void cancel(int id) throws ServiceException {
+        for (Result value : Result.values()) {
+            final int multiplierId = multiplierService.findIdByMatchIdAndResult(id, value);
+            betService.deleteAllByMultiplierId(multiplierId);
+            multiplierService.deleteById(multiplierId);
+        }
+        matchService.deleteById(id);
     }
 }

@@ -15,6 +15,7 @@ import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.TeamServiceImpl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,9 +34,12 @@ public enum ShowBookmakerPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
+            final LocalDate yesterday = LocalDateTime.now().minusDays(1).toLocalDate();
+            final LocalDate tomorrow = LocalDateTime.now().plusDays(1).toLocalDate();
+
             final List<MatchDto> matchDtos =
                     matchService.findAllUnfinishedByDateBetween(
-                            LocalDate.now().minusDays(1), LocalDate.now()).orElse(Collections.emptyList());
+                            yesterday, tomorrow).orElse(Collections.emptyList());
 
             req.setAttribute(Parameter.MATCHES.getValue(), matchDtos);
             req.setAttribute(Parameter.TEAMS.getValue(), teamService.findAll());

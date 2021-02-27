@@ -30,10 +30,10 @@ public class EventManager {
         users.remove(listener);
     }
 
-    public void notify(String eventType, RequestContext req) throws ListenerException {
+    public void notify(String eventType, int anyId) throws ListenerException {
         List<EventListener> users = listeners.get(eventType);
         for (EventListener listener : users) {
-            listener.update(eventType, req);
+            listener.update(eventType, anyId);
         }
     }
 }

@@ -30,9 +30,10 @@ public enum CancelBetCommand implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final int betId = req.getIntParameter(Parameter.BET_ID.getValue());
-            final String userName = req.getStringSessionAttribute(Parameter.USER_NAME.getValue());
+            final Integer userId = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
             final BigDecimal betMoney = betService.findBetMoneyById(betId);
-            userService.topUpBalance(userName, betMoney);
+
+            userService.topUpBalance(userId, betMoney);
             betService.deleteById(betId);
             return ShowBetsPage.INSTANCE.execute(req);
         } catch (ServiceException e) {

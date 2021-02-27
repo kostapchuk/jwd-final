@@ -21,5 +21,5 @@ public interface UserDao {
 
     void rollbackRole(User user) throws DaoException;
 
-    void updateBalance(String userName, BigDecimal balance) throws DaoException;
+    void updateBalance(int id, BigDecimal balance) throws DaoException;
 }

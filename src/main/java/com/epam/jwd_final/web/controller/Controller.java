@@ -3,10 +3,10 @@ package com.epam.jwd_final.web.controller;
 import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.command.WrappingRequestContext;
-import com.epam.jwd_final.web.connection.ConnectionPool;
 import com.epam.jwd_final.web.exception.CommandException;
+import com.epam.jwd_final.web.observer.CancelMatchListener;
 import com.epam.jwd_final.web.observer.Payout;
-import com.epam.jwd_final.web.observer.PayoutUserWinListener;
+import com.epam.jwd_final.web.observer.WinUserListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,13 +24,17 @@ public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
     private static final String COMMAND_PARAMETER_NAME = "command";
+    private static final String WIN_USER_EVENT_TYPE = "winUser";
+    private static final String CANCEL_MATCH_EVENT_TYPE = "cancelMatch";
 
-    public static final Payout payout = new Payout();
+
+    public static Payout payout = new Payout();
 
     @Override
     public void init() throws ServletException {
         super.init();
-        payout.events.subscribe("payoutUserWin", new PayoutUserWinListener());
+        payout.events.subscribe(WIN_USER_EVENT_TYPE, new WinUserListener());
+        payout.events.subscribe(CANCEL_MATCH_EVENT_TYPE, new CancelMatchListener());
     }
 
     @Override

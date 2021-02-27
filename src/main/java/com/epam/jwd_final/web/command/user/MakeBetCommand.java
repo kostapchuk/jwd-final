@@ -50,7 +50,7 @@ public enum MakeBetCommand implements Command {
                 if (finalBalance.compareTo(BigDecimal.ZERO) >= 0) {
                     betService.save(
                             betService.createBet(userId, multiplierId, betMoney));
-                    userService.withdrawFromBalance(userName, betMoney); // TODO: try to make more general
+                    userService.withdrawFromBalance(userId, betMoney); // TODO: try to make more general
                 }
             }
         } catch (ServiceException e) {

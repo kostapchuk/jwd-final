@@ -32,7 +32,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             "update user set role = ? where name = ?";
 
     private static final String UPDATE_BALANCE_SQL =
-            "update user set balance = ? where name = ?";
+            "update user set balance = ? where id = ?";
 
     @Override
     public Optional<List<User>> findAll() throws DaoException {
@@ -105,10 +105,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void updateBalance(String userName, BigDecimal balance) throws DaoException {
+    public void updateBalance(int id, BigDecimal balance) throws DaoException {
         queryUpdate(
                 UPDATE_BALANCE_SQL,
-                Arrays.asList(balance, userName)
+                Arrays.asList(balance, id)
         );
     }
 

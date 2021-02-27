@@ -130,28 +130,27 @@ public enum UserServiceImpl implements UserService {
     }
 
     @Override
-    public void topUpBalance(String userName, BigDecimal amount) throws ServiceException {
-        final BigDecimal previousBalance;
+    public void topUpBalance(int id, BigDecimal amount) throws ServiceException {
         try {
-            previousBalance = userDao.findOneByName(userName)
+            final BigDecimal previousBalance = userDao.findOneById(id)
                     .orElseThrow(ServiceException::new)
                     .getBalance();
             final BigDecimal newBalance = previousBalance.add(amount);
-            userDao.updateBalance(userName, newBalance);
+            userDao.updateBalance(id, newBalance);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
     }
 
     @Override
-    public void withdrawFromBalance(String userName, BigDecimal amount) throws ServiceException {
+    public void withdrawFromBalance(int id, BigDecimal amount) throws ServiceException {
         try {
-            final BigDecimal previousBalance = userDao.findOneByName(userName)
+            final BigDecimal previousBalance = userDao.findOneById(id)
                     .orElseThrow(ServiceException::new)
                     .getBalance();
             final BigDecimal newBalance = previousBalance.subtract(amount);
             if (newBalance.compareTo(BigDecimal.ZERO) >= 0) {
-                userDao.updateBalance(userName, newBalance);
+                userDao.updateBalance(id, newBalance);
             }
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());

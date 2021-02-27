@@ -28,16 +28,10 @@ public enum MatchServiceImpl implements MatchService {
 
     private final MatchDao matchDao;
     private final TeamDao teamDao;
-    private final BetService betService;
-    private final MultiplierService multiplierService;
-    private final UserService userService;
 
     MatchServiceImpl() {
         this.matchDao = new MatchDaoImpl();
         this.teamDao = new TeamDao();
-        this.betService = BetServiceImpl.INSTANCE;
-        this.multiplierService = MultiplierServiceImpl.INSTANCE;
-        this.userService = UserServiceImpl.INSTANCE;
     }
 
     @Override
@@ -106,26 +100,6 @@ public enum MatchServiceImpl implements MatchService {
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
-    }
-
-    @Override
-    public void cancel(int id) throws ServiceException {
-        for (Result value : Result.values()) {
-            final int multiplierId = multiplierService.findIdByMatchIdAndResult(id, value);
-            final List<Integer> userIds = betService
-                    .findAllUserIdByMultiplierId(multiplierId).orElse(Collections.emptyList());
-
-            for (Integer userId : userIds) {
-                userService.topUpBalance(
-                        userService.findNameById(userId),
-                        betService.findBetMoneyByUserIdByMultiplierId(userId, multiplierId)
-                );
-            }
-            betService.deleteAllByMultiplierId(multiplierId);
-            multiplierService.deleteById(multiplierId);
-        }
-
-        deleteById(id);
     }
 
     @Override

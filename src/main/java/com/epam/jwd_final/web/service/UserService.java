@@ -24,9 +24,9 @@ public interface UserService {
 
     int findUserIdByUserName(String userName) throws ServiceException;
 
-    void topUpBalance(String userName, BigDecimal amount) throws ServiceException;
+    void topUpBalance(int id, BigDecimal amount) throws ServiceException;
 
-    void withdrawFromBalance(String userName, BigDecimal amount) throws ServiceException;
+    void withdrawFromBalance(int id, BigDecimal amount) throws ServiceException;
 
     BigDecimal findBalanceById(int id) throws ServiceException;
 

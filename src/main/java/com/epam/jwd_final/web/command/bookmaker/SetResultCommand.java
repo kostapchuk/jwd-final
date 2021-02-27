@@ -10,7 +10,7 @@ import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ListenerException;
 import com.epam.jwd_final.web.exception.ServiceException;
-import com.epam.jwd_final.web.observer.PayoutUserWinListener;
+import com.epam.jwd_final.web.observer.WinUserListener;
 import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.MultiplierService;
@@ -18,13 +18,17 @@ import com.epam.jwd_final.web.service.impl.BetServiceImpl;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
 
+import static com.epam.jwd_final.web.controller.Controller.payout;
+
 public enum SetResultCommand implements Command {
 
     INSTANCE;
 
+
     private final MatchService matchService;
     private final MultiplierService multiplierService;
     private final BetService betService;
+
 
     SetResultCommand() {
         this.matchService = MatchServiceImpl.INSTANCE;
@@ -34,6 +38,7 @@ public enum SetResultCommand implements Command {
 
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
+
         try {
             final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
             final String userResult = req.getStringParameter(Parameter.RESULT_TYPE.getValue());
@@ -43,9 +48,9 @@ public enum SetResultCommand implements Command {
             Result newResult = parseResult(match,userResult);
             matchService.updateResult(matchId, newResult);
 
-            new PayoutUserWinListener().update("payoutUserWin", req); // TODO: MOVE TO FILTER (add to everyone setting userBalance)
+            payout.payoutUserWin(matchId);
 
-//            deleteAllBets(matchId);
+            deleteAllBets(matchId);
 
             return ShowBookmakerPage.INSTANCE.execute(req);
         } catch (ListenerException | ServiceException e) {
