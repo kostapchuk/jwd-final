@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface BetService {
 
-    Optional<List<BetDto>> findAllByUserId(int id) throws ServiceException;
+    Optional<List<BetDto>> findAllUnfinishedByUserId(int id) throws ServiceException;
 
     Bet createBet(int userId, int multiplierId, BigDecimal betMoney);
 

@@ -10,30 +10,30 @@ import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ListenerException;
 import com.epam.jwd_final.web.exception.ServiceException;
-import com.epam.jwd_final.web.observer.WinUserListener;
 import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.MultiplierService;
 import com.epam.jwd_final.web.service.impl.BetServiceImpl;
+import com.epam.jwd_final.web.service.impl.EventService;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
 
 import static com.epam.jwd_final.web.controller.Controller.payout;
 
-public enum SetResultCommand implements Command {
+public enum FinishEventCommand implements Command {
 
     INSTANCE;
 
-
     private final MatchService matchService;
-    private final MultiplierService multiplierService;
-    private final BetService betService;
+//    private final MultiplierService multiplierService;
+//    private final BetService betService;
+//    private final EventService eventService;
 
-
-    SetResultCommand() {
+    FinishEventCommand() {
         this.matchService = MatchServiceImpl.INSTANCE;
-        this.multiplierService = MultiplierServiceImpl.INSTANCE;
-        this.betService = BetServiceImpl.INSTANCE;
+//        this.multiplierService = MultiplierServiceImpl.INSTANCE;
+//        this.betService = BetServiceImpl.INSTANCE;
+//        this.eventService = EventService.INSTANCE;
     }
 
     @Override
@@ -41,40 +41,41 @@ public enum SetResultCommand implements Command {
 
         try {
             final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
-            final String userResult = req.getStringParameter(Parameter.RESULT_TYPE.getValue());
+            final String bookmakerResult = req.getStringParameter(Parameter.RESULT_TYPE.getValue());
 
             final Match match = matchService.findById(matchId);
+            Result newResult = parseResult(match, bookmakerResult);
 
-            Result newResult = parseResult(match,userResult);
             matchService.updateResult(matchId, newResult);
-
             payout.payoutUserWin(matchId);
 
-            deleteAllBets(matchId);
 
+
+//            eventService.finish(matchId, newResult);
+//            deleteAllBets(matchId);
             return ShowBookmakerPage.INSTANCE.execute(req);
         } catch (ListenerException | ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }
     }
 
-    Result parseResult(Match match, String userResult) {
+    Result parseResult(Match match, String bookmakerResult) {
         Result result = null;
-        if (match.getFirstTeam().equals(userResult)) {
+        if (match.getFirstTeam().equals(bookmakerResult)) {
             result = Result.FIRST_TEAM;
-        } else if (match.getSecondTeam().equals(userResult)) {
+        } else if (match.getSecondTeam().equals(bookmakerResult)) {
             result = Result.SECOND_TEAM;
-        } else if (Result.DRAW.name().equals(userResult.toUpperCase())) {
+        } else if (Result.DRAW.name().equals(bookmakerResult.toUpperCase())) {
             result = Result.DRAW;
         }
         return result;
     }
 
-    void deleteAllBets(int matchId) throws ServiceException {
-        for (Result value : Result.values()) {
-            betService.deleteAllByMultiplierId(
-                    multiplierService.findIdByMatchIdAndResult(matchId, value)
-            );
-        }
-    }
+//    void deleteAllBets(int matchId) throws ServiceException {
+//        for (Result value : Result.values()) {
+//            betService.deleteAllByMultiplierId(
+//                    multiplierService.findIdByMatchIdAndResult(matchId, value)
+//            );
+//        }
+//    }
 }

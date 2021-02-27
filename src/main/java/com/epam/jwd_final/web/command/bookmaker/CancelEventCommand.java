@@ -26,6 +26,7 @@ public enum CancelEventCommand implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
+//            TODO: delete all info about match, multiplier and bets
             payout.payoutCancelMatch(matchId);
             eventService.cancel(matchId);
             return ShowBookmakerPage.INSTANCE.execute(req);

@@ -14,7 +14,6 @@ import com.epam.jwd_final.web.service.impl.BetServiceImpl;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public enum ShowBetsPage implements Command {
 
@@ -30,9 +29,7 @@ public enum ShowBetsPage implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final int id = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
-
-            final List<BetDto> placedBets = betService.findAllByUserId(id).orElse(Collections.emptyList());
-
+            final List<BetDto> placedBets = betService.findAllUnfinishedByUserId(id).orElse(Collections.emptyList());
             req.setAttribute(Parameter.PLACED_BETS.getValue(), placedBets);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

@@ -79,7 +79,7 @@
                                 <%--                        <td>${requestScope.coefficient}</td>--%>
                             <td>${match.secondTeam}</td>
                             <td>
-                                <form action="${pageContext.request.contextPath}/controller?command=set_result" method="post">
+                                <form action="${pageContext.request.contextPath}/controller?command=finish_event" method="post">
                                         <%--                                    <input type="text" name="resultType" required>--%>
                                     <div class="form-group">
                                         <select class="form-control" id="result" name="resultType" required>

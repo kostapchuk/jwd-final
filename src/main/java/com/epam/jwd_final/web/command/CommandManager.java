@@ -4,7 +4,7 @@ import com.epam.jwd_final.web.command.admin.RollbackRoleCommand;
 import com.epam.jwd_final.web.command.admin.UpdateRoleCommand;
 import com.epam.jwd_final.web.command.bookmaker.CancelEventCommand;
 import com.epam.jwd_final.web.command.bookmaker.CreateEventCommand;
-import com.epam.jwd_final.web.command.bookmaker.SetResultCommand;
+import com.epam.jwd_final.web.command.bookmaker.FinishEventCommand;
 import com.epam.jwd_final.web.command.general.LoginCommand;
 import com.epam.jwd_final.web.command.general.LogoutCommand;
 import com.epam.jwd_final.web.command.general.SignupCommand;
@@ -28,7 +28,7 @@ public enum CommandManager {
     UPDATE_ROLE(UpdateRoleCommand.INSTANCE),
     ROLLBACK_ROLE(RollbackRoleCommand.INSTANCE),
     CREATE_EVENT(CreateEventCommand.INSTANCE),
-    SET_RESULT(SetResultCommand.INSTANCE),
+    FINISH_EVENT(FinishEventCommand.INSTANCE),
     CANCEL_BET(CancelBetCommand.INSTANCE),
     MAKE_BET(MakeBetCommand.INSTANCE),
     DEPOSIT(DepositCommand.INSTANCE),

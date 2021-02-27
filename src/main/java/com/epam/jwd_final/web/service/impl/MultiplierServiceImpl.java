@@ -11,6 +11,7 @@ import com.epam.jwd_final.web.service.MultiplierService;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public enum MultiplierServiceImpl implements MultiplierService {
 
@@ -84,9 +85,9 @@ public enum MultiplierServiceImpl implements MultiplierService {
     }
 
     @Override
-    public Result findResultById(int id) throws ServiceException {
+    public Optional<Result> findResultById(int id) throws ServiceException {
         try {
-            return multiplierDao.findOneById(id).orElseThrow(ServiceException::new).getResult();
+            return multiplierDao.findOneById(id).map(Multiplier::getResult);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
