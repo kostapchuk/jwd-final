@@ -9,11 +9,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MatchDao {
+
     Optional<Match> findOneById(int id) throws DaoException;
 
     Optional<Match> findOneByStartByFirstTeamIdBySecondTeamId(Timestamp start, int firstTeamId, int secondTeamId) throws DaoException;
 
-    Optional<List<Match>> findAllByStartOfDateByResultId(LocalDate date, int resultId) throws DaoException;
+    Optional<List<Match>> findAllUnfinishedByDate(LocalDate date) throws DaoException;
 
     void save(Match match) throws DaoException;
 

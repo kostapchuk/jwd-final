@@ -6,18 +6,17 @@ import com.epam.jwd_final.web.command.Page;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
-import com.epam.jwd_final.web.domain.Result;
+import com.epam.jwd_final.web.domain.MatchDto;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.TeamService;
-import com.epam.jwd_final.web.service.UserService;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.TeamServiceImpl;
-import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 
 public enum ShowBookmakerPage implements Command {
 
@@ -34,7 +33,10 @@ public enum ShowBookmakerPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            req.setAttribute(Parameter.MATCHES.getValue(), matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT).orElse(Collections.emptyList()));
+            final List<MatchDto> matchDtos =
+                    matchService.findAllUnfinishedByDate(LocalDate.now()).orElse(Collections.emptyList());
+            
+            req.setAttribute(Parameter.MATCHES.getValue(), matchDtos);
             req.setAttribute(Parameter.TEAMS.getValue(), teamService.findAll());
             return ResponseContextResult.forward(Page.BOOKMAKER.getLink());
         } catch (ServiceException e) {

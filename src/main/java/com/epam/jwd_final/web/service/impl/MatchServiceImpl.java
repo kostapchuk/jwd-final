@@ -41,9 +41,9 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Optional<List<MatchDto>> findAllByStartOfDateByResult(LocalDate date, Result result) throws ServiceException {
+    public Optional<List<MatchDto>> findAllUnfinishedByDate(LocalDate date) throws ServiceException {
         try {
-            return matchDao.findAllByStartOfDateByResultId(date, result.getId())
+            return matchDao.findAllUnfinishedByDate(date)
                     .map(matches ->
                             matches.stream()
                                     .map(this::convertToDto)
@@ -111,10 +111,6 @@ public enum MatchServiceImpl implements MatchService {
     @Override
     public void cancel(int id) throws ServiceException {
         for (Result value : Result.values()) {
-            if (value.equals(Result.NO_RESULT)) {
-                break;
-            }
-
             final int multiplierId = multiplierService.findIdByMatchIdAndResult(id, value);
             final List<Integer> userIds = betService
                     .findAllUserIdByMultiplierId(multiplierId).orElse(Collections.emptyList());

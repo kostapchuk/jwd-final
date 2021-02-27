@@ -25,7 +25,7 @@ public class MatchDto {
     }
 
     public String getStart() {
-        return start.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER, Locale.getDefault()));
+        return start.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER));
     }
 
     public String getFirstTeam() {

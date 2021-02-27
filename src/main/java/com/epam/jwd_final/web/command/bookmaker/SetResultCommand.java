@@ -54,24 +54,19 @@ public enum SetResultCommand implements Command {
     }
 
     Result parseResult(Match match, String userResult) {
-        Result result;
+        Result result = null;
         if (match.getFirstTeam().equals(userResult)) {
             result = Result.FIRST_TEAM;
         } else if (match.getSecondTeam().equals(userResult)) {
             result = Result.SECOND_TEAM;
         } else if (Result.DRAW.name().equals(userResult.toUpperCase())) {
             result = Result.DRAW;
-        } else {
-            result = Result.NO_RESULT;
         }
         return result;
     }
 
     void deleteAllBets(int matchId) throws ServiceException {
         for (Result value : Result.values()) {
-            if (value.equals(Result.NO_RESULT)) {
-                break;
-            }
             betService.deleteAllByMultiplierId(
                     multiplierService.findIdByMatchIdAndResult(matchId, value)
             );

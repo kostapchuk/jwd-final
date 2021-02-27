@@ -4,8 +4,7 @@ public enum Result implements Entity {
 
     FIRST_TEAM(1),
     SECOND_TEAM(2),
-    DRAW(3),
-    NO_RESULT(4);
+    DRAW(3);
 
     private final Integer id;
 
@@ -30,9 +29,8 @@ public enum Result implements Entity {
             case (3):
                 result = Result.DRAW;
                 break;
-            case (4):
             default:
-                result = Result.NO_RESULT;
+                result = null;
                 break;
         }
         return result;

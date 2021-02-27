@@ -13,10 +13,9 @@ import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.MultiplierService;
-import com.epam.jwd_final.web.service.UserService;
+import com.epam.jwd_final.web.service.impl.EventService;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
-import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,33 +23,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public enum ShowMatchesPage implements Command {
 
     INSTANCE;
 
-    private final MatchService matchService;
-    private final MultiplierService multiplierService;
+    private final EventService eventService;
 
     ShowMatchesPage() {
-        this.matchService = MatchServiceImpl.INSTANCE;
-        this.multiplierService = MultiplierServiceImpl.INSTANCE;
+        this.eventService = EventService.INSTANCE;
     }
 
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final List<MatchDto> matchDtos = matchService.findAllByStartOfDateByResult(LocalDate.now(), Result.NO_RESULT).orElse(Collections.emptyList());
-            List<EventDto> eventDtos = new ArrayList<>();
-            for (MatchDto matchDto : matchDtos) {
-                final Map<Result, BigDecimal> coefficients = multiplierService.findCoefficientsByMatchId(matchDto.getId());
-                eventDtos.add(new EventDto(
-                        matchDto, coefficients.get(Result.FIRST_TEAM),
-                        coefficients.get(Result.SECOND_TEAM), coefficients.get(Result.DRAW))
-                );
-            }
-            req.setAttribute(Parameter.EVENTS.getValue(), eventDtos);
+            final List<EventDto> events = eventService.findAll().orElse(Collections.emptyList());
+            req.setAttribute(Parameter.EVENTS.getValue(), events);
             return ResponseContextResult.forward(Page.MATCHES.getLink());
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

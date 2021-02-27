@@ -96,9 +96,6 @@ public enum MultiplierServiceImpl implements MultiplierService {
     public Map<Result, BigDecimal> findCoefficientsByMatchId(int matchId) throws ServiceException {
         Map<Result, BigDecimal> coefficients = new HashMap<>();
         for (Result value : Result.values()) {
-            if (value.equals(Result.NO_RESULT)) {
-                break;
-            }
             coefficients.put(value, findCoefficientByMatchIdByResult(matchId, value));
         }
         return coefficients;
