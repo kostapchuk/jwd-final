@@ -17,9 +17,9 @@ public interface UserDao {
 
     boolean save(User user) throws DaoException;
 
-    void updateRole(User user) throws DaoException;
+    void updateRoleById(int id, int newRoleId) throws DaoException;
 
-    void rollbackRole(User user) throws DaoException;
+    void rollbackRoleById(int id, int newRoleId) throws DaoException;
 
     void updateBalance(int id, BigDecimal balance) throws DaoException;
 }

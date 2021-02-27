@@ -1,6 +1,5 @@
 package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.dao.impl.BetDaoImpl;
 import com.epam.jwd_final.web.dao.BetDao;
 import com.epam.jwd_final.web.dao.impl.MatchDaoImpl;
@@ -98,10 +97,8 @@ public enum UserServiceImpl implements UserService {
     @Override
     public void updateRole(int id) throws ServiceException {
         try {
-            userDao.updateRole(
-                    userDao.findOneById(id)
-                            .orElseThrow(ServiceException::new)
-            );
+            final User user = userDao.findOneById(id).orElseThrow(ServiceException::new);
+            userDao.updateRoleById(user.getId(), user.getRole().getId() - 1);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
@@ -110,10 +107,8 @@ public enum UserServiceImpl implements UserService {
     @Override
     public void rollbackRole(int id) throws ServiceException {
         try {
-            userDao.rollbackRole(
-                    userDao.findOneById(id)
-                            .orElseThrow(ServiceException::new)
-            );
+            final User user = userDao.findOneById(id).orElseThrow(ServiceException::new);
+            userDao.rollbackRoleById(user.getId(), user.getRole().getId() + 1);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }

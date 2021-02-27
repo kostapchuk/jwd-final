@@ -27,11 +27,11 @@
                                 <form action="${pageContext.request.contextPath}/controller?command=update_role" method="post">
                                     <h5 class="card-title"><strong><fmt:message key="name" bundle="${bundle}"/>:</strong> ${user.name}</h5>
                                     <h5 class="card-title"><strong><fmt:message key="users.role" bundle="${bundle}"/>:</strong> ${user.role}</h5>
-                                    <input type="hidden" name="userName" value="${user.name}" />
+                                    <input type="hidden" name="userId" value="${user.id}" />
                                     <button class="btn btn-primary"><fmt:message key="users.update-role" bundle="${bundle}"/></button>
                                 </form>
                                 <form action="${pageContext.request.contextPath}/controller?command=rollback_role" method="post">
-                                    <input type="hidden" name="userName" value="${user.name}" />
+                                    <input type="hidden" name="userId" value="${user.id}" />
                                     <button class="btn btn-primary"><fmt:message key="users.rollback-role" bundle="${bundle}"/></button>
                                 </form>
                             </div>

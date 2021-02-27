@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
@@ -29,7 +30,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             "insert into user (name, password) values (?, ?)";
 
     private static final String UPDATE_ROLE_SQL =
-            "update user set role = ? where name = ?";
+            "update user set role = ? where id = ?";
 
     private static final String UPDATE_BALANCE_SQL =
             "update user set balance = ? where id = ?";
@@ -66,42 +67,36 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         );
     }
 
+//    public void updateRoleById(int id, int newRoleId) {
+//        final int currentRoleId = user.getRole().getId();
+//        final int newRoleId = currentRoleId - 1;
+//        if (Role.CLIENT.getId() >= newRoleId && Role.ADMIN.getId() <= newRoleId) {
+//            queryUpdate(
+//                    UPDATE_ROLE_SQL,
+//                    Arrays.asList(newRoleId, user.getName())
+//            );
+//        }
+//    }
+
     @Override
-    public void updateRole(User user) throws DaoException {
-        int newRoleId;
-        switch (user.getRole()) {
-            case CLIENT:
-                newRoleId = Role.BOOKMAKER.getId();
-                break;
-            case ADMIN:
-            case BOOKMAKER:
-                newRoleId = Role.ADMIN.getId();
-                break;
-            default:
-                newRoleId = Role.CLIENT.getId();
+    public void updateRoleById(int id, int newRoleId) throws DaoException {
+        if (Role.CLIENT.getId() >= newRoleId && Role.ADMIN.getId() <= newRoleId) {
+            queryUpdate(
+                    UPDATE_ROLE_SQL,
+                    Arrays.asList(newRoleId, id)
+            );
         }
-        queryUpdate(
-                UPDATE_ROLE_SQL,
-                Arrays.asList(newRoleId, user.getName())
-        );
     }
 
     @Override
-    public void rollbackRole(User user) throws DaoException {
-        int newRoleId;
-        switch (user.getRole()) {
-            case ADMIN:
-                newRoleId = Role.BOOKMAKER.getId();
-                break;
-            case BOOKMAKER:
-            case CLIENT:
-            default:
-                newRoleId = Role.CLIENT.getId();
+    public void rollbackRoleById(int id, int newRoleId) throws DaoException {
+        if (Role.CLIENT.getId() >= newRoleId && Role.ADMIN.getId() < newRoleId) {
+            queryUpdate(
+                    UPDATE_ROLE_SQL,
+                    Arrays.asList(newRoleId, id)
+            );
         }
-        queryUpdate(
-                UPDATE_ROLE_SQL,
-                Arrays.asList(newRoleId, user.getName())
-        );
+
     }
 
     @Override
