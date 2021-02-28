@@ -5,6 +5,7 @@ import com.epam.jwd_final.web.command.Page;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
+import com.epam.jwd_final.web.command.ResponseContextResult;
 import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
@@ -24,24 +25,12 @@ public enum ShowUsersPage implements Command {
         this.userService = UserServiceImpl.INSTANCE;
     }
 
-    private static final ResponseContext ALL_USERS_PAGE_RESPONSE = new ResponseContext() {
-        @Override
-        public String getPage() {
-            return Page.USERS.getLink();
-        }
-
-        @Override
-        public boolean isRedirect() {
-            return false;
-        }
-    };
-
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final List<UserDto> userDtos = userService.findAll().orElse(Collections.emptyList());
             req.setAttribute(Parameter.USERS.getValue(), userDtos);
-            return ALL_USERS_PAGE_RESPONSE;
+            return ResponseContextResult.forward(Page.USERS.getLink());
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }
