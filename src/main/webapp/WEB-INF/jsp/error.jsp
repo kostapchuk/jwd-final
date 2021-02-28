@@ -18,10 +18,9 @@
 
 <jsp:include page="header.jsp"/>
     <div class="container">
-        <h2>Oops... Something went wrong</h2>
+        <h1>Oops...</h1>
         <c:if test="${sessionScope.error != null}">
-            <h6>Something went wrong. Try again</h6>
-            <p>${sessionScope.error}</p>
+            <h2>${sessionScope.error}</h2>
         </c:if>
         <p>When you’re moving, you’re stressed. This page probably doesn’t help with that, even though it’s pretty cute. But we love to solve problems and fix things, so reach one of us directly and we’ll get this move back on track.</p>
     </div>

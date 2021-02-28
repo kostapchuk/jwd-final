@@ -21,6 +21,8 @@ public enum LoginCommand implements Command {
 
     private static final String ERROR_MSG = "Invalid credentials";
 
+    private static final String HOME_PAGE = "/controller?command=go_home_page";
+
     private final UserService userService;
 
     LoginCommand() {
@@ -38,10 +40,9 @@ public enum LoginCommand implements Command {
                 req.setSessionAttribute(Parameter.USER_NAME.getValue(), name);
                 req.setSessionAttribute(Parameter.USER_ROLE.getValue(), userDto.get().getRole());
                 req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userDto.get().getBalance());
-                return ShowEventsPage.INSTANCE.execute(req);
+                return ResponseContextResult.redirect(HOME_PAGE);
             } else {
                 req.setSessionAttribute(Parameter.ERROR.getValue(), ERROR_MSG);
-                // TODO: or just validate with js and write "incorrect login or password"
                 return ResponseContextResult.forward(Page.ERROR.getLink());
             }
         } catch (ServiceException e) {

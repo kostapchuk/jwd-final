@@ -57,7 +57,7 @@ public enum MatchServiceImpl implements MatchService {
             return matchDao.findOneByStartByFirstTeamIdBySecondTeamId(
                     Timestamp.valueOf(start),
                     teamService.findIdByName(firstTeam),
-                    teamService.findIdByName(firstTeam)
+                    teamService.findIdByName(secondTeam)
             ).orElseThrow(ServiceException::new).getId();
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
