@@ -6,9 +6,12 @@ import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
 import com.epam.jwd_final.web.mapper.impl.MatchModelMapper;
+import com.epam.jwd_final.web.service.TeamService;
+import com.epam.jwd_final.web.service.impl.TeamServiceImpl;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -34,8 +37,6 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     private static final String DELETE_BY_ID_SQL =
             "delete from `match` where id = ?";
 
-    private final TeamDao teamDao = new TeamDao();
-
     @Override
     public Optional<Match> findOneById(int id) throws DaoException {
         return querySelectOne(
@@ -45,7 +46,8 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public Optional<Match> findOneByStartByFirstTeamIdBySecondTeamId(Timestamp start, int firstTeamId, int secondTeamId) throws DaoException {
+    public Optional<Match> findOneByStartByFirstTeamIdBySecondTeamId(Timestamp start, int firstTeamId, int secondTeamId)
+            throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_START_BY_FIRST_TEAM_ID_BY_SECOND_TEAM_ID_SQL,
                 Arrays.asList(start, firstTeamId, secondTeamId)
@@ -53,30 +55,26 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public Optional<List<Match>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws DaoException {
+    public Optional<List<Match>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws DaoException { // TODO: redo to Timestamp
         return querySelectAll(
                 FIND_ALL_UNFINISHED_BY_DATE_BETWEEN_SQL,
                 Arrays.asList(
-                        Timestamp.valueOf(from.atStartOfDay()),
-                        Timestamp.valueOf(to.atStartOfDay().plusDays(1).minusSeconds(1)))
+                        Timestamp.valueOf(from.atStartOfDay()), // TODO: redo
+                        Timestamp.valueOf(to.atStartOfDay().plusDays(1).minusSeconds(1))) // TODO: redo
         );
     }
 
     @Override
-    public void save(Match match) throws DaoException {
+    public void save(LocalDateTime start, int firstTeamId, int secondTeamId) throws DaoException {
         queryUpdate(
                 SAVE_SQL,
-                Arrays.asList(
-                        java.sql.Timestamp.valueOf(match.getStart()),
-                        teamDao.findOneByName(match.getFirstTeam()).orElseThrow(DaoException::new).getId(),
-                        teamDao.findOneByName(match.getSecondTeam()).orElseThrow(DaoException::new).getId()
-                )
+                Arrays.asList(Timestamp.valueOf(start), firstTeamId, secondTeamId)
         );
     }
 
     @Override
-    public boolean updateResultId(int matchId, int resultId) throws DaoException {
-        return queryUpdate(
+    public void updateResultId(int matchId, int resultId) throws DaoException {
+        queryUpdate(
                 UPDATE_RESULT_TYPE_ID_SQL,
                 Arrays.asList(resultId, matchId)
         );

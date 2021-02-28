@@ -11,18 +11,12 @@ public class Match extends AbstractEntity {
     private final String secondTeam;
     private final Result resultType;
 
-    public Match(Integer id, LocalDateTime start,
-                 String firstTeam, String secondTeam, Result resultType) {
+    public Match(Integer id, LocalDateTime start, String firstTeam, String secondTeam, Result resultType) {
         super(id);
         this.start = start;
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
         this.resultType = resultType;
-    }
-
-    public Match(LocalDateTime start, String firstTeam,
-                 String secondTeam, Result resultType) {
-        this(null, start, firstTeam, secondTeam, resultType);
     }
 
     public Match(LocalDateTime start, String firstTeam, String secondTeam) {
@@ -40,7 +34,6 @@ public class Match extends AbstractEntity {
     public String getSecondTeam() {
         return secondTeam;
     }
-
 
     public Result getResultType() {
         return resultType;

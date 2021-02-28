@@ -41,7 +41,7 @@ public enum EventServiceImpl implements EventService {
         // TODO: create transaction (it should create match and multiplier or do nothing)
 
 
-        matchService.saveMatch(matchService.createMatch(start, firstTeam, secondTeam));
+        matchService.save(matchService.createMatch(start, firstTeam, secondTeam));
 
         createMultipliers(
                 coefficients,

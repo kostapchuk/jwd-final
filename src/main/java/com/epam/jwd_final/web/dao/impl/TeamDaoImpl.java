@@ -1,6 +1,7 @@
 package com.epam.jwd_final.web.dao.impl;
 
 import com.epam.jwd_final.web.dao.AbstractDao;
+import com.epam.jwd_final.web.dao.TeamDao;
 import com.epam.jwd_final.web.domain.Team;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
@@ -10,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class TeamDao extends AbstractDao<Team> {
+public class TeamDaoImpl extends AbstractDao<Team> implements TeamDao {
 
     private static final String FIND_ONE_BY_ID_SQL =
             "select id, name from team where id = ?";
@@ -21,6 +22,7 @@ public class TeamDao extends AbstractDao<Team> {
     private static final String FIND_ALL_SQL =
             "select id, name from team";
 
+    @Override
     public Optional<Team> findOneById(int id) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_ID_SQL,
@@ -28,6 +30,7 @@ public class TeamDao extends AbstractDao<Team> {
         );
     }
 
+    @Override
     public Optional<Team> findOneByName(String name) throws DaoException {
         return querySelectOne(
                 FIND_ONE_BY_NAME_SQL,
@@ -35,6 +38,7 @@ public class TeamDao extends AbstractDao<Team> {
         );
     }
 
+    @Override
     public Optional<List<Team>> findAll() throws DaoException {
         return querySelectAll(
                 FIND_ALL_SQL,

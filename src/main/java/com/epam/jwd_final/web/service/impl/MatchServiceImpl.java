@@ -2,13 +2,14 @@ package com.epam.jwd_final.web.service.impl;
 
 import com.epam.jwd_final.web.dao.impl.MatchDaoImpl;
 import com.epam.jwd_final.web.dao.MatchDao;
-import com.epam.jwd_final.web.dao.impl.TeamDao;
+import com.epam.jwd_final.web.dao.impl.TeamDaoImpl;
 import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.domain.MatchDto;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.MatchService;
+import com.epam.jwd_final.web.service.TeamService;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -23,11 +24,11 @@ public enum MatchServiceImpl implements MatchService {
     INSTANCE;
 
     private final MatchDao matchDao;
-    private final TeamDao teamDao;
+    private final TeamService teamService;
 
     MatchServiceImpl() {
         this.matchDao = new MatchDaoImpl();
-        this.teamDao = new TeamDao();
+        this.teamService = TeamServiceImpl.INSTANCE;
     }
 
     @Override
@@ -50,12 +51,13 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public int findMatchIdByStartByFirstTeamBySecondTeam(LocalDateTime start, String firstTeam, String secondTeam) throws ServiceException {
+    public int findMatchIdByStartByFirstTeamBySecondTeam(LocalDateTime start, String firstTeam, String secondTeam)
+            throws ServiceException {
         try {
             return matchDao.findOneByStartByFirstTeamIdBySecondTeamId(
                     Timestamp.valueOf(start),
-                    teamDao.findOneByName(firstTeam).orElseThrow(IllegalArgumentException::new).getId(), // TODO: redo exception
-                    teamDao.findOneByName(secondTeam).orElseThrow(IllegalArgumentException::new).getId() // TODO: redo exception
+                    teamService.findIdByName(firstTeam),
+                    teamService.findIdByName(firstTeam)
             ).orElseThrow(ServiceException::new).getId();
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
@@ -99,9 +101,13 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public void saveMatch(Match match) throws ServiceException {
+    public void save(Match match) throws ServiceException {
         try {
-            matchDao.save(match);
+            matchDao.save(
+                    match.getStart(),
+                    teamService.findIdByName(match.getFirstTeam()),
+                    teamService.findIdByName(match.getSecondTeam())
+            );
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }

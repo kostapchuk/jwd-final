@@ -5,6 +5,7 @@ import com.epam.jwd_final.web.exception.DaoException;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,9 +17,9 @@ public interface MatchDao {
 
     Optional<List<Match>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws DaoException;
 
-    void save(Match match) throws DaoException;
+    void save(LocalDateTime start, int firstTeamId, int secondTeamId) throws DaoException;
 
-    boolean updateResultId(int matchId, int resultId) throws DaoException;
+    void updateResultId(int matchId, int resultId) throws DaoException;
 
     void deleteById(int id) throws DaoException;
 }

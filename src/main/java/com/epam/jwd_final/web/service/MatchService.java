@@ -16,7 +16,7 @@ public interface MatchService {
 
     Match createMatch(LocalDateTime start, String firstTeam, String secondTeam);
 
-    void saveMatch(Match match) throws ServiceException;
+    void save(Match match) throws ServiceException;
 
     int findMatchIdByStartByFirstTeamBySecondTeam(LocalDateTime start, String firstTeam, String secondTeam) throws ServiceException;
 

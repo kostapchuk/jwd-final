@@ -6,6 +6,7 @@ import com.epam.jwd_final.web.exception.DaoException;
 import java.util.Optional;
 
 public interface MultiplierDao {
+
     Optional<Multiplier> findOneById(int id) throws DaoException;
 
     Optional<Multiplier> findOneByMatchIdByResultId(int matchId, int resultId) throws DaoException;

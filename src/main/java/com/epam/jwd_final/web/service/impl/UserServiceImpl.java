@@ -2,14 +2,12 @@ package com.epam.jwd_final.web.service.impl;
 
 import com.epam.jwd_final.web.dao.impl.BetDaoImpl;
 import com.epam.jwd_final.web.dao.BetDao;
-import com.epam.jwd_final.web.dao.impl.MatchDaoImpl;
-import com.epam.jwd_final.web.dao.MatchDao;
 import com.epam.jwd_final.web.dao.MultiplierDao;
 import com.epam.jwd_final.web.dao.impl.MultiplierDaoImpl;
 import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.dao.impl.UserDaoImpl;
 import com.epam.jwd_final.web.domain.Bet;
-import com.epam.jwd_final.web.domain.Result;
+import com.epam.jwd_final.web.domain.Role;
 import com.epam.jwd_final.web.domain.User;
 import com.epam.jwd_final.web.domain.UserDto;
 import com.epam.jwd_final.web.exception.DaoException;
@@ -101,7 +99,10 @@ public enum UserServiceImpl implements UserService {
     public void updateRole(int id) throws ServiceException {
         try {
             final User user = userDao.findOneById(id).orElseThrow(ServiceException::new);
-            userDao.updateRoleById(user.getId(), user.getRole().getId() - 1);
+            final int newRoleId = user.getRole().getId() - 1;
+            if (Role.CLIENT.getId() >= newRoleId && Role.ADMIN.getId() <= newRoleId) {
+                userDao.updateRole(user.getId(), newRoleId);
+            }
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
@@ -111,7 +112,10 @@ public enum UserServiceImpl implements UserService {
     public void rollbackRole(int id) throws ServiceException {
         try {
             final User user = userDao.findOneById(id).orElseThrow(ServiceException::new);
-            userDao.rollbackRoleById(user.getId(), user.getRole().getId() + 1);
+            final int newRoleId = user.getRole().getId() + 1;
+            if (Role.CLIENT.getId() >= newRoleId && Role.ADMIN.getId() < newRoleId) {
+                userDao.updateRole(user.getId(), newRoleId);
+            }
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }

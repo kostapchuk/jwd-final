@@ -1,11 +1,14 @@
 package com.epam.jwd_final.web.mapper.impl;
 
-import com.epam.jwd_final.web.dao.impl.TeamDao;
+import com.epam.jwd_final.web.dao.impl.TeamDaoImpl;
 import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ModelMapperException;
+import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
+import com.epam.jwd_final.web.service.TeamService;
+import com.epam.jwd_final.web.service.impl.TeamServiceImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +22,11 @@ public class MatchModelMapper implements ModelMapper<Match> {
     private static final String SECOND_TEAM_ID_COLUMN = "second_team_id";
     private static final String RESULT_TYPE_ID_COLUMN = "result_type_id";
 
-    private final TeamDao teamDao = new TeamDao();
+    private final TeamService teamService;
+
+    public MatchModelMapper() {
+        teamService = TeamServiceImpl.INSTANCE;
+    }
 
     @Override
     public Match mapToEntity(ResultSet rs) throws ModelMapperException {
@@ -32,11 +39,11 @@ public class MatchModelMapper implements ModelMapper<Match> {
             return new Match(
                     id,
                     startTime,
-                    teamDao.findOneById(firstTeamId).orElseThrow(ModelMapperException::new).getName(), // TODO: use service
-                    teamDao.findOneById(secondTeamId).orElseThrow(ModelMapperException::new).getName(), // TODO: use service
+                    teamService.findNameById(firstTeamId),
+                    teamService.findNameById(secondTeamId),
                     Result.resolveResultById(resultTypeId)
             );
-        } catch (DaoException | SQLException e) {
+        } catch (SQLException | ServiceException e) {
             throw new ModelMapperException(e.getMessage(), e.getCause());
         }
     }

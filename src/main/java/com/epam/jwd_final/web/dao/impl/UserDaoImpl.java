@@ -68,24 +68,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void updateRoleById(int id, int newRoleId) throws DaoException {
-        if (Role.CLIENT.getId() >= newRoleId && Role.ADMIN.getId() <= newRoleId) {
-            queryUpdate(
-                    UPDATE_ROLE_SQL,
-                    Arrays.asList(newRoleId, id)
-            );
-        }
-    }
-
-    @Override
-    public void rollbackRoleById(int id, int newRoleId) throws DaoException {
-        if (Role.CLIENT.getId() >= newRoleId && Role.ADMIN.getId() < newRoleId) {
-            queryUpdate(
-                    UPDATE_ROLE_SQL,
-                    Arrays.asList(newRoleId, id)
-            );
-        }
-
+    public void updateRole(int id, int newRoleId) throws DaoException {
+        queryUpdate(
+                UPDATE_ROLE_SQL,
+                Arrays.asList(newRoleId, id)
+        );
     }
 
     @Override

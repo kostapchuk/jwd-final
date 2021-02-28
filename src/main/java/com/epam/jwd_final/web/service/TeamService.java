@@ -7,4 +7,8 @@ import java.util.List;
 public interface TeamService {
 
     List<String> findAll() throws ServiceException;
+
+    int findIdByName(String name) throws ServiceException;
+
+    String findNameById(int id) throws ServiceException;
 }
