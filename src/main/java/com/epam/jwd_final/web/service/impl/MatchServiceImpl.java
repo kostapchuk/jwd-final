@@ -51,7 +51,7 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public int findMatchIdByStartByFirstTeamBySecondTeam(LocalDateTime start, String firstTeam, String secondTeam)
+    public int findIdByStartByFirstTeamBySecondTeam(LocalDateTime start, String firstTeam, String secondTeam)
             throws ServiceException {
         try {
             return matchDao.findOneByStartByFirstTeamIdBySecondTeamId(
@@ -74,7 +74,7 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Result findResultTypeById(int id) throws ServiceException {
+    public Result findResultById(int id) throws ServiceException {
         try {
             return matchDao.findOneById(id).orElseThrow(ServiceException::new).getResultType();
         } catch (DaoException e) {

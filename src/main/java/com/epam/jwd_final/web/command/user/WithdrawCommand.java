@@ -27,7 +27,7 @@ public enum WithdrawCommand implements Command {
         try {
             final Integer userId = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
             final BigDecimal toWithdrawMoney = new BigDecimal(req.getStringParameter(Parameter.WITHDRAW_MONEY.getValue()));
-            userService.withdrawFromBalance(userId, toWithdrawMoney);
+            userService.reduceBalance(userId, toWithdrawMoney);
             return ShowWithdrawPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

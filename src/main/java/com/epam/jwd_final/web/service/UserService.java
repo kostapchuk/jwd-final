@@ -22,9 +22,9 @@ public interface UserService {
 
     void rollbackRole(int id) throws ServiceException;
 
-    void topUpBalance(int id, BigDecimal amount) throws ServiceException;
+    void increaseBalance(int id, BigDecimal amount) throws ServiceException;
 
-    void withdrawFromBalance(int id, BigDecimal amount) throws ServiceException;
+    void reduceBalance(int id, BigDecimal amount) throws ServiceException;
 
     BigDecimal findBalanceById(int id) throws ServiceException;
 

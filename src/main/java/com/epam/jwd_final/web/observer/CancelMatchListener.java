@@ -34,7 +34,7 @@ public class CancelMatchListener implements EventListener {
                         .findAllUserIdByMultiplierId(multiplierId).orElse(Collections.emptyList());
 
                 for (Integer userId : userIds) {
-                    userService.topUpBalance(
+                    userService.increaseBalance(
                             userId,
                             betService.findBetMoneyByUserIdByMultiplierId(userId, multiplierId)
                     );

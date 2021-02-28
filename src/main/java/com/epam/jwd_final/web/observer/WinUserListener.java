@@ -32,12 +32,12 @@ public class WinUserListener implements EventListener {
     @Override
     public void update(String eventType, int matchId) throws ListenerException {
         try {
-            final Result actualResult = matchService.findResultTypeById(matchId);
+            final Result actualResult = matchService.findResultById(matchId);
             final int winMultiplier = multiplierService.findIdByMatchIdByResult(matchId, actualResult);
             final List<Integer> usersId =
                     betService.findAllUserIdByMultiplierId(winMultiplier).orElse(Collections.emptyList());
             for (Integer userId : usersId) {
-                userService.topUpBalance(
+                userService.increaseBalance(
                         userId,
                         userService.calculateToReturn(userId, winMultiplier)
                 );

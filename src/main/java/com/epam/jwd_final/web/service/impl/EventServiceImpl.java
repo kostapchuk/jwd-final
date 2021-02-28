@@ -45,7 +45,7 @@ public enum EventServiceImpl implements EventService {
 
         createMultipliers(
                 coefficients,
-                matchService.findMatchIdByStartByFirstTeamBySecondTeam(start, firstTeam, secondTeam)
+                matchService.findIdByStartByFirstTeamBySecondTeam(start, firstTeam, secondTeam)
         );
     }
 

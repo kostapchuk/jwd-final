@@ -33,7 +33,7 @@ public enum CancelBetCommand implements Command {
             final Integer userId = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
             final BigDecimal betMoney = betService.findBetMoneyById(betId);
 
-            userService.topUpBalance(userId, betMoney); // TODO: make transaction
+            userService.increaseBalance(userId, betMoney); // TODO: make transaction
             betService.deleteById(betId); // TODO: make transaction
 
             return ShowBetsPage.INSTANCE.execute(req);

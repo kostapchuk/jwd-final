@@ -18,11 +18,11 @@ public interface MatchService {
 
     void save(Match match) throws ServiceException;
 
-    int findMatchIdByStartByFirstTeamBySecondTeam(LocalDateTime start, String firstTeam, String secondTeam) throws ServiceException;
+    int findIdByStartByFirstTeamBySecondTeam(LocalDateTime start, String firstTeam, String secondTeam) throws ServiceException;
 
     void updateResult(int matchId, Result result) throws ServiceException;
 
-    Result findResultTypeById(int id) throws ServiceException;
+    Result findResultById(int id) throws ServiceException;
 
     Match findById(int id) throws ServiceException;
 
