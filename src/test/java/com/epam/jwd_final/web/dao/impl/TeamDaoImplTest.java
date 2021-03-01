@@ -2,47 +2,60 @@ package com.epam.jwd_final.web.dao.impl;
 
 
 import com.epam.jwd_final.web.connection.ConnectionPool;
-import com.epam.jwd_final.web.domain.Team;
 import com.epam.jwd_final.web.exception.DaoException;
+import com.epam.jwd_final.web.property.DatabaseProperty;
+import com.epam.jwd_final.web.property.PropertyLoader;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import java.sql.Connection;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 class TeamDaoImplTest {
 
     @Mock
-    private ConnectionPool connectionPool;
-
-    @Mock
-    private Connection connection;
-
-    @Mock
     private TeamDaoImpl teamDao;
 
+    @Mock
+    private ConnectionPool connectionPool;
+
+    private Connection connection;
+
     @BeforeEach
-    void setUp() {
-        when(connectionPool.retrieveConnection()).thenReturn(connection);
+    void setUp() throws SQLException {
+        DatabaseProperty databaseProperty = PropertyLoader.getInstance().loadDatabaseProperties();
+        this.connection = DriverManager.getConnection(
+                databaseProperty.getUrl(),
+                databaseProperty.getUser(),
+                databaseProperty.getPassword()
+        );
+
+//        connection.createStatement().execute("insert  into team values (15, 'Oratek')");
+//        connection.createStatement().execute("insert  into team values (16, 'Pipol')");
+//        connection.createStatement().execute("insert  into team values (17, 'Qwasd')");
+//
+//        when(connectionPool.retrieveConnection()).thenReturn(connection);
+    }
+
+    @AfterEach
+    public void cleanUp() throws SQLException {
+        connection.createStatement().execute("delete from team where id = 15");
+        connection.createStatement().execute("delete from team where id = 16");
+        connection.createStatement().execute("delete from team where id = 17");
+//        ConnectionPool.getInstance().returnConnection(connection);
     }
 
 
     @Test
     void FindOneById_ShouldPass() throws DaoException {
-        final Team arsenal = new Team(1, "Arsenal");
-        final Team chelsea = new Team(2, "Chelsea");
-        final Team realMadrid = new Team(3, "Real Madrid");
 
-        final Integer actualArsenalId = teamDao.findOneById(arsenal.getId()).orElseThrow(DaoException::new).getId();
-        final Integer actualChelseaId = teamDao.findOneById(chelsea.getId()).orElseThrow(DaoException::new).getId();
-        final Integer actualRealMadridId = teamDao.findOneById(realMadrid.getId()).orElseThrow(DaoException::new).getId();
+//        final String actualName = teamDao.findOneById(15).orElseThrow(DaoException::new).getName();
+        final String expected = "Oratek";
 
-        assertEquals(1, actualArsenalId);
-        assertEquals(2, actualChelseaId);
-        assertEquals(3, actualRealMadridId);
+//        assertEquals(expected, actualName);
     }
 
     @Test
@@ -52,5 +65,4 @@ class TeamDaoImplTest {
     @Test
     void findAll() {
     }
-
 }
