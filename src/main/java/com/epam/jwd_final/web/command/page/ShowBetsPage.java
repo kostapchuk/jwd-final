@@ -6,7 +6,8 @@ import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.command.ResponseContextResult;
-import com.epam.jwd_final.web.domain.BetDto;
+import com.epam.jwd_final.web.domain.dto.BetDto;
+import com.epam.jwd_final.web.domain.dto.PreviousBetDto;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.BetService;
@@ -29,8 +30,10 @@ public enum ShowBetsPage implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final int id = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
-            final List<BetDto> placedBets = betService.findAllUnfinishedByUserId(id).orElse(Collections.emptyList());
-            req.setAttribute(Parameter.PLACED_BETS.getValue(), placedBets);
+            final List<BetDto> activePlacedBets = betService.findAllActiveByUserId(id).orElse(Collections.emptyList());
+            final List<PreviousBetDto> previousPlacedBets = betService.findAllPreviousByUserId(id).orElse(Collections.emptyList());
+            req.setAttribute(Parameter.ACTIVE_PLACED_BETS.getValue(), activePlacedBets);
+            req.setAttribute(Parameter.PREVIOUS_PLACED_BETS.getValue(), previousPlacedBets);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

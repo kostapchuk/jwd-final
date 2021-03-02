@@ -1,4 +1,6 @@
-package com.epam.jwd_final.web.domain;
+package com.epam.jwd_final.web.domain.dto;
+
+import com.epam.jwd_final.web.domain.Result;
 
 import java.math.BigDecimal;
 import java.util.Map;

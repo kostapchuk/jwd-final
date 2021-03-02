@@ -1,4 +1,4 @@
-package com.epam.jwd_final.web.domain;
+package com.epam.jwd_final.web.domain.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,8 +10,8 @@ public class BetDto {
     
     private final int id;
     private final LocalDateTime start;
-    private final String placedTeam;
     private final BigDecimal placedCoefficient;
+    private final String placedTeam;
     private final BigDecimal expectedWin;
     private final String opponents;
 

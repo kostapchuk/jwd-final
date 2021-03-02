@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.png" type="image/png">
     <title>Tiger bet - Online Football Betting</title>
 </head>
 <body>
@@ -65,6 +65,7 @@
                 <table class="table">
                     <thead>
                     <tr>
+                        <th scope="col"><fmt:message key="start" bundle="${bundle}"/></th>
                         <th scope="col"><fmt:message key="bookmaker.first-team" bundle="${bundle}"/></th>
                             <%--                    <th scope="col">Coefficient</th>--%>
                         <th scope="col"><fmt:message key="bookmaker.second-team" bundle="${bundle}"/></th>
@@ -75,6 +76,7 @@
                     <tbody>
                     <c:forEach var="match" items="${requestScope.matches}">
                         <tr>
+                            <td>${match.start}</td>
                             <td>${match.firstTeam}</td>
                                 <%--                        <td>${requestScope.coefficient}</td>--%>
                             <td>${match.secondTeam}</td>
@@ -95,7 +97,7 @@
                             <td>
                                 <form action="${pageContext.request.contextPath}/controller?command=cancel_event" method="post">
                                     <input type="hidden" name="matchId" value="${match.id}" />
-                                    <button class="btn btn-primary"><fmt:message key="cancel" bundle="${bundle}"/></button>
+                                    <button class="btn btn-danger"><fmt:message key="cancel" bundle="${bundle}"/></button>
                                 </form>
                             </td>
                         </tr>

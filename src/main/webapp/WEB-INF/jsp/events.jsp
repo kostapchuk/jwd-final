@@ -10,11 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.png" type="image/png">
     <title>Tiger bet - Online Football Betting</title>
 </head>
 <body>
 
     <jsp:include page="header.jsp"/>
+    <br>
 
     <div class="container-lg">
         <c:if test="${not empty requestScope.events}">
@@ -86,6 +88,7 @@
                                 </table>
                             </div>
                         </div>
+                        <br>
                     </div>
                 </c:forEach>
             </div>

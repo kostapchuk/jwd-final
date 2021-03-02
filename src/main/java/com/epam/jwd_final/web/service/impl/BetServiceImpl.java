@@ -3,8 +3,9 @@ package com.epam.jwd_final.web.service.impl;
 import com.epam.jwd_final.web.dao.BetDao;
 import com.epam.jwd_final.web.dao.impl.BetDaoImpl;
 import com.epam.jwd_final.web.domain.Bet;
-import com.epam.jwd_final.web.domain.BetDto;
+import com.epam.jwd_final.web.domain.dto.BetDto;
 import com.epam.jwd_final.web.domain.Match;
+import com.epam.jwd_final.web.domain.dto.PreviousBetDto;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ServiceException;
@@ -37,28 +38,59 @@ public enum BetServiceImpl implements BetService {
         this.betDao = new BetDaoImpl();
     }
 
+
     @Override
-    public Optional<List<BetDto>> findAllUnfinishedByUserId(int id) throws ServiceException {
+    public Optional<List<BetDto>> findAllActiveByUserId(int id) throws ServiceException {
         try {
-            List<BetDto> betDtos = new ArrayList<>();
-            final List<Bet> bets = betDao.findAllByUserId(id).orElse(Collections.emptyList());
-            for (Bet bet : bets) {
-                final int multiplierId = findMultiplierIdById(bet.getId());
+            List<BetDto> activeBetDtos = new ArrayList<>();
+            final List<Integer> betIds = betDao.findAllByUserId(id).orElse(Collections.emptyList()).stream().map(Bet::getId).collect(Collectors.toList());
+            for (int betId : betIds) {
+                final int multiplierId = findMultiplierIdById(betId);
                 final int matchId = multiplierService.findMatchIdByMultiplierId(multiplierId);
                 final Match match = matchService.findById(matchId);
                 if (match.getResultType() == null) {
                     final BigDecimal placedCoefficient = multiplierService.findCoefficientById(multiplierId);
                     final Result placedResult = multiplierService.findResultById(multiplierId).orElseThrow(ServiceException::new);
                     String placedResultStr = parseResult(placedResult, match);
-                    betDtos.add(convertToDto(bet, match.getStart(),
+                    activeBetDtos.add(convertToBetDto(betId, match.getStart(),
                             placedResultStr, placedCoefficient, userService.calculateToReturn(id, multiplierId),
                             match.getFirstTeam() + " - " + match.getSecondTeam()));
                 }
             }
-            if (betDtos.isEmpty()) {
+            if (activeBetDtos.isEmpty()) {
                 return Optional.empty();
             }
-            return Optional.of(betDtos);
+            return Optional.of(activeBetDtos);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public Optional<List<PreviousBetDto>> findAllPreviousByUserId(int id) throws ServiceException { // TODO: redo
+        try {
+            List<PreviousBetDto> previousBetDtos = new ArrayList<>();
+            final List<Bet> bets = betDao.findAllByUserId(id).orElse(Collections.emptyList());
+            for (Bet bet : bets) {
+                final int multiplierId = findMultiplierIdById(bet.getId());
+                final int matchId = multiplierService.findMatchIdByMultiplierId(multiplierId);
+                final Match match = matchService.findById(matchId);
+                if (match.getResultType() != null) {
+                    final BigDecimal placedCoefficient = multiplierService.findCoefficientById(multiplierId);
+                    final Result placedResult = multiplierService.findResultById(multiplierId).orElseThrow(ServiceException::new);
+                    String placedResultStr = parseResult(placedResult, match);
+                    final boolean win = placedResult.equals(match.getResultType());
+                    final BetDto betDto = convertToBetDto(bet.getId(), match.getStart(),
+                            placedResultStr, placedCoefficient, userService.calculateToReturn(id, multiplierId),
+                            match.getFirstTeam() + " - " + match.getSecondTeam());
+                    final BigDecimal betMoney = findBetMoneyById(bet.getId());
+                    previousBetDtos.add(convertToPreviousBetDto(betDto, win, betMoney));
+                }
+            }
+            if (previousBetDtos.isEmpty()) {
+                return Optional.empty();
+            }
+            return Optional.of(previousBetDtos);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
@@ -175,8 +207,12 @@ public enum BetServiceImpl implements BetService {
         }
     }
 
-    private BetDto convertToDto(Bet bet, LocalDateTime start, String placedTeam,
-                                BigDecimal placedCoefficient, BigDecimal expectedWin, String opponents) {
-        return new BetDto(bet.getId(), start, placedTeam, placedCoefficient, expectedWin, opponents);
+    private BetDto convertToBetDto(int betId, LocalDateTime start, String placedTeam,
+                                   BigDecimal placedCoefficient, BigDecimal expectedWin, String opponents) {
+        return new BetDto(betId, start, placedTeam, placedCoefficient, expectedWin, opponents);
+    }
+
+    private PreviousBetDto convertToPreviousBetDto(BetDto bet, boolean win, BigDecimal placedMoney) {
+        return new PreviousBetDto(bet, win, placedMoney);
     }
 }

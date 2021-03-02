@@ -2,9 +2,8 @@ package com.epam.jwd_final.web.service.impl;
 
 import com.epam.jwd_final.web.dao.impl.MatchDaoImpl;
 import com.epam.jwd_final.web.dao.MatchDao;
-import com.epam.jwd_final.web.dao.impl.TeamDaoImpl;
 import com.epam.jwd_final.web.domain.Match;
-import com.epam.jwd_final.web.domain.MatchDto;
+import com.epam.jwd_final.web.domain.dto.MatchDto;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ServiceException;

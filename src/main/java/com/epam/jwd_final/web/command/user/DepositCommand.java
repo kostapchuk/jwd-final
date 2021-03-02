@@ -1,9 +1,11 @@
 package com.epam.jwd_final.web.command.user;
 
 import com.epam.jwd_final.web.command.Command;
+import com.epam.jwd_final.web.command.Page;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
+import com.epam.jwd_final.web.command.ResponseContextResult;
 import com.epam.jwd_final.web.command.page.ShowBetsPage;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
@@ -28,7 +30,7 @@ public enum DepositCommand implements Command {
             final Integer userId = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
             final BigDecimal depositMoney = new BigDecimal(req.getStringParameter(Parameter.DEPOSIT_MONEY.getValue()));
             userService.increaseBalance(userId, depositMoney);
-            return ShowBetsPage.INSTANCE.execute(req);
+            return ResponseContextResult.forward(Page.DEPOSIT.getLink());
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

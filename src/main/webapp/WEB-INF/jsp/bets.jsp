@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.png" type="image/png">
     <title>Tiger bet - Online Football Betting</title>
 </head>
 <body>
@@ -19,6 +19,7 @@
     <div class="container">
         <div class="offset-lg-1 col-lg-10">
             <c:if test="${not empty requestScope.placedBets}">
+                <h5>Current bets</h5>
                 <table class="table">
                     <tbody>
                     <c:forEach var="bet" items="${requestScope.placedBets}">
@@ -45,6 +46,52 @@
                                     <input type="hidden" name="matchId" value="${requestScope.matchId}" />
                                     <button class="btn btn-outline-primary btn-block"><fmt:message key="cancel" bundle="${bundle}"/></button>
                                 </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${not empty requestScope.previousPlacedBets}">
+                <h5>Previous bets</h5>
+                <table class="table">
+                    <tbody>
+                    <c:forEach var="previousBet" items="${requestScope.previousPlacedBets}">
+
+                        <c:if test="${previousBet.win == true}">
+                            <tr class="table-success">
+                        </c:if>
+
+                        <c:if test="${previousBet.win == false}">
+                            <tr class="table-danger">
+                        </c:if>
+                            <td>${previousBet.bet.start}</td>
+                            <td>${previousBet.bet.opponents}</td>
+                            <td class="font-weight-bold">
+                                <c:if test="${'Draw' eq previousBet.bet.placedTeam}">
+                                    <fmt:message key="draw" bundle="${bundle}"/>
+                                </c:if>
+                                <c:if test="${'Draw' ne previousBet.bet.placedTeam}">
+                                    ${previousBet.bet.placedTeam}
+                                </c:if>
+                            </td>
+                            <td>x${previousBet.bet.placedCoefficient}</td>
+                            <td>
+                                <c:if test="${previousBet.win == true}">
+                                    <span class="text-muted">Won</span>
+                                    <span class="font-weight-bold">
+                                            +
+                                            ${previousBet.bet.expectedWin}
+                                    </span>
+                                </c:if>
+                                <c:if test="${previousBet.win == false}">
+                                    <span class="text-muted">Lost</span>
+                                    <span class="font-weight-bold">
+                                            -
+                                            ${previousBet.placedMoney}
+                                    </span>
+                                </c:if>
+                                <span class="text-muted">$</span>
                             </td>
                         </tr>
                     </c:forEach>

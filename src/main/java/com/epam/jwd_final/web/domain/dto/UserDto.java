@@ -1,4 +1,4 @@
-package com.epam.jwd_final.web.domain;
+package com.epam.jwd_final.web.domain.dto;
 
 import java.math.BigDecimal;
 

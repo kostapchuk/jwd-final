@@ -9,7 +9,7 @@ import com.epam.jwd_final.web.dao.impl.UserDaoImpl;
 import com.epam.jwd_final.web.domain.Bet;
 import com.epam.jwd_final.web.domain.Role;
 import com.epam.jwd_final.web.domain.User;
-import com.epam.jwd_final.web.domain.UserDto;
+import com.epam.jwd_final.web.domain.dto.UserDto;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.UserService;
@@ -83,13 +83,16 @@ public enum UserServiceImpl implements UserService {
     @Override
     public boolean signup(String name, String password) throws ServiceException {
         try {
+            if (userDao.findOneByName(name).isPresent()) {
+                return false;
+            }
             if (name.length() >= MIN_NAME_LENGTH && password.length() >= MIN_PASSWORD_LENGTH) {
                 return save(new User(
                         name,
                         BCrypt.hashpw(password, BCrypt.gensalt())
                 ));
             }
-        } catch (ServiceException e) {
+        } catch (ServiceException | DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
         return false;
