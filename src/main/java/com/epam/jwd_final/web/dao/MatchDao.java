@@ -15,7 +15,7 @@ public interface MatchDao {
 
     Optional<Match> findOneByStartByFirstTeamIdBySecondTeamId(Timestamp start, int firstTeamId, int secondTeamId) throws DaoException;
 
-    Optional<List<Match>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws DaoException;
+    Optional<List<Match>> findAllUnfinishedByDateBetween(LocalDateTime from, LocalDateTime to) throws DaoException;
 
     void save(LocalDateTime start, int firstTeamId, int secondTeamId) throws DaoException;
 

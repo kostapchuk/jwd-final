@@ -55,12 +55,10 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public Optional<List<Match>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws DaoException { // TODO: redo to Timestamp
+    public Optional<List<Match>> findAllUnfinishedByDateBetween(LocalDateTime from, LocalDateTime to) throws DaoException { // TODO: redo to Timestamp
         return querySelectAll(
                 FIND_ALL_UNFINISHED_BY_DATE_BETWEEN_SQL,
-                Arrays.asList(
-                        Timestamp.valueOf(from.atStartOfDay()), // TODO: redo
-                        Timestamp.valueOf(to.atStartOfDay().plusDays(1).minusSeconds(1))) // TODO: redo
+                Arrays.asList(Timestamp.valueOf(from), Timestamp.valueOf(to))
         );
     }
 

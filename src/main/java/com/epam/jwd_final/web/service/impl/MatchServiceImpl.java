@@ -1,10 +1,10 @@
 package com.epam.jwd_final.web.service.impl;
 
-import com.epam.jwd_final.web.dao.impl.MatchDaoImpl;
 import com.epam.jwd_final.web.dao.MatchDao;
+import com.epam.jwd_final.web.dao.impl.MatchDaoImpl;
 import com.epam.jwd_final.web.domain.Match;
-import com.epam.jwd_final.web.domain.dto.MatchDto;
 import com.epam.jwd_final.web.domain.Result;
+import com.epam.jwd_final.web.domain.dto.MatchDto;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.MatchService;
@@ -33,7 +33,7 @@ public enum MatchServiceImpl implements MatchService {
     @Override
     public Optional<List<MatchDto>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws ServiceException {
         try {
-            return matchDao.findAllUnfinishedByDateBetween(from, to)
+            return matchDao.findAllUnfinishedByDateBetween(from.atStartOfDay(), to.atStartOfDay().plusDays(1).minusSeconds(1))
                     .map(matches ->
                             matches.stream()
                                     .map(this::convertToDto)

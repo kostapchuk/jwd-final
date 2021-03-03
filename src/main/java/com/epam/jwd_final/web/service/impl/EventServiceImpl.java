@@ -36,13 +36,11 @@ public enum EventServiceImpl implements EventService {
     public void createEvent(LocalDateTime start, String firstTeam, String secondTeam, Map<Result, BigDecimal> coefficients)
             throws ServiceException {
         if (firstTeam.equals(secondTeam)) {
-            throw new ServiceException("First team cannot be equal second team");
+            throw new ServiceException("First team cannot equal second team");
         }
-        // TODO: create transaction (it should create match and multiplier or do nothing)
 
-
+        // TODO: make transactional
         matchService.save(matchService.createMatch(start, firstTeam, secondTeam));
-
         createMultipliers(
                 coefficients,
                 matchService.findIdByStartByFirstTeamBySecondTeam(start, firstTeam, secondTeam)
