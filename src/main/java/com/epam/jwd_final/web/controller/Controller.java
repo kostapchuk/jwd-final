@@ -30,7 +30,6 @@ public class Controller extends HttpServlet {
     private static final String CANCEL_MATCH_EVENT_TYPE = "cancelMatch";
     private static final String ERROR = "error";
 
-
     public static Payout payout = new Payout();
 
     @Override

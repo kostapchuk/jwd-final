@@ -2,6 +2,7 @@ package com.epam.jwd_final.web.connection;
 
 import com.epam.jwd_final.web.context.ApplicationContext;
 import com.epam.jwd_final.web.exception.ConnectionException;
+import com.epam.jwd_final.web.property.ConnectionPoolProperty;
 import com.epam.jwd_final.web.property.DatabaseProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,19 +15,22 @@ import java.util.Deque;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.epam.jwd_final.web.connection.ConnectionPool.EXTRA_CONNECTIONS_AMOUNT;
-import static com.epam.jwd_final.web.connection.ConnectionPool.INITIAL_POOL_SIZE;
-import static com.epam.jwd_final.web.connection.ConnectionPool.LOAD_FACTOR;
-import static com.epam.jwd_final.web.connection.ConnectionPool.MAX_POOL_SIZE;
-import static com.epam.jwd_final.web.connection.ConnectionPool.SHRINK_FACTOR;
-import static com.epam.jwd_final.web.connection.ConnectionPool.TIME_OUT;
-
 public final class ConnectionPoolManager {
 
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPoolManager.class);
 
-    private static final DatabaseProperty databaseProperties =
+    private static final ConnectionPoolProperty connectionPoolProperty =
+            ApplicationContext.getConnectionPoolProperties();
+
+    private static final DatabaseProperty databaseProperty =
             ApplicationContext.getDatabaseProperties();
+
+    private static final int INITIAL_POOL_SIZE = connectionPoolProperty.getInitialConnections();
+    private static final int MAX_POOL_SIZE = connectionPoolProperty.getMaxConnections();
+    private static final int EXTRA_CONNECTIONS_AMOUNT = connectionPoolProperty.getExtraConnections();
+    private static final double LOAD_FACTOR = connectionPoolProperty.getLoadFactor();
+    private static final double SHRINK_FACTOR = connectionPoolProperty.getShrinkFactor();
+    private static final int TIME_OUT = connectionPoolProperty.getConnectionTimeOut();
 
     private ConnectionPoolManager() {
     }
@@ -49,9 +53,9 @@ public final class ConnectionPoolManager {
         for (int i = 0; i < extraConnectionsAmount; i++) {
             try {
                 Connection connection = DriverManager.getConnection(
-                        databaseProperties.getUrl(),
-                        databaseProperties.getUser(),
-                        databaseProperties.getPassword());
+                        databaseProperty.getUrl(),
+                        databaseProperty.getUser(),
+                        databaseProperty.getPassword());
                 newConnections.add(new ProxyConnection(connection));
             } catch (SQLException e) {
                 if (extraConnectionsAmount == INITIAL_POOL_SIZE) {

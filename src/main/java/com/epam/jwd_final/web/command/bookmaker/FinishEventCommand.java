@@ -29,9 +29,9 @@ public enum FinishEventCommand implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
-            final String bookmakerResult = req.getStringParameter(Parameter.RESULT_TYPE.getValue());
+            final String result = req.getStringParameter(Parameter.RESULT_TYPE.getValue());
             final Match match = matchService.findById(matchId);
-            final Result newResult = parseResult(match, bookmakerResult);
+            final Result newResult = parseResult(match, result);
 
             matchService.updateResult(matchId, newResult);
             payout.payoutUserWin(matchId);

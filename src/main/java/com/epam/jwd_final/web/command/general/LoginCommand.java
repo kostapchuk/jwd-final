@@ -31,14 +31,15 @@ public enum LoginCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final String name = req.getStringParameter(Parameter.USER_NAME.getValue());
-            final String password = req.getStringParameter(Parameter.USER_PASSWORD.getValue());
-            final Optional<UserDto> userDto = userService.login(name, password);
-            if (userDto.isPresent()) {
-                req.setSessionAttribute(Parameter.USER_ID.getValue(), userDto.get().getId());
-                req.setSessionAttribute(Parameter.USER_NAME.getValue(), name);
-                req.setSessionAttribute(Parameter.USER_ROLE.getValue(), userDto.get().getRole());
-                req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), userDto.get().getBalance());
+            final String userName = req.getStringParameter(Parameter.USER_NAME.getValue());
+            final String userPassword = req.getStringParameter(Parameter.USER_PASSWORD.getValue());
+            final Optional<UserDto> userOptional = userService.login(userName, userPassword);
+            if (userOptional.isPresent()) {
+                final UserDto user = userOptional.get();
+                req.setSessionAttribute(Parameter.USER_ID.getValue(), user.getId());
+                req.setSessionAttribute(Parameter.USER_NAME.getValue(), userName);
+                req.setSessionAttribute(Parameter.USER_ROLE.getValue(), user.getRole());
+                req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), user.getBalance());
                 return ResponseContextResult.redirect(HOME_PAGE);
             } else {
                 req.setSessionAttribute(Parameter.ERROR.getValue(), ERROR_MSG);

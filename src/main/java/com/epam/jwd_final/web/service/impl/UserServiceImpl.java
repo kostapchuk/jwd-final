@@ -138,7 +138,7 @@ public enum UserServiceImpl implements UserService {
     }
 
     @Override
-    public void reduceBalance(int id, BigDecimal amount) throws ServiceException {
+    public void decreaseBalance(int id, BigDecimal amount) throws ServiceException {
         try {
             final BigDecimal previousBalance = userDao.findOneById(id)
                     .orElseThrow(ServiceException::new)

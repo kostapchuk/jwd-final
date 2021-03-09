@@ -15,18 +15,6 @@ public enum ShowWithdrawPage implements Command {
 
     INSTANCE;
 
-//    private static final ResponseContext WITHDRAW_PAGE_RESPONSE = new ResponseContext() {
-//        @Override
-//        public String getPage() {
-//            return Page.WITHDRAW.getLink();
-//        }
-//
-//        @Override
-//        public boolean isRedirect() {
-//            return false;
-//        }
-//    };
-
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         return ResponseContextResult.forward(Page.WITHDRAW.getLink());

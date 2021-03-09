@@ -28,8 +28,10 @@ public enum ShowUsersPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final List<UserDto> userDtos = userService.findAll().orElse(Collections.emptyList());
-            req.setAttribute(Parameter.USERS.getValue(), userDtos);
+            final List<UserDto> users =
+                    userService.findAll().orElse(Collections.emptyList());
+
+            req.setAttribute(Parameter.USERS.getValue(), users);
             return ResponseContextResult.forward(Page.USERS.getLink());
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

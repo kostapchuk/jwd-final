@@ -28,8 +28,11 @@ public enum DepositCommand implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final Integer userId = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
-            final BigDecimal depositMoney = new BigDecimal(req.getStringParameter(Parameter.DEPOSIT_MONEY.getValue()));
-            userService.increaseBalance(userId, depositMoney);
+            final BigDecimal toDepositAmount =
+                    new BigDecimal(req.getStringParameter(Parameter.DEPOSIT_MONEY.getValue()));
+
+            userService.increaseBalance(userId, toDepositAmount);
+
             return ResponseContextResult.forward(Page.DEPOSIT.getLink());
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

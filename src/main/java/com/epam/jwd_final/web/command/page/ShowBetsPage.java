@@ -29,11 +29,15 @@ public enum ShowBetsPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final int id = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
-            final List<BetDto> activePlacedBets = betService.findAllActiveByUserId(id).orElse(Collections.emptyList());
-            final List<PreviousBetDto> previousPlacedBets = betService.findAllPreviousByUserId(id).orElse(Collections.emptyList());
-            req.setAttribute(Parameter.ACTIVE_PLACED_BETS.getValue(), activePlacedBets);
-            req.setAttribute(Parameter.PREVIOUS_PLACED_BETS.getValue(), previousPlacedBets);
+            final int userId = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
+
+            final List<BetDto> activeBets =
+                    betService.findAllActiveByUserId(userId).orElse(Collections.emptyList());
+            final List<PreviousBetDto> previousBets =
+                    betService.findAllPreviousByUserId(userId).orElse(Collections.emptyList());
+
+            req.setAttribute(Parameter.ACTIVE_BETS.getValue(), activeBets);
+            req.setAttribute(Parameter.PREVIOUS_BETS.getValue(), previousBets);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

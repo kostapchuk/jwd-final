@@ -31,11 +31,11 @@ public enum PlaceBetCommand implements Command {
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
             final int userId = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
-            final String userResult = req.getStringParameter(Parameter.RESULT.getValue());
+            final String result = req.getStringParameter(Parameter.RESULT.getValue());
             final int matchId = req.getIntParameter(Parameter.MATCH_ID.getValue());
             final BigDecimal betMoney = new BigDecimal(req.getStringParameter(Parameter.BET_MONEY.getValue()));
 
-            final int multiplierId = multiplierService.findIdByMatchIdByResult(matchId, Result.valueOf(userResult));
+            final int multiplierId = multiplierService.findIdByMatchIdByResult(matchId, Result.valueOf(result));
 
             betService.placeBet(userId, multiplierId, betMoney);
         } catch (ServiceException e) {

@@ -24,7 +24,7 @@ public interface UserService {
 
     void increaseBalance(int id, BigDecimal amount) throws ServiceException;
 
-    void reduceBalance(int id, BigDecimal amount) throws ServiceException;
+    void decreaseBalance(int id, BigDecimal amount) throws ServiceException;
 
     BigDecimal findBalanceById(int id) throws ServiceException;
 

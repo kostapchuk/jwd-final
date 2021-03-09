@@ -34,6 +34,7 @@ public enum ShowEventsPage implements Command {
 
             final List<EventDto> events =
                     eventService.findAllUnfinishedByDateBetween(yesterday, tomorrow).orElse(Collections.emptyList());
+
             req.setAttribute(Parameter.EVENTS.getValue(), events);
             return ResponseContextResult.forward(Page.EVENTS.getLink());
         } catch (ServiceException e) {

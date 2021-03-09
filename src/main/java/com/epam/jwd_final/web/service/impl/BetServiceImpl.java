@@ -182,7 +182,7 @@ public enum BetServiceImpl implements BetService {
 
                 if (finalBalance.compareTo(BigDecimal.ZERO) >= 0) {
                     save(createBet(userId, multiplierId, betMoney));
-                    userService.reduceBalance(userId, betMoney);
+                    userService.decreaseBalance(userId, betMoney);
                 }
             }
         } catch (DaoException e) {

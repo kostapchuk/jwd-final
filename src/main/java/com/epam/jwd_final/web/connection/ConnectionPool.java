@@ -24,18 +24,11 @@ public final class ConnectionPool {
 
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
-    private static final ConnectionPoolProperty connectionPoolProperties =
+    private static final ConnectionPoolProperty connectionPoolProperty =
             ApplicationContext.getConnectionPoolProperties();
 
-    private static final DatabaseProperty databaseProperties =
+    private static final DatabaseProperty databaseProperty =
             ApplicationContext.getDatabaseProperties();
-
-    static final int INITIAL_POOL_SIZE = connectionPoolProperties.getInitialConnections();
-    static final int MAX_POOL_SIZE = connectionPoolProperties.getMaxConnections();
-    static final int EXTRA_CONNECTIONS_AMOUNT = connectionPoolProperties.getExtraConnections();
-    static final double LOAD_FACTOR = connectionPoolProperties.getLoadFactor();
-    static final double SHRINK_FACTOR = connectionPoolProperties.getShrinkFactor();
-    static final int TIME_OUT = connectionPoolProperties.getConnectionTimeOut();
 
     private static final Lock INSTANCE_LOCK = new ReentrantLock();
     private static final Lock CONNECTIONS_LOCK = new ReentrantLock();
@@ -123,7 +116,9 @@ public final class ConnectionPool {
     private void init() {
         LOGGER.info("Initializing connection pool...");
         registerDrivers();
-        availableConnections.addAll(ConnectionPoolManager.createConnections(INITIAL_POOL_SIZE));
+        availableConnections.addAll(
+                ConnectionPoolManager.createConnections(connectionPoolProperty.getInitialConnections())
+        );
         initialized.set(true);
         ConnectionPoolManager.createListener();
     }
@@ -137,8 +132,8 @@ public final class ConnectionPool {
 
     private static void registerDrivers() {
         try {
-            Class.forName(databaseProperties.getClassname());
-            DriverManager.registerDriver(DriverManager.getDriver(databaseProperties.getUrl()));
+            Class.forName(databaseProperty.getClassname());
+            DriverManager.registerDriver(DriverManager.getDriver(databaseProperty.getUrl()));
         } catch (SQLException | ClassNotFoundException e) {
             LOGGER.error("Cannot register drivers");
         }

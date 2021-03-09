@@ -37,10 +37,10 @@ public enum ShowBookmakerPage implements Command {
             final LocalDate yesterday = LocalDateTime.now().minusDays(1).toLocalDate();
             final LocalDate tomorrow = LocalDateTime.now().plusDays(1).toLocalDate();
 
-            final List<MatchDto> matchDtos =
+            final List<MatchDto> matches =
                     matchService.findAllUnfinishedByDateBetween(yesterday, tomorrow).orElse(Collections.emptyList());
 
-            req.setAttribute(Parameter.MATCHES.getValue(), matchDtos);
+            req.setAttribute(Parameter.MATCHES.getValue(), matches);
             req.setAttribute(Parameter.TEAMS.getValue(), teamService.findAll());
             return ResponseContextResult.forward(Page.BOOKMAKER.getLink());
         } catch (ServiceException e) {
