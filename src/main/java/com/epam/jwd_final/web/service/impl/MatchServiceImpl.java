@@ -11,7 +11,6 @@ import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.TeamService;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,9 +29,11 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<MatchDto> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws ServiceException {
+    public List<MatchDto> findAllUnfinishedByDateBetween(LocalDateTime from, LocalDateTime to) throws ServiceException {
         try {
-            return matchDao.findAllUnfinishedByDateBetween(from.atStartOfDay(), to.atStartOfDay().plusDays(1).minusSeconds(1))
+            Timestamp yesterdayStart = Timestamp.valueOf(from.toLocalDate().atStartOfDay());
+            Timestamp tomorrowEnd = Timestamp.valueOf(to.toLocalDate().atStartOfDay().plusDays(1).minusSeconds(1));
+            return matchDao.findAllUnfinishedByDateBetween(yesterdayStart, tomorrowEnd)
                     .stream()
                     .map(this::convertToDto)
                     .collect(toList());

@@ -10,7 +10,6 @@ import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.MultiplierService;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,7 +53,7 @@ public enum EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventDto> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws ServiceException {
+    public List<EventDto> findAllUnfinishedByDateBetween(LocalDateTime from, LocalDateTime to) throws ServiceException {
         final List<MatchDto> matchDtos =
                 matchService.findAllUnfinishedByDateBetween(from, to);
         List<EventDto> eventDtos = new ArrayList<>();

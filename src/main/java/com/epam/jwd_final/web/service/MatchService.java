@@ -5,13 +5,12 @@ import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.domain.dto.MatchDto;
 import com.epam.jwd_final.web.exception.ServiceException;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MatchService {
 
-    List<MatchDto> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws ServiceException;
+    List<MatchDto> findAllUnfinishedByDateBetween(LocalDateTime from, LocalDateTime to) throws ServiceException;
 
     Match createMatch(LocalDateTime start, String firstTeam, String secondTeam);
 
