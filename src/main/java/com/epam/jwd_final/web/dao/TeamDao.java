@@ -12,5 +12,5 @@ public interface TeamDao {
 
     Optional<Team> findOneByName(String name) throws DaoException;
 
-    Optional<List<Team>> findAll() throws DaoException;
+    List<Team> findAll() throws DaoException;
 }

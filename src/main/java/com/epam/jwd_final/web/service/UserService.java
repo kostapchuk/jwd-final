@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    Optional<List<UserDto>> findAll() throws ServiceException;
+    List<UserDto> findAll() throws ServiceException;
 
     Optional<UserDto> login(String name, String password) throws ServiceException;
 

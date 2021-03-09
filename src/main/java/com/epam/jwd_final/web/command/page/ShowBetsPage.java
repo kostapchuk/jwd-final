@@ -32,9 +32,9 @@ public enum ShowBetsPage implements Command {
             final int userId = req.getIntSessionAttribute(Parameter.USER_ID.getValue());
 
             final List<BetDto> activeBets =
-                    betService.findAllActiveByUserId(userId).orElse(Collections.emptyList());
+                    betService.findAllActiveByUserId(userId);
             final List<PreviousBetDto> previousBets =
-                    betService.findAllPreviousByUserId(userId).orElse(Collections.emptyList());
+                    betService.findAllPreviousByUserId(userId);
 
             req.setAttribute(Parameter.ACTIVE_BETS.getValue(), activeBets);
             req.setAttribute(Parameter.PREVIOUS_BETS.getValue(), previousBets);

@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +23,12 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
 
     @Override
     public Optional<T> querySelectOne(String querySQL, List<Object> params) throws DaoException {
-        Optional<List<T>> result = querySelectAll(querySQL, params);
-        if (!result.isPresent()) {
+        List<T> result = querySelectAll(querySQL, params);
+        if (result.isEmpty()) {
             return Optional.empty();
         }
-        if (result.get().size() == 1) {
-            T value = result.get().get(0);
+        if (result.size() == 1) {
+            T value = result.get(0);
             return Optional.of(value);
         }
         return Optional.empty();
@@ -44,7 +45,7 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
     }
 
     @Override
-    public Optional<List<T>> querySelectAll(String querySQL, List<Object> params) throws DaoException {
+    public List<T> querySelectAll(String querySQL, List<Object> params) throws DaoException {
         try {
             List<T> objects = new ArrayList<>();
             PreparedStatement preparedStatement = makeStatementPrepared(querySQL, params);
@@ -55,9 +56,9 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
                 objects.add(item);
             }
             if (objects.isEmpty()) {
-                return Optional.empty();
+                return Collections.emptyList();
             }
-            return Optional.of(objects);
+            return objects;
         } catch (SQLException | ModelMapperException e) {
             throw new DaoException(e.getMessage(), e.getCause());
         }

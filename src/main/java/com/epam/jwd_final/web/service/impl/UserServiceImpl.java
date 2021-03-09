@@ -16,6 +16,7 @@ import com.epam.jwd_final.web.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,12 +27,13 @@ public enum UserServiceImpl implements UserService {
 
     private static final int MIN_NAME_LENGTH = 4;
     private static final int MIN_PASSWORD_LENGTH = 6;
-    private final UserDao userDao;
-    private final BetDao betDao;
-    private final MultiplierDao multiplierDao;
 
     private static final String DUMMY_PASSWORD = "defaultPwd";
     private static final String HASHED_DUMMY_PASSWORD = BCrypt.hashpw(DUMMY_PASSWORD, BCrypt.gensalt());
+
+    private final UserDao userDao;
+    private final BetDao betDao;
+    private final MultiplierDao multiplierDao;
 
     UserServiceImpl() {
         this.userDao = new UserDaoImpl();
@@ -40,13 +42,12 @@ public enum UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<List<UserDto>> findAll() throws ServiceException {
+    public List<UserDto> findAll() throws ServiceException {
         try {
             return userDao.findAll()
-                    .map(users ->
-                            users.stream()
-                                    .map(this::convertToDto)
-                                    .collect(Collectors.toList()));
+                    .stream()
+                    .map(this::convertToDto)
+                    .collect(Collectors.toList());
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
@@ -87,10 +88,7 @@ public enum UserServiceImpl implements UserService {
                 return false;
             }
             if (name.length() >= MIN_NAME_LENGTH && password.length() >= MIN_PASSWORD_LENGTH) {
-                return save(new User(
-                        name,
-                        BCrypt.hashpw(password, BCrypt.gensalt())
-                ));
+                return save(new User(name, BCrypt.hashpw(password, BCrypt.gensalt())));
             }
         } catch (ServiceException | DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
@@ -168,7 +166,10 @@ public enum UserServiceImpl implements UserService {
         try {
             final Bet bet = betDao.findOneByUserIdByMultiplierId(id, multiplierId).orElseThrow(ServiceException::new);
             final BigDecimal betMoney = bet.getBetMoney();
-            return multiplierDao.findOneById(bet.getMultiplierId()).orElseThrow(ServiceException::new).getCoefficient().multiply(betMoney);
+            return multiplierDao.findOneById(bet.getMultiplierId())
+                    .orElseThrow(ServiceException::new)
+                    .getCoefficient()
+                    .multiply(betMoney);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }

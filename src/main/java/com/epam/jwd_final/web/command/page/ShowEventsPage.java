@@ -33,7 +33,7 @@ public enum ShowEventsPage implements Command {
             final LocalDate tomorrow = LocalDateTime.now().plusDays(1).toLocalDate();
 
             final List<EventDto> events =
-                    eventService.findAllUnfinishedByDateBetween(yesterday, tomorrow).orElse(Collections.emptyList());
+                    eventService.findAllUnfinishedByDateBetween(yesterday, tomorrow);
 
             req.setAttribute(Parameter.EVENTS.getValue(), events);
             return ResponseContextResult.forward(Page.EVENTS.getLink());

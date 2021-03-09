@@ -24,7 +24,7 @@ public enum TeamServiceImpl implements TeamService {
     @Override
     public List<String> findAll() throws ServiceException {
         try {
-            return teamDao.findAll().orElse(Collections.emptyList())
+            return teamDao.findAll()
                     .stream()
                     .map(Team::getName)
                     .collect(Collectors.toList());
@@ -36,7 +36,9 @@ public enum TeamServiceImpl implements TeamService {
     @Override
     public int findIdByName(String name) throws ServiceException {
         try {
-            return teamDao.findOneByName(name).orElseThrow(ServiceException::new).getId();
+            return teamDao.findOneByName(name)
+                    .orElseThrow(ServiceException::new)
+                    .getId();
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
@@ -45,7 +47,9 @@ public enum TeamServiceImpl implements TeamService {
     @Override
     public String findNameById(int id) throws ServiceException {
         try {
-            return teamDao.findOneById(id).orElseThrow(ServiceException::new).getName();
+            return teamDao.findOneById(id)
+                    .orElseThrow(ServiceException::new)
+                    .getName();
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }

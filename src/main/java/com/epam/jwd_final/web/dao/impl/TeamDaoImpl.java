@@ -39,7 +39,7 @@ public class TeamDaoImpl extends AbstractDao<Team> implements TeamDao {
     }
 
     @Override
-    public Optional<List<Team>> findAll() throws DaoException {
+    public List<Team> findAll() throws DaoException {
         return querySelectAll(
                 FIND_ALL_SQL,
                 Collections.emptyList()

@@ -52,7 +52,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     }
 
     @Override
-    public Optional<List<Bet>> findAllByUserId(int userId) throws DaoException {
+    public List<Bet> findAllByUserId(int userId) throws DaoException {
         return querySelectAll(
                 FIND_ALL_BY_USER_ID_SQL,
                 Collections.singletonList(userId)
@@ -84,7 +84,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     }
 
     @Override
-    public Optional<List<Bet>> findAllByMultiplierId(int multiplierId) throws DaoException {
+    public List<Bet> findAllByMultiplierId(int multiplierId) throws DaoException {
         return querySelectAll(
                 FIND_ALL_BY_MULTIPLIER_ID_SQL,
                 Collections.singletonList(multiplierId)

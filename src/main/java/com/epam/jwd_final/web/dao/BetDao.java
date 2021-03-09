@@ -12,7 +12,7 @@ public interface BetDao {
 
     Optional<Bet> findOneByUserIdByMultiplierId(int userId, int multiplierId) throws DaoException;
 
-    Optional<List<Bet>> findAllByUserId(int userId) throws DaoException;
+    List<Bet> findAllByUserId(int userId) throws DaoException;
 
     void save(Bet bet) throws DaoException;
 
@@ -20,5 +20,5 @@ public interface BetDao {
 
     void deleteAllByMultiplierId(int multiplierId) throws DaoException;
 
-    Optional<List<Bet>> findAllByMultiplierId(int multiplierId) throws DaoException;
+    List<Bet> findAllByMultiplierId(int multiplierId) throws DaoException;
 }

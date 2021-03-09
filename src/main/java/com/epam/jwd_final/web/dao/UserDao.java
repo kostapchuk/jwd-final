@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface UserDao {
 
-    Optional<List<User>> findAll() throws DaoException;
+    List<User> findAll() throws DaoException;
 
     Optional<User> findOneByName(String name) throws DaoException;
 

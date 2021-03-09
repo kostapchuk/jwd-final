@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public enum BetServiceImpl implements BetService {
@@ -43,10 +42,10 @@ public enum BetServiceImpl implements BetService {
 
 
     @Override
-    public Optional<List<BetDto>> findAllActiveByUserId(int id) throws ServiceException {
+    public List<BetDto> findAllActiveByUserId(int userId) throws ServiceException { // TODO: redo
         try {
             List<BetDto> activeBetDtos = new ArrayList<>();
-            final List<Integer> betIds = betDao.findAllByUserId(id).orElse(Collections.emptyList()).stream().map(Bet::getId).collect(Collectors.toList());
+            final List<Integer> betIds = betDao.findAllByUserId(userId).stream().map(Bet::getId).collect(Collectors.toList());
             for (int betId : betIds) {
                 final int multiplierId = findMultiplierIdById(betId);
                 final int matchId = multiplierService.findMatchIdByMultiplierId(multiplierId);
@@ -57,24 +56,24 @@ public enum BetServiceImpl implements BetService {
                     String placedResultStr = parseResult(placedResult, match);
                     final String opponents = match.getFirstTeam() + " - " + match.getSecondTeam();
                     activeBetDtos.add(convertToBetDto(betId, match.getStart(),
-                            placedResultStr, placedCoefficient, userService.calculateToReturn(id, multiplierId),
+                            placedResultStr, placedCoefficient, userService.calculateToReturn(userId, multiplierId),
                             opponents));
                 }
             }
             if (activeBetDtos.isEmpty()) {
-                return Optional.empty();
+                return Collections.emptyList();
             }
-            return Optional.of(activeBetDtos);
+            return activeBetDtos;
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
     }
 
     @Override
-    public Optional<List<PreviousBetDto>> findAllPreviousByUserId(int id) throws ServiceException {
+    public List<PreviousBetDto> findAllPreviousByUserId(int id) throws ServiceException { // TODO: redo
         try {
             List<PreviousBetDto> previousBetDtos = new ArrayList<>();
-            final List<Bet> bets = betDao.findAllByUserId(id).orElse(Collections.emptyList());
+            final List<Bet> bets = betDao.findAllByUserId(id);
             for (Bet bet : bets) {
                 final int multiplierId = findMultiplierIdById(bet.getId());
                 final int matchId = multiplierService.findMatchIdByMultiplierId(multiplierId);
@@ -93,9 +92,9 @@ public enum BetServiceImpl implements BetService {
                 }
             }
             if (previousBetDtos.isEmpty()) {
-                return Optional.empty();
+                return Collections.emptyList();
             }
-            return Optional.of(previousBetDtos);
+            return previousBetDtos;
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
@@ -148,14 +147,12 @@ public enum BetServiceImpl implements BetService {
     }
 
     @Override
-    public Optional<List<Integer>> findAllUserIdByMultiplierId(int multiplierId) throws ServiceException {
+    public List<Integer> findAllUserIdByMultiplierId(int multiplierId) throws ServiceException {
         try {
             return betDao.findAllByMultiplierId(multiplierId)
-                    .map(bets -> bets
                             .stream()
                             .map(Bet::getUserId)
-                            .collect(Collectors.toList())
-                    );
+                            .collect(Collectors.toList());
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
@@ -191,7 +188,7 @@ public enum BetServiceImpl implements BetService {
     }
 
     @Override
-    public int findMultiplierIdById(int id) throws ServiceException {
+    public int findMultiplierIdById(int id) throws ServiceException { // TODO: make private
         try {
             return betDao.findOneById(id)
                     .orElseThrow(ServiceException::new)

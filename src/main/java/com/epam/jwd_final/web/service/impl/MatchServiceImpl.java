@@ -13,8 +13,8 @@ import com.epam.jwd_final.web.service.TeamService;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -31,14 +31,12 @@ public enum MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Optional<List<MatchDto>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws ServiceException {
+    public List<MatchDto> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws ServiceException {
         try {
             return matchDao.findAllUnfinishedByDateBetween(from.atStartOfDay(), to.atStartOfDay().plusDays(1).minusSeconds(1))
-                    .map(matches ->
-                            matches.stream()
-                                    .map(this::convertToDto)
-                                    .collect(toList())
-                    );
+                    .stream()
+                    .map(this::convertToDto)
+                    .collect(toList());
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
@@ -75,7 +73,9 @@ public enum MatchServiceImpl implements MatchService {
     @Override
     public Result findResultById(int id) throws ServiceException {
         try {
-            return matchDao.findOneById(id).orElseThrow(ServiceException::new).getResultType();
+            return matchDao.findOneById(id)
+                    .orElseThrow(ServiceException::new)
+                    .getResultType();
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }

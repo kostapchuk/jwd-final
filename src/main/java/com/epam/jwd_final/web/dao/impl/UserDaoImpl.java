@@ -2,7 +2,6 @@ package com.epam.jwd_final.web.dao.impl;
 
 import com.epam.jwd_final.web.dao.AbstractDao;
 import com.epam.jwd_final.web.dao.UserDao;
-import com.epam.jwd_final.web.domain.Role;
 import com.epam.jwd_final.web.domain.User;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
@@ -13,7 +12,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
@@ -36,7 +34,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             "update user set balance = ? where id = ?";
 
     @Override
-    public Optional<List<User>> findAll() throws DaoException {
+    public List<User> findAll() throws DaoException {
         return querySelectAll(
                 FIND_ALL_SQL,
                 Collections.emptyList()

@@ -6,11 +6,8 @@ import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
 import com.epam.jwd_final.web.mapper.impl.MatchModelMapper;
-import com.epam.jwd_final.web.service.TeamService;
-import com.epam.jwd_final.web.service.impl.TeamServiceImpl;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
@@ -55,7 +52,7 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    public Optional<List<Match>> findAllUnfinishedByDateBetween(LocalDateTime from, LocalDateTime to) throws DaoException { // TODO: redo to Timestamp
+    public List<Match> findAllUnfinishedByDateBetween(LocalDateTime from, LocalDateTime to) throws DaoException { // TODO: redo to Timestamp
         return querySelectAll(
                 FIND_ALL_UNFINISHED_BY_DATE_BETWEEN_SQL,
                 Arrays.asList(Timestamp.valueOf(from), Timestamp.valueOf(to))

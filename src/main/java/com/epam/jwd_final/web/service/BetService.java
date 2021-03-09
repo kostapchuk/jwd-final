@@ -7,13 +7,12 @@ import com.epam.jwd_final.web.exception.ServiceException;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public interface BetService {
 
-    Optional<List<BetDto>> findAllActiveByUserId(int id) throws ServiceException;
+    List<BetDto> findAllActiveByUserId(int id) throws ServiceException;
 
-    Optional<List<PreviousBetDto>> findAllPreviousByUserId(int id) throws ServiceException;
+    List<PreviousBetDto> findAllPreviousByUserId(int id) throws ServiceException;
 
     Bet createBet(int userId, int multiplierId, BigDecimal betMoney);
 
@@ -27,7 +26,7 @@ public interface BetService {
 
     void deleteAllByMultiplierId(int multiplierId) throws ServiceException;
 
-    Optional<List<Integer>> findAllUserIdByMultiplierId(int multiplierId) throws ServiceException;
+    List<Integer> findAllUserIdByMultiplierId(int multiplierId) throws ServiceException;
 
     BigDecimal findBetMoneyByUserIdByMultiplierId(int userId, int multiplierId) throws ServiceException;
 

@@ -55,18 +55,18 @@ public enum EventServiceImpl implements EventService {
     }
 
     @Override
-    public Optional<List<EventDto>> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws ServiceException {
+    public List<EventDto> findAllUnfinishedByDateBetween(LocalDate from, LocalDate to) throws ServiceException {
         final List<MatchDto> matchDtos =
-                matchService.findAllUnfinishedByDateBetween(from, to).orElse(Collections.emptyList());
+                matchService.findAllUnfinishedByDateBetween(from, to);
         List<EventDto> eventDtos = new ArrayList<>();
         for (MatchDto matchDto : matchDtos) {
             final Map<Result, BigDecimal> coefficients = multiplierService.findCoefficientsByMatchId(matchDto.getId());
             eventDtos.add(new EventDto(matchDto, coefficients));
         }
         if (eventDtos.isEmpty()) {
-            return Optional.empty();
+            return Collections.emptyList();
         }
-        return Optional.of(eventDtos);
+        return eventDtos;
     }
 
     @Override

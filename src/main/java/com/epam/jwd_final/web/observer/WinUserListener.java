@@ -35,7 +35,7 @@ public class WinUserListener implements EventListener {
             final Result actualResult = matchService.findResultById(matchId);
             final int winMultiplier = multiplierService.findIdByMatchIdByResult(matchId, actualResult);
             final List<Integer> usersId =
-                    betService.findAllUserIdByMultiplierId(winMultiplier).orElse(Collections.emptyList());
+                    betService.findAllUserIdByMultiplierId(winMultiplier);
             for (Integer userId : usersId) {
                 userService.increaseBalance(
                         userId,
