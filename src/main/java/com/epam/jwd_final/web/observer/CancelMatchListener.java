@@ -10,7 +10,6 @@ import com.epam.jwd_final.web.service.impl.BetServiceImpl;
 import com.epam.jwd_final.web.service.impl.MultiplierServiceImpl;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
-import java.util.Collections;
 import java.util.List;
 
 public class CancelMatchListener implements EventListener {

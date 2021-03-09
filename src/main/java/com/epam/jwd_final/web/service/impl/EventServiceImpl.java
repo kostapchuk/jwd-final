@@ -1,8 +1,8 @@
 package com.epam.jwd_final.web.service.impl;
 
+import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.domain.dto.EventDto;
 import com.epam.jwd_final.web.domain.dto.MatchDto;
-import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.EventService;
@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public enum EventServiceImpl implements EventService {
 

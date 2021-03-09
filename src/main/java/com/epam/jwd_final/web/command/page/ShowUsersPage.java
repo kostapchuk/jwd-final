@@ -12,7 +12,6 @@ import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.UserService;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;
 
-import java.util.Collections;
 import java.util.List;
 
 public enum ShowUsersPage implements Command {

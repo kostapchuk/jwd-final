@@ -1,10 +1,7 @@
 package com.epam.jwd_final.web.observer;
 
-import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.exception.ListenerException;
 
-import java.io.File;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

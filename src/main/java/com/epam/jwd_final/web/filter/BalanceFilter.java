@@ -1,7 +1,6 @@
 package com.epam.jwd_final.web.filter;
 
 import com.epam.jwd_final.web.command.Parameter;
-import com.epam.jwd_final.web.controller.Controller;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.UserService;
 import com.epam.jwd_final.web.service.impl.UserServiceImpl;

@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 public class BetDto {
 
     private static final String PATTERN = "dd-MM-yyyy HH:mm";
-    
+
     private final int id;
     private final LocalDateTime start;
     private final BigDecimal placedCoefficient;

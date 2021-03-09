@@ -13,7 +13,6 @@ import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.BetService;
 import com.epam.jwd_final.web.service.impl.BetServiceImpl;
 
-import java.util.Collections;
 import java.util.List;
 
 public enum ShowBetsPage implements Command {

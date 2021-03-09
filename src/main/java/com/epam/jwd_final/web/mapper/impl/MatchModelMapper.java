@@ -1,9 +1,7 @@
 package com.epam.jwd_final.web.mapper.impl;
 
-import com.epam.jwd_final.web.dao.impl.TeamDaoImpl;
 import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.domain.Result;
-import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ModelMapperException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.mapper.ModelMapper;

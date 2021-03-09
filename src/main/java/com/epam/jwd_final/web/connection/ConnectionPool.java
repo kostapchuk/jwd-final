@@ -1,6 +1,5 @@
 package com.epam.jwd_final.web.connection;
 
-
 import com.epam.jwd_final.web.context.ApplicationContext;
 import com.epam.jwd_final.web.exception.ConnectionPoolException;
 import com.epam.jwd_final.web.property.ConnectionPoolProperty;

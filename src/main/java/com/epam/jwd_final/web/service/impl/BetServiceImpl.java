@@ -3,10 +3,10 @@ package com.epam.jwd_final.web.service.impl;
 import com.epam.jwd_final.web.dao.BetDao;
 import com.epam.jwd_final.web.dao.impl.BetDaoImpl;
 import com.epam.jwd_final.web.domain.Bet;
-import com.epam.jwd_final.web.domain.dto.BetDto;
 import com.epam.jwd_final.web.domain.Match;
-import com.epam.jwd_final.web.domain.dto.PreviousBetDto;
 import com.epam.jwd_final.web.domain.Result;
+import com.epam.jwd_final.web.domain.dto.BetDto;
+import com.epam.jwd_final.web.domain.dto.PreviousBetDto;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.BetService;
@@ -150,9 +150,9 @@ public enum BetServiceImpl implements BetService {
     public List<Integer> findAllUserIdByMultiplierId(int multiplierId) throws ServiceException {
         try {
             return betDao.findAllByMultiplierId(multiplierId)
-                            .stream()
-                            .map(Bet::getUserId)
-                            .collect(Collectors.toList());
+                    .stream()
+                    .map(Bet::getUserId)
+                    .collect(Collectors.toList());
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
