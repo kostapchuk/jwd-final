@@ -33,8 +33,8 @@ public enum ShowBookmakerPage implements Command {
     @Override
     public ResponseContext execute(RequestContext req) throws CommandException {
         try {
-            final LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
-            final LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
+            final LocalDateTime yesterday = LocalDateTime.now().minusDays(1).toLocalDate().atStartOfDay();
+            final LocalDateTime tomorrow = LocalDateTime.now().plusDays(2).toLocalDate().atStartOfDay().minusSeconds(1);
 
             final List<MatchDto> matches =
                     matchService.findAllUnfinishedByDateBetween(yesterday, tomorrow);
