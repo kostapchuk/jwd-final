@@ -61,7 +61,7 @@ public class Controller extends HttpServlet {
                 resp.sendRedirect(req.getContextPath() + result.getPage());
             } else {
                 final RequestDispatcher dispatcher = req.getRequestDispatcher(result.getPage());
-                dispatcher.forward(req, resp);
+                    dispatcher.forward(req, resp);
             }
         } catch (CommandException e) {
             LOGGER.error(e.getMessage(), e);

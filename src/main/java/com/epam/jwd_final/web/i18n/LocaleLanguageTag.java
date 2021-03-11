@@ -28,8 +28,6 @@ public class LocaleLanguageTag extends TagSupport {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie temp : cookies) {
-                String name = temp.getName();
-                String value = temp.getValue();
                 if (temp.getName().equals("language")) {
                     language = temp.getValue();
                 }

@@ -37,7 +37,6 @@ public enum EventServiceImpl implements EventService {
             throw new ServiceException("First team cannot equal second team");
         }
 
-        // TODO: make transactional
         matchService.save(matchService.createMatch(start, firstTeam, secondTeam));
         createMultipliers(
                 coefficients,

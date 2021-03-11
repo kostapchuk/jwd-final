@@ -32,7 +32,7 @@
                                 </c:if>
                             </td>
                             <td>x${bet.placedCoefficient}</td>
-                            <td >
+                            <td>
                                 <span class="text-muted"><ut:locale_tag key="return"/></span>
                                 <span class="font-weight-bold">${bet.expectedWin}</span>
                                 <span class="text-muted">$</span>

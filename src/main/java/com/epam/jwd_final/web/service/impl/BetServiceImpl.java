@@ -40,14 +40,13 @@ public enum BetServiceImpl implements BetService {
         this.betDao = new BetDaoImpl();
     }
 
-
     @Override
     public List<BetDto> findAllActiveByUserId(int userId) throws ServiceException { // TODO: redo
         try {
             List<BetDto> activeBetDtos = new ArrayList<>();
             final List<Integer> betIds = betDao.findAllByUserId(userId).stream().map(Bet::getId).collect(Collectors.toList());
             for (int betId : betIds) {
-                final int multiplierId = findMultiplierIdById(betId);
+                final int multiplierId = betDao.findOneById(betId).orElseThrow(ServiceException::new).getMultiplierId();
                 final int matchId = multiplierService.findMatchIdByMultiplierId(multiplierId);
                 final Match match = matchService.findById(matchId);
                 if (match.getResultType() == null) {
@@ -73,9 +72,9 @@ public enum BetServiceImpl implements BetService {
     public List<PreviousBetDto> findAllPreviousByUserId(int id) throws ServiceException { // TODO: redo
         try {
             List<PreviousBetDto> previousBetDtos = new ArrayList<>();
-            final List<Bet> bets = betDao.findAllByUserId(id);
-            for (Bet bet : bets) {
-                final int multiplierId = findMultiplierIdById(bet.getId());
+            List<Integer> betIds = betDao.findAllByUserId(id).stream().map(Bet::getId).collect(Collectors.toList());
+            for (int betId : betIds) {
+                final int multiplierId = betDao.findOneById(betId).orElseThrow(ServiceException::new).getMultiplierId();
                 final int matchId = multiplierService.findMatchIdByMultiplierId(multiplierId);
                 final Match match = matchService.findById(matchId);
                 if (match.getResultType() != null) {
@@ -84,10 +83,10 @@ public enum BetServiceImpl implements BetService {
                     String placedResultStr = parseResult(placedResult, match);
                     final boolean win = placedResult.equals(match.getResultType());
                     final String opponents = match.getFirstTeam() + " - " + match.getSecondTeam();
-                    final BetDto betDto = convertToBetDto(bet.getId(), match.getStart(),
+                    final BetDto betDto = convertToBetDto(betId, match.getStart(),
                             placedResultStr, placedCoefficient, userService.calculateToReturn(id, multiplierId),
                             opponents);
-                    final BigDecimal betMoney = findBetMoneyById(bet.getId());
+                    final BigDecimal betMoney = findBetMoneyById(betId);
                     previousBetDtos.add(convertToPreviousBetDto(betDto, win, betMoney));
                 }
             }
@@ -161,8 +160,7 @@ public enum BetServiceImpl implements BetService {
     @Override
     public BigDecimal findBetMoneyByUserIdByMultiplierId(int userId, int multiplierId) throws ServiceException {
         try {
-            return betDao
-                    .findOneByUserIdByMultiplierId(userId, multiplierId)
+            return betDao.findOneByUserIdByMultiplierId(userId, multiplierId)
                     .orElseThrow(ServiceException::new)
                     .getBetMoney();
         } catch (DaoException e) {
@@ -187,16 +185,6 @@ public enum BetServiceImpl implements BetService {
         }
     }
 
-    @Override
-    public int findMultiplierIdById(int id) throws ServiceException { // TODO: make private
-        try {
-            return betDao.findOneById(id)
-                    .orElseThrow(ServiceException::new)
-                    .getMultiplierId();
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e.getCause());
-        }
-    }
 
     @Override
     public BigDecimal findBetMoneyById(int id) throws ServiceException {

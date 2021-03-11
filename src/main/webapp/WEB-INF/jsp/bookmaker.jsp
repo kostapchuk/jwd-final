@@ -43,7 +43,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="firstTeamCoefficientId"><ut:locale_tag key="bookmaker.first-team-coefficient"/>/label>
+                    <label for="firstTeamCoefficientId"><ut:locale_tag key="bookmaker.first-team-coefficient"/></label>
                     <input type="number" step="0.01" class="form-control" id="firstTeamCoefficientId" name="firstTeamCoefficient" required>
                 </div>
                 <div class="form-group">

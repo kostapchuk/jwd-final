@@ -22,24 +22,12 @@
                             <ut:locale_tag key="name"/>
                         </label>
                         <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="<ut:locale_tag key="enter-name"/>" name="userName" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                        <div class="invalid-feedback">
-                            This name exists.
-                        </div>
                     </div>
                     <div class="form-group">
                         <label>
                             <ut:locale_tag key="password"/>
                         </label>
                         <input type="password" class="form-control" placeholder="<ut:locale_tag key="enter-password"/>" name="userPassword" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                        <div class="invalid-feedback">
-                            Invalid password.
-                        </div>
                     </div>
                     <button type="submit" class="btn btn-success btn-lg btn-block">
                         <ut:locale_tag key="modal.button.login"/>

@@ -22,8 +22,6 @@ public interface BetService {
 
     BigDecimal findBetMoneyById(int id) throws ServiceException;
 
-    int findMultiplierIdById(int id) throws ServiceException;
-
     void deleteAllByMultiplierId(int multiplierId) throws ServiceException;
 
     List<Integer> findAllUserIdByMultiplierId(int multiplierId) throws ServiceException;
