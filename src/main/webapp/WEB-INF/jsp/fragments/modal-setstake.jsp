@@ -1,17 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="ut" uri="/WEB-INF/tag" %>
 
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
-<c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
-
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="page" var="bundle"/>
 
 <div class="modal fade" id="makeBet" tabindex="-1" role="dialog" aria-labelledby="makeBet" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><fmt:message key="matches.set-stake" bundle="${bundle}"/></h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><ut:locale_tag key="matches.set-stake"/></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -26,7 +23,7 @@
                     <span id="toReturn"></span>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success btn-block"><fmt:message key="matches.place-bet" bundle="${bundle}"/></button>
+                    <button type="submit" class="btn btn-success btn-block"><ut:locale_tag key="matches.place-bet"/></button>
                 </div>
             </form>
         </div>

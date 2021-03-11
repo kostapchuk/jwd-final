@@ -1,10 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="ut" uri="/WEB-INF/tag" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
-<c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
 
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="page" var="bundle"/>
 <html>
 <head>
     <meta charset="utf-8">
@@ -18,14 +16,14 @@
     <jsp:include page="header.jsp"/>
     <div class="container">
         <div class="offset-md-2 col-md-8">
-            <h2><fmt:message key="bookmaker.create" bundle="${bundle}"/></h2>
+            <h2><ut:locale_tag key="bookmaker.create"/></h2>
             <form action="${pageContext.request.contextPath}/controller?command=create_event" method="post">
                 <div class="form-group">
-                    <label for="start"><fmt:message key="start" bundle="${bundle}"/></label>
+                    <label for="start"><ut:locale_tag key="start"/></label>
                     <input type="datetime-local" name="startTime" class="form-control" id="start" required>
                 </div>
                 <div class="form-group">
-                    <label for="firstTeam"><fmt:message key="bookmaker.opponent" bundle="${bundle}"/></label>
+                    <label for="firstTeam"><ut:locale_tag key="bookmaker.opponent"/></label>
                     <select class="form-control" id="firstTeam" name="firstTeam" required>
                         <c:if test="${not empty requestScope.teams}">
                             <c:forEach var="team" items="${requestScope.teams}">
@@ -35,7 +33,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="secondTeam"><fmt:message key="bookmaker.opponent" bundle="${bundle}"/></label>
+                    <label for="secondTeam"><ut:locale_tag key="bookmaker.opponent"/></label>
                     <select class="form-control" id="secondTeam" name="secondTeam" required>
                         <c:if test="${not empty requestScope.teams}">
                             <c:forEach var="team" items="${requestScope.teams}">
@@ -45,32 +43,31 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="firstTeamCoefficientId"><fmt:message key="bookmaker.first-team-coefficient" bundle="${bundle}"/></label>
+                    <label for="firstTeamCoefficientId"><ut:locale_tag key="bookmaker.first-team-coefficient"/>/label>
                     <input type="number" step="0.01" class="form-control" id="firstTeamCoefficientId" name="firstTeamCoefficient" required>
                 </div>
                 <div class="form-group">
-                    <label for="secondTeamCoefficientId"><fmt:message key="bookmaker.second-team-coefficient" bundle="${bundle}"/></label>
+                    <label for="secondTeamCoefficientId"><ut:locale_tag key="bookmaker.second-team-coefficient"/></label>
                     <input type="number" step="0.01" class="form-control" id="secondTeamCoefficientId" name="secondTeamCoefficient" required>
                 </div>
                 <div class="form-group">
-                    <label for="drawCoefficientId"><fmt:message key="bookmaker.draw-coefficient" bundle="${bundle}"/></label>
+                    <label for="drawCoefficientId"><ut:locale_tag key="bookmaker.draw-coefficient"/></label>
                     <input type="number" step="0.01" class="form-control" id="drawCoefficientId" name="drawCoefficient" required>
                 </div>
-                <button type="submit" class="btn btn-success"><fmt:message key="bookmaker.create" bundle="${bundle}"/></button>
+                <button type="submit" class="btn btn-success"><ut:locale_tag key="bookmaker.create"/></button>
             </form>
         </div>
         <div class="offset-lg-1 col-lg-10">
             <c:if test="${not empty requestScope.matches}">
-                <h5><fmt:message key="bookmaker.available-matches" bundle="${bundle}"/></h5>
+                <h5><ut:locale_tag key="bookmaker.available-matches"/></h5>
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col"><fmt:message key="start" bundle="${bundle}"/></th>
-                        <th scope="col"><fmt:message key="bookmaker.first-team" bundle="${bundle}"/></th>
-                            <%--                    <th scope="col">Coefficient</th>--%>
-                        <th scope="col"><fmt:message key="bookmaker.second-team" bundle="${bundle}"/></th>
-                        <th scope="col"><fmt:message key="bookmaker.new-result" bundle="${bundle}"/></th>
-                        <th scope="col"><fmt:message key="cancel" bundle="${bundle}"/></th>
+                        <th scope="col"><ut:locale_tag key="start"/></th>
+                        <th scope="col"><ut:locale_tag key="bookmaker.first-team"/></th>
+                        <th scope="col"><ut:locale_tag key="bookmaker.second-team"/></th>
+                        <th scope="col"><ut:locale_tag key="bookmaker.new-result"/></th>
+                        <th scope="col"><ut:locale_tag key="cancel"/></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -78,26 +75,24 @@
                         <tr>
                             <td>${match.start}</td>
                             <td>${match.firstTeam}</td>
-                                <%--                        <td>${requestScope.coefficient}</td>--%>
                             <td>${match.secondTeam}</td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/controller?command=finish_event" method="post">
-                                        <%--                                    <input type="text" name="resultType" required>--%>
                                     <div class="form-group">
                                         <select class="form-control" id="result" name="resultType" required>
                                             <option>${match.firstTeam}</option>
                                             <option>${match.secondTeam}</option>
-                                            <option><fmt:message key="draw" bundle="${bundle}"/></option>
+                                            <option><ut:locale_tag key="draw"/></option>
                                         </select>
                                     </div>
                                     <input type="hidden" name="matchId" value="${match.id}" />
-                                    <button class="btn btn-primary"><fmt:message key="bookmaker.submit" bundle="${bundle}"/></button>
+                                    <button class="btn btn-primary"><ut:locale_tag key="bookmaker.submit"/></button>
                                 </form>
                             </td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/controller?command=cancel_event" method="post">
                                     <input type="hidden" name="matchId" value="${match.id}" />
-                                    <button class="btn btn-danger"><fmt:message key="cancel" bundle="${bundle}"/></button>
+                                    <button class="btn btn-danger"><ut:locale_tag key="cancel"/></button>
                                 </form>
                             </td>
                         </tr>
@@ -106,7 +101,7 @@
                 </table>
             </c:if>
             <c:if test="${empty requestScope.matches}">
-                <h5><fmt:message key="bookmaker.no-matches" bundle="${bundle}"/></h5>
+                <h5><ut:locale_tag key="bookmaker.no-matches"/></h5>
             </c:if>
         </div>
 

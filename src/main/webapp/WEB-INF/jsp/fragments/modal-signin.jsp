@@ -1,18 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="ut" uri="/WEB-INF/tag" %>
 
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
-<c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
-
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="page" var="bundle"/>
 
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">
-                    <fmt:message key="signin" bundle="${bundle}"/>
+                    <ut:locale_tag key="signin"/>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -22,9 +19,9 @@
                 <form action="${pageContext.request.contextPath}/controller?command=login" method="post">
                     <div class="form-group">
                         <label>
-                            <fmt:message key="name" bundle="${bundle}"/>
+                            <ut:locale_tag key="name"/>
                         </label>
-                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="<fmt:message key="enter-name" bundle="${bundle}"/>" name="userName" required>
+                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="<ut:locale_tag key="enter-name"/>" name="userName" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -34,9 +31,9 @@
                     </div>
                     <div class="form-group">
                         <label>
-                            <fmt:message key="password" bundle="${bundle}"/>
+                            <ut:locale_tag key="password"/>
                         </label>
-                        <input type="password" class="form-control" placeholder="<fmt:message key="enter-password" bundle="${bundle}"/>" name="userPassword" required>
+                        <input type="password" class="form-control" placeholder="<ut:locale_tag key="enter-password"/>" name="userPassword" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -45,13 +42,13 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success btn-lg btn-block">
-                        <fmt:message key="modal.button.login" bundle="${bundle}"/>
+                        <ut:locale_tag key="modal.button.login"/>
                     </button>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-dark btn-lg btn-block" data-toggle="modal" data-target="#signUpModal" data-dismiss="modal">
-                    <fmt:message key="modal.button.create-acc" bundle="${bundle}"/>
+                    <ut:locale_tag key="modal.button.create-acc"/>
                 </button>
             </div>
         </div>

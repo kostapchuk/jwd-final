@@ -1,10 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="ut" uri="/WEB-INF/tag" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
-<c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
 
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="page" var="bundle"/>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,7 +27,7 @@
                                         ${event.matchDto.firstTeam} vs ${event.matchDto.secondTeam}
                                 </h5>
                                 <p>
-                                    <fmt:message key="start" bundle="${bundle}"/>: <c:out value="${event.matchDto.start}"/>
+                                    <ut:locale_tag key="start"/>: <c:out value="${event.matchDto.start}"/>
                                 </p>
                                 <table class="table table-bordered">
                                     <thead>
@@ -113,7 +111,7 @@
             const log = document.getElementById('toReturn');
             input.addEventListener('input', updateValue);
             function updateValue(e) {
-                log.textContent = '<fmt:message key="return" bundle="${bundle}"/> ' + Math.round((e.target.value * coefficient + Number.EPSILON) * 100) / 100;
+                log.textContent = '<ut:locale_tag key="return"/> ' + Math.round((e.target.value * coefficient + Number.EPSILON) * 100) / 100;
             }
         })
     </script>

@@ -1,14 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
-<c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
 
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="page" var="bundle"/>
+<%@ taglib prefix="ut" uri="/WEB-INF/tag" %>
 
 <div class="container-lg">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <%--        <a class="navbar-brand" href="<c:url value="/controller?command=show_events_page"/>">Tiger bet</a>--%>
                 <img src="./img/logo.png" width="111" height="70" alt="Tiger bet">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -19,7 +16,7 @@
                 <li class="nav-item">
                     <h5>
                         <a class="nav-link" href="<c:url value="/controller?command=show_events_page"/>">
-                            <fmt:message key="header.home" bundle="${bundle}"/>
+                            <ut:locale_tag key="header.home"/>
                         </a>
                     </h5>
                 </li>
@@ -27,7 +24,7 @@
                     <li class="nav-item">
                         <h5>
                             <a class="nav-link" href="<c:url value="/controller?command=show_bets_page"/>">
-                                <fmt:message key="header.my-bets" bundle="${bundle}"/>
+                                <ut:locale_tag key="header.my-bets"/>
                             </a>
                         </h5>
                     </li>
@@ -36,7 +33,7 @@
                     <li class="nav-item">
                         <h5>
                             <a class="nav-link" href="<c:url value="/controller?command=show_deposit_page"/>">
-                                <fmt:message key="deposit" bundle="${bundle}"/>
+                                <ut:locale_tag key="deposit"/>
                             </a>
                         </h5>
                     </li>
@@ -45,7 +42,7 @@
                     <li class="nav-item">
                         <h5>
                             <a class="nav-link" href="<c:url value="/controller?command=show_withdraw_page"/>">
-                                <fmt:message key="withdraw" bundle="${bundle}"/>
+                                <ut:locale_tag key="withdraw"/>
                             </a>
                         </h5>
                     </li>
@@ -54,7 +51,7 @@
                     <li class="nav-item">
                         <h5>
                             <a class="nav-link" href="<c:url value="/controller?command=show_bookmaker_page"/>">
-                                <fmt:message key="header.bookmaker" bundle="${bundle}"/>
+                                <ut:locale_tag key="header.bookmaker"/>
                             </a>
                         </h5>
                     </li>
@@ -63,7 +60,7 @@
                     <li class="nav-item">
                         <h5>
                             <a class="nav-link" href="<c:url value="/controller?command=show_users_page"/>">
-                                <fmt:message key="users" bundle="${bundle}"/>
+                                <ut:locale_tag key="users"/>
                             </a>
                         </h5>
                     </li>
@@ -72,7 +69,7 @@
                     <li class="nav-item">
                         <h5>
                             <a class="nav-link" href="<c:url value="/controller?command=logout"/>">
-                                <fmt:message key="header.logout" bundle="${bundle}"/>
+                                <ut:locale_tag key="header.logout"/>
                             </a>
                         </h5>
                     </li>
@@ -92,7 +89,7 @@
                 </li>
             </c:if>
             <button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
-                <fmt:message key="signin" bundle="${bundle}"/>
+                <ut:locale_tag key="signin"/>
             </button>
         </div>
     </nav>

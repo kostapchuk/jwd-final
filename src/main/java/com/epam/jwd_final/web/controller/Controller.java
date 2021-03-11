@@ -14,10 +14,12 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Locale;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
@@ -28,6 +30,7 @@ public class Controller extends HttpServlet {
     private static final String WIN_USER_EVENT_TYPE = "winUser";
     private static final String CANCEL_MATCH_EVENT_TYPE = "cancelMatch";
     private static final String ERROR = "error";
+    private static final String LANGUAGE = "language";
 
     public static Payout payout = new Payout();
 
@@ -50,6 +53,7 @@ public class Controller extends HttpServlet {
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            resp.addCookie(new Cookie(LANGUAGE, Locale.getDefault().getLanguage()));
             final String command = req.getParameter(COMMAND_PARAMETER_NAME);
             final Command businessCommand = Command.of(command);
             final ResponseContext result = businessCommand.execute(WrappingRequestContext.of(req));

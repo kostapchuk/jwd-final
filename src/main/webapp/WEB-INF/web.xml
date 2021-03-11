@@ -6,4 +6,10 @@
     <error-page>
         <location>/WEB-INF/jsp/error.jsp</location>
     </error-page>
+    <jsp-config>
+        <taglib>
+            <taglib-uri>/WEB-INF/tag</taglib-uri>
+            <taglib-location>/WEB-INF/tag/i18n.tld</taglib-location>
+        </taglib>
+    </jsp-config>
 </web-app>

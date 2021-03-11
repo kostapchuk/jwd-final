@@ -1,10 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="ut" uri="/WEB-INF/tag" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
-<c:set var="language" value="${not empty param.language ? param.language : (not empty language ? language : pageContext.request.locale)}" scope="session"/>
-
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="page" var="bundle"/>
 
 <head>
     <meta charset="utf-8">
@@ -28,7 +25,7 @@
                             <td>${bet.opponents}</td>
                             <td class="font-weight-bold">
                                 <c:if test="${'Draw' eq bet.placedTeam}">
-                                    <fmt:message key="draw" bundle="${bundle}"/>
+                                    <ut:locale_tag key="draw"/>
                                 </c:if>
                                 <c:if test="${'Draw' ne bet.placedTeam}">
                                     ${bet.placedTeam}
@@ -36,7 +33,7 @@
                             </td>
                             <td>x${bet.placedCoefficient}</td>
                             <td >
-                                <span class="text-muted"><fmt:message key="return" bundle="${bundle}"/></span>
+                                <span class="text-muted"><ut:locale_tag key="return"/></span>
                                 <span class="font-weight-bold">${bet.expectedWin}</span>
                                 <span class="text-muted">$</span>
                             </td>
@@ -44,7 +41,7 @@
                                 <form action="${pageContext.request.contextPath}/controller?command=cancel_bet" method="post">
                                     <input type="hidden" name="betId" value="${bet.id}" />
                                     <input type="hidden" name="matchId" value="${requestScope.matchId}" />
-                                    <button class="btn btn-outline-primary btn-block"><fmt:message key="cancel" bundle="${bundle}"/></button>
+                                    <button class="btn btn-outline-primary btn-block"><ut:locale_tag key="cancel"/></button>
                                 </form>
                             </td>
                         </tr>
@@ -69,7 +66,7 @@
                             <td>${previousBet.bet.opponents}</td>
                             <td class="font-weight-bold">
                                 <c:if test="${'Draw' eq previousBet.bet.placedTeam}">
-                                    <fmt:message key="draw" bundle="${bundle}"/>
+                                    <ut:locale_tag key="draw"/>
                                 </c:if>
                                 <c:if test="${'Draw' ne previousBet.bet.placedTeam}">
                                     ${previousBet.bet.placedTeam}
