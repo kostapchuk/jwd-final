@@ -19,6 +19,16 @@
             <div class="form-group">
                 <label for="withdrawMoney"><ut:locale_tag key="money-amount"/> ($)</label>
                 <input type="number" step="0.01" name="withdrawMoney" required class="form-control" id="withdrawMoney" aria-describedby="emailHelp">
+                <c:if test="${not empty requestScope.notEnoughMoneyError}">
+                    <div class="alert alert-danger" role="alert">
+                        You cannot withdraw <c:out value="${requestScope.notEnoughMoneyError}"/> $
+                    </div>
+                </c:if>
+                <c:if test="${not empty requestScope.withdrewAmount}">
+                    <div class="alert alert-success" role="alert">
+                        You successfully withdrew <c:out value="${requestScope.withdrewAmount}"/> $
+                    </div>
+                </c:if>
             </div>
             <button type="submit" class="btn btn-warning"><ut:locale_tag key="withdraw"/></button>
         </form>

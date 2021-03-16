@@ -80,5 +80,9 @@ public abstract class AbstractDao<T extends Entity> implements GeneralDao<T> {
         }
     }
 
+    // todo: threadlocal var stores unique connections for current thread
+    //
+    //
+
     protected abstract ModelMapper<T> retrieveModelMapper();
 }

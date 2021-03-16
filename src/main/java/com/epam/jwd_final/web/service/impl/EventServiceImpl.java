@@ -31,10 +31,10 @@ public enum EventServiceImpl implements EventService {
     }
 
     @Override
-    public void createEvent(LocalDateTime start, String firstTeam, String secondTeam, Map<Result, BigDecimal> coefficients)
+    public boolean createEvent(LocalDateTime start, String firstTeam, String secondTeam, Map<Result, BigDecimal> coefficients)
             throws ServiceException {
         if (firstTeam.equals(secondTeam)) {
-            throw new ServiceException("First team cannot equal second team");
+            return false;
         }
 
         matchService.save(matchService.createMatch(start, firstTeam, secondTeam));
@@ -42,6 +42,7 @@ public enum EventServiceImpl implements EventService {
                 coefficients,
                 matchService.findIdByStartByFirstTeamBySecondTeam(start, firstTeam, secondTeam)
         );
+        return true;
     }
 
     void createMultipliers(Map<Result, BigDecimal> coefficients, int matchId) throws ServiceException {

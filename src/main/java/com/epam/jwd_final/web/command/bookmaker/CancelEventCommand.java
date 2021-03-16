@@ -10,7 +10,8 @@ import com.epam.jwd_final.web.exception.ListenerException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.impl.EventServiceImpl;
 
-import static com.epam.jwd_final.web.controller.Controller.payout;
+import static com.epam.jwd_final.web.listener.ApplicationListener.payout;
+
 
 public enum CancelEventCommand implements Command {
 

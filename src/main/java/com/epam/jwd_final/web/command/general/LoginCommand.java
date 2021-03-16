@@ -40,10 +40,11 @@ public enum LoginCommand implements Command {
                 req.setSessionAttribute(Parameter.USER_NAME.getValue(), userName);
                 req.setSessionAttribute(Parameter.USER_ROLE.getValue(), user.getRole());
                 req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), user.getBalance());
+//                req.setSessionAttribute("success", "Successfully logged in!");
                 return ResponseContextResult.redirect(HOME_PAGE);
             } else {
                 req.setSessionAttribute(Parameter.ERROR.getValue(), ERROR_MSG);
-                return ResponseContextResult.forward(Page.ERROR.getLink());
+                return ResponseContextResult.forward(HOME_PAGE);
             }
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

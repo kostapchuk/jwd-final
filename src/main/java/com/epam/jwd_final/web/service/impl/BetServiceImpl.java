@@ -42,6 +42,9 @@ public enum BetServiceImpl implements BetService {
 
     @Override
     public List<BetDto> findAllActiveByUserId(int userId) throws ServiceException { // TODO: redo
+
+        // все, что внутри фора в метод
+
         try {
             List<BetDto> activeBetDtos = new ArrayList<>();
             final List<Integer> betIds = betDao.findAllByUserId(userId).stream().map(Bet::getId).collect(Collectors.toList());

@@ -95,6 +95,7 @@ public enum UserServiceImpl implements UserService {
         return false;
     }
 
+    // verify userDao
     @Override
     public void updateRole(int id) throws ServiceException {
         try {
@@ -141,9 +142,7 @@ public enum UserServiceImpl implements UserService {
                     .orElseThrow(ServiceException::new)
                     .getBalance();
             final BigDecimal newBalance = previousBalance.subtract(amount);
-            if (newBalance.compareTo(BigDecimal.ZERO) >= 0) {
-                userDao.updateBalance(id, newBalance);
-            }
+            userDao.updateBalance(id, newBalance);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
         }

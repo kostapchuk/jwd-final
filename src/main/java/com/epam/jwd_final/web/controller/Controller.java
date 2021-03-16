@@ -2,6 +2,7 @@ package com.epam.jwd_final.web.controller;
 
 import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.Page;
+import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.command.WrappingRequestContext;
 import com.epam.jwd_final.web.exception.CommandException;
@@ -27,18 +28,11 @@ public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
     private static final String COMMAND_PARAMETER_NAME = "command";
-    private static final String WIN_USER_EVENT_TYPE = "winUser";
-    private static final String CANCEL_MATCH_EVENT_TYPE = "cancelMatch";
-    private static final String ERROR = "error";
     private static final String LANGUAGE = "language";
-
-    public static Payout payout = new Payout();
 
     @Override
     public void init() throws ServletException {
         super.init();
-        payout.events.subscribe(WIN_USER_EVENT_TYPE, new WinUserListener());
-        payout.events.subscribe(CANCEL_MATCH_EVENT_TYPE, new CancelMatchListener());
     }
 
     @Override
@@ -53,7 +47,7 @@ public class Controller extends HttpServlet {
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            resp.addCookie(new Cookie(LANGUAGE, Locale.getDefault().getLanguage()));
+//            resp.addCookie(new Cookie(LANGUAGE, Locale.getDefault().getLanguage())); // todo: move filter
             final String command = req.getParameter(COMMAND_PARAMETER_NAME);
             final Command businessCommand = Command.of(command);
             final ResponseContext result = businessCommand.execute(WrappingRequestContext.of(req));
@@ -61,11 +55,11 @@ public class Controller extends HttpServlet {
                 resp.sendRedirect(req.getContextPath() + result.getPage());
             } else {
                 final RequestDispatcher dispatcher = req.getRequestDispatcher(result.getPage());
-                    dispatcher.forward(req, resp);
+                dispatcher.forward(req, resp);
             }
         } catch (CommandException e) {
             LOGGER.error(e.getMessage(), e);
-            req.setAttribute(ERROR, e.getMessage());
+            req.setAttribute(Parameter.ERROR.getValue(), e.getMessage());
             final RequestDispatcher dispatcher = req.getRequestDispatcher(Page.ERROR.getLink());
             dispatcher.forward(req, resp);
         }

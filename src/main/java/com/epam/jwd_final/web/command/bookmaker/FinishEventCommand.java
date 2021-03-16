@@ -13,7 +13,7 @@ import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.MatchService;
 import com.epam.jwd_final.web.service.impl.MatchServiceImpl;
 
-import static com.epam.jwd_final.web.controller.Controller.payout;
+import static com.epam.jwd_final.web.listener.ApplicationListener.payout;
 
 public enum FinishEventCommand implements Command {
 

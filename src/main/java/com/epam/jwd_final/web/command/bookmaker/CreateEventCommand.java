@@ -4,6 +4,7 @@ import com.epam.jwd_final.web.command.Command;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
+import com.epam.jwd_final.web.command.page.ShowBookmakerPage;
 import com.epam.jwd_final.web.command.page.ShowEventsPage;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
@@ -18,6 +19,9 @@ import java.util.Map;
 public enum CreateEventCommand implements Command {
 
     INSTANCE;
+
+    private static final String SAME_TEAM_ERROR = "sameTeamError";
+    private static final String SUCCESS = "success";
 
     private final EventServiceImpl eventService;
 
@@ -38,8 +42,12 @@ public enum CreateEventCommand implements Command {
                     new BigDecimal(req.getStringParameter(Parameter.DRAW_COEFFICIENT.getValue()))
             );
 
-            eventService.createEvent(start, firstTeam, secondTeam, coefficients);
-            return ShowEventsPage.INSTANCE.execute(req);
+            if (eventService.createEvent(start, firstTeam, secondTeam, coefficients)) {
+                req.setAttribute(SUCCESS, "The event was created");
+            } else {
+                req.setAttribute(SAME_TEAM_ERROR, "Two teams cannot be the same");
+            }
+            return ShowBookmakerPage.INSTANCE.execute(req);
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
         }

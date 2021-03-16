@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface EventService {
 
-    void createEvent(LocalDateTime start, String firstTeam, String secondTeam, Map<Result, BigDecimal> coefficients)
+    boolean createEvent(LocalDateTime start, String firstTeam, String secondTeam, Map<Result, BigDecimal> coefficients)
             throws ServiceException;
 
     List<EventDto> findAllUnfinishedByDateBetween(LocalDateTime from, LocalDateTime to) throws ServiceException;
