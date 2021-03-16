@@ -26,7 +26,7 @@ public class BalanceFilter implements Filter {
     private UserService userService;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         this.userService = UserServiceImpl.INSTANCE;
     }
 
@@ -46,10 +46,5 @@ public class BalanceFilter implements Filter {
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage(), e.getCause());
         }
-    }
-
-    @Override
-    public void destroy() {
-
     }
 }

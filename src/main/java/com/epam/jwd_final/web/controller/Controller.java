@@ -28,7 +28,6 @@ public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
     private static final String COMMAND_PARAMETER_NAME = "command";
-    private static final String LANGUAGE = "language";
 
     @Override
     public void init() throws ServletException {
@@ -47,7 +46,6 @@ public class Controller extends HttpServlet {
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            resp.addCookie(new Cookie(LANGUAGE, Locale.getDefault().getLanguage()));
             final String command = req.getParameter(COMMAND_PARAMETER_NAME);
             final Command businessCommand = Command.of(command);
             final ResponseContext result = businessCommand.execute(WrappingRequestContext.of(req));
