@@ -47,7 +47,7 @@ public class Controller extends HttpServlet {
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-//            resp.addCookie(new Cookie(LANGUAGE, Locale.getDefault().getLanguage())); // todo: move filter
+            resp.addCookie(new Cookie(LANGUAGE, Locale.getDefault().getLanguage()));
             final String command = req.getParameter(COMMAND_PARAMETER_NAME);
             final Command businessCommand = Command.of(command);
             final ResponseContext result = businessCommand.execute(WrappingRequestContext.of(req));
