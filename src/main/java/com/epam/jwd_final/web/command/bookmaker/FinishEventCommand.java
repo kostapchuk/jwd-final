@@ -42,7 +42,7 @@ public enum FinishEventCommand implements Command {
         }
     }
 
-    Result parseResult(Match match, String bookmakerResult) {
+    private Result parseResult(Match match, String bookmakerResult) {
         Result result = null;
         if (match.getFirstTeam().equals(bookmakerResult)) {
             result = Result.FIRST_TEAM;

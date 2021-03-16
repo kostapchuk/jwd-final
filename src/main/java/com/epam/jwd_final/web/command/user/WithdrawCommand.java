@@ -19,8 +19,6 @@ public enum WithdrawCommand implements Command {
     INSTANCE;
 
     private static final String WITHDRAW_PAGE = "/controller?command=show_withdraw_page";
-    private static final String WITHDREW_AMOUNT = "withdrewAmount";
-    private static final String NOT_ENOUGH_MONEY_ERROR = "notEnoughMoneyError";
 
     private final UserService userService;
 
@@ -40,10 +38,10 @@ public enum WithdrawCommand implements Command {
             final BigDecimal newBalance = previousBalance.subtract(toWithdrawAmount);
             if (newBalance.compareTo(BigDecimal.ZERO) >= 0) {
                 userService.decreaseBalance(userId, toWithdrawAmount);
-                req.setAttribute(WITHDREW_AMOUNT, toWithdrawAmount.toString());
+                req.setAttribute(Parameter.SUCCESS.getValue(), toWithdrawAmount.toString());
                 return ResponseContextResult.redirect(WITHDRAW_PAGE);
             } else {
-                req.setAttribute(NOT_ENOUGH_MONEY_ERROR, toWithdrawAmount.toString());
+                req.setAttribute(Parameter.ERROR.getValue(), toWithdrawAmount.toString());
                 return ShowWithdrawPage.INSTANCE.execute(req);
             }
         } catch (ServiceException e) {

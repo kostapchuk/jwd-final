@@ -54,9 +54,9 @@
                     <label for="drawCoefficientId"><ut:locale_tag key="bookmaker.draw-coefficient"/></label>
                     <input type="number" step="0.01" class="form-control" id="drawCoefficientId" name="drawCoefficient" required>
                 </div>
-                <c:if test="${not empty requestScope.sameTeamError}">
+                <c:if test="${not empty requestScope.error}">
                     <div class="alert alert-danger" role="alert">
-                        <c:out value="${requestScope.sameTeamError}"/>
+                        <c:out value="${requestScope.error}"/>
                     </div>
                 </c:if>
                 <c:if test="${not empty requestScope.success}">

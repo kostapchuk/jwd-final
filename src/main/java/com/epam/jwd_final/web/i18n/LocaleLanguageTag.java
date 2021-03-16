@@ -19,7 +19,7 @@ public class LocaleLanguageTag extends TagSupport {
     private String key;
 
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
 
         JspWriter out = pageContext.getOut();
         String language = "en";

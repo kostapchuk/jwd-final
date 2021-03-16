@@ -20,8 +20,8 @@ public enum CreateEventCommand implements Command {
 
     INSTANCE;
 
-    private static final String SAME_TEAM_ERROR = "sameTeamError";
-    private static final String SUCCESS = "success";
+    private static final String SUCCESS_MSG = "The event was created";
+    private static final String ERROR_MSG = "Two teams cannot be the same";
 
     private final EventServiceImpl eventService;
 
@@ -43,9 +43,9 @@ public enum CreateEventCommand implements Command {
             );
 
             if (eventService.createEvent(start, firstTeam, secondTeam, coefficients)) {
-                req.setAttribute(SUCCESS, "The event was created");
+                req.setAttribute(Parameter.SUCCESS.getValue(), SUCCESS_MSG);
             } else {
-                req.setAttribute(SAME_TEAM_ERROR, "Two teams cannot be the same");
+                req.setAttribute(Parameter.ERROR.getValue(), ERROR_MSG);
             }
             return ShowBookmakerPage.INSTANCE.execute(req);
         } catch (ServiceException e) {

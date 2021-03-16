@@ -19,14 +19,14 @@
             <div class="form-group">
                 <label for="withdrawMoney"><ut:locale_tag key="money-amount"/> ($)</label>
                 <input type="number" step="0.01" name="withdrawMoney" required class="form-control" id="withdrawMoney" aria-describedby="emailHelp">
-                <c:if test="${not empty requestScope.notEnoughMoneyError}">
+                <c:if test="${not empty requestScope.error}">
                     <div class="alert alert-danger" role="alert">
-                        You cannot withdraw <c:out value="${requestScope.notEnoughMoneyError}"/> $
+                        You cannot withdraw <c:out value="${requestScope.error}"/> $
                     </div>
                 </c:if>
-                <c:if test="${not empty requestScope.withdrewAmount}">
+                <c:if test="${not empty requestScope.success}">
                     <div class="alert alert-success" role="alert">
-                        You successfully withdrew <c:out value="${requestScope.withdrewAmount}"/> $
+                        You successfully withdrew <c:out value="${requestScope.success}"/> $
                     </div>
                 </c:if>
             </div>
