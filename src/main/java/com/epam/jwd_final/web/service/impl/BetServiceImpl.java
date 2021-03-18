@@ -47,7 +47,9 @@ public enum BetServiceImpl implements BetService {
             List<BetDto> activeBetDtos = new ArrayList<>();
             final List<Integer> betIds = betDao.findAllByUserId(userId).stream().map(Bet::getId).collect(Collectors.toList());
             for (int betId : betIds) {
-                    activeBetDtos.add(createBetDto(userId, betId).orElseThrow(ServiceException::new));
+                if (createBetDto(userId, betId).isPresent()) {
+                    activeBetDtos.add(createBetDto(userId, betId).get());
+                }
             }
             if (activeBetDtos.isEmpty()) {
                 return Collections.emptyList();
@@ -64,7 +66,9 @@ public enum BetServiceImpl implements BetService {
             List<PreviousBetDto> previousBetDtos = new ArrayList<>();
             List<Integer> betIds = betDao.findAllByUserId(userId).stream().map(Bet::getId).collect(Collectors.toList());
             for (int betId : betIds) {
-                previousBetDtos.add(createPreviousBetDto(userId, betId).orElseThrow(ServiceException::new));
+                if (createPreviousBetDto(userId, betId).isPresent()) {
+                    previousBetDtos.add(createPreviousBetDto(userId, betId).get());
+                }
             }
             if (previousBetDtos.isEmpty()) {
                 return Collections.emptyList();
@@ -133,14 +137,15 @@ public enum BetServiceImpl implements BetService {
     @Override
     public void placeBet(int userId, int multiplierId, BigDecimal betMoney) throws ServiceException {
         try {
-            // TODO: check now time and match start time
-            if (!betDao.findOneByUserIdByMultiplierId(userId, multiplierId).isPresent()) {
-                final BigDecimal currentBalance = userService.findBalanceById(userId);
-                final BigDecimal finalBalance = currentBalance.subtract(betMoney);
+            if (LocalDateTime.now().isBefore(matchService.findById(multiplierService.findMatchIdByMultiplierId(multiplierId)).getStart())) {
+                if (!betDao.findOneByUserIdByMultiplierId(userId, multiplierId).isPresent()) {
+                    final BigDecimal currentBalance = userService.findBalanceById(userId);
+                    final BigDecimal finalBalance = currentBalance.subtract(betMoney);
 
-                if (finalBalance.compareTo(BigDecimal.ZERO) >= 0) {
-                    save(createBet(userId, multiplierId, betMoney));
-                    userService.decreaseBalance(userId, betMoney);
+                    if (finalBalance.compareTo(BigDecimal.ZERO) >= 0) {
+                        save(createBet(userId, multiplierId, betMoney));
+                        userService.decreaseBalance(userId, betMoney);
+                    }
                 }
             }
         } catch (DaoException e) {

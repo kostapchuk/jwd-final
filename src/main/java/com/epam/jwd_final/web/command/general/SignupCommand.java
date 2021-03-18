@@ -15,6 +15,7 @@ public enum SignupCommand implements Command {
 
     INSTANCE;
 
+    private static final String ERROR_MSG = "User with such name already exists";
     private final UserService userService;
 
     SignupCommand() {
@@ -30,6 +31,7 @@ public enum SignupCommand implements Command {
             if (userService.signup(userName, userPassword)) {
                 result = ShowEventsPage.INSTANCE.execute(req);
             } else {
+                req.setAttribute(Parameter.ERROR.getValue(), ERROR_MSG);
                 result = ShowErrorPage.INSTANCE.execute(req);
             }
             return result;

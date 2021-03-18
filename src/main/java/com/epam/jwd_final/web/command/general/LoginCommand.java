@@ -41,8 +41,8 @@ public enum LoginCommand implements Command {
                 req.setSessionAttribute(Parameter.USER_BALANCE.getValue(), user.getBalance());
                 return ResponseContextResult.redirect(HOME_PAGE);
             } else {
-                req.setSessionAttribute(Parameter.ERROR.getValue(), ERROR_MSG);
-                return ResponseContextResult.forward(HOME_PAGE);
+                req.setAttribute(Parameter.ERROR.getValue(), ERROR_MSG);
+                return ResponseContextResult.forward(Page.ERROR.getLink());
             }
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());
