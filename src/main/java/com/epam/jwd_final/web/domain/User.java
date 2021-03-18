@@ -6,6 +6,7 @@ import java.util.Objects;
 public class User extends AbstractEntity {
 
     private static final long serialVersionUID = 3489038301033270987L;
+    private static final String ZERO_VALUE = "0.0";
 
     private final String name;
     private final String password;
@@ -25,7 +26,7 @@ public class User extends AbstractEntity {
     }
 
     public User(String name, String password) {
-        this(name, password, new BigDecimal("0.0"), Role.CLIENT);
+        this(name, password, new BigDecimal(ZERO_VALUE), Role.CLIENT);
     }
 
     public String getName() {
