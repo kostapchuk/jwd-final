@@ -83,9 +83,7 @@ public enum UserServiceImpl implements UserService {
     @Override
     public boolean signup(String name, String password) throws ServiceException {
         try {
-            if (userDao.findOneByName(name).isPresent()) {
-                return false;
-            }
+            userDao.findOneByName(name).orElseThrow(ServiceException::new); // TODO: check working
             if (name.length() >= MIN_NAME_LENGTH && password.length() >= MIN_PASSWORD_LENGTH) {
                 return save(new User(name, BCrypt.hashpw(password, BCrypt.gensalt())));
             }
@@ -95,7 +93,7 @@ public enum UserServiceImpl implements UserService {
         return false;
     }
 
-    // verify userDao
+    // TODO: verify userDao
     @Override
     public void updateRole(int id) throws ServiceException {
         try {

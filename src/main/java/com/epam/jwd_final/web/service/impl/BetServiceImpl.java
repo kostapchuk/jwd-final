@@ -47,9 +47,7 @@ public enum BetServiceImpl implements BetService {
             List<BetDto> activeBetDtos = new ArrayList<>();
             final List<Integer> betIds = betDao.findAllByUserId(userId).stream().map(Bet::getId).collect(Collectors.toList());
             for (int betId : betIds) {
-                if (createBetDto(userId, betId).isPresent()) {
-                    activeBetDtos.add(createBetDto(userId, betId).get());
-                }
+                    activeBetDtos.add(createBetDto(userId, betId).orElseThrow(ServiceException::new));
             }
             if (activeBetDtos.isEmpty()) {
                 return Collections.emptyList();
@@ -66,9 +64,7 @@ public enum BetServiceImpl implements BetService {
             List<PreviousBetDto> previousBetDtos = new ArrayList<>();
             List<Integer> betIds = betDao.findAllByUserId(userId).stream().map(Bet::getId).collect(Collectors.toList());
             for (int betId : betIds) {
-                if (createPreviousBetDto(userId, betId).isPresent()) {
-                    previousBetDtos.add(createPreviousBetDto(userId, betId).get());
-                }
+                previousBetDtos.add(createPreviousBetDto(userId, betId).orElseThrow(ServiceException::new));
             }
             if (previousBetDtos.isEmpty()) {
                 return Collections.emptyList();
@@ -137,6 +133,7 @@ public enum BetServiceImpl implements BetService {
     @Override
     public void placeBet(int userId, int multiplierId, BigDecimal betMoney) throws ServiceException {
         try {
+            // TODO: check now time and match start time
             if (!betDao.findOneByUserIdByMultiplierId(userId, multiplierId).isPresent()) {
                 final BigDecimal currentBalance = userService.findBalanceById(userId);
                 final BigDecimal finalBalance = currentBalance.subtract(betMoney);
