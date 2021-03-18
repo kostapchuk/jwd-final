@@ -24,7 +24,7 @@ public enum MatchServiceImpl implements MatchService {
     private final TeamService teamService;
 
     MatchServiceImpl() {
-        this.matchDao = new MatchDaoImpl();
+        this.matchDao = MatchDaoImpl.INSTANCE;
         this.teamService = TeamServiceImpl.INSTANCE;
     }
 

@@ -20,7 +20,7 @@ public enum MultiplierServiceImpl implements MultiplierService {
     private final MultiplierDao multiplierDao;
 
     MultiplierServiceImpl() {
-        this.multiplierDao = new MultiplierDaoImpl();
+        this.multiplierDao = MultiplierDaoImpl.INSTANCE;
     }
 
     @Override

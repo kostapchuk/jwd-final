@@ -38,7 +38,7 @@ public enum BetServiceImpl implements BetService {
         this.userService = UserServiceImpl.INSTANCE;
         this.multiplierService = MultiplierServiceImpl.INSTANCE;
         this.matchService = MatchServiceImpl.INSTANCE;
-        this.betDao = new BetDaoImpl();
+        this.betDao = BetDaoImpl.INSTANCE;
     }
 
     @Override

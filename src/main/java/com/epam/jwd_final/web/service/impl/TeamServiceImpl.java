@@ -17,7 +17,7 @@ public enum TeamServiceImpl implements TeamService {
     private final TeamDao teamDao;
 
     TeamServiceImpl() {
-        this.teamDao = new TeamDaoImpl();
+        this.teamDao = TeamDaoImpl.INSTANCE;
     }
 
     @Override

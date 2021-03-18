@@ -1,7 +1,7 @@
 package com.epam.jwd_final.web.dao.impl;
 
-import com.epam.jwd_final.web.dao.AbstractDao;
 import com.epam.jwd_final.web.dao.BetDao;
+import com.epam.jwd_final.web.dao.GeneralDao;
 import com.epam.jwd_final.web.domain.Bet;
 import com.epam.jwd_final.web.exception.DaoException;
 import com.epam.jwd_final.web.mapper.ModelMapper;
@@ -12,7 +12,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
+public enum BetDaoImpl implements GeneralDao<Bet>, BetDao {
+
+    INSTANCE;
 
     private static final String FIND_ONE_BY_ID_SQL =
             "select id, user_id, multiplier_id, bet_money from bet where id = ?";
@@ -92,7 +94,7 @@ public class BetDaoImpl extends AbstractDao<Bet> implements BetDao {
     }
 
     @Override
-    protected ModelMapper<Bet> retrieveModelMapper() {
+    public ModelMapper<Bet> retrieveModelMapper() {
         return new BetModelMapper();
     }
 }

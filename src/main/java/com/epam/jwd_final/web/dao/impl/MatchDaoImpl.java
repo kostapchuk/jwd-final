@@ -1,6 +1,6 @@
 package com.epam.jwd_final.web.dao.impl;
 
-import com.epam.jwd_final.web.dao.AbstractDao;
+import com.epam.jwd_final.web.dao.GeneralDao;
 import com.epam.jwd_final.web.dao.MatchDao;
 import com.epam.jwd_final.web.domain.Match;
 import com.epam.jwd_final.web.exception.DaoException;
@@ -14,7 +14,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
+public enum MatchDaoImpl implements GeneralDao<Match>, MatchDao {
+
+    INSTANCE;
 
     private static final String FIND_ONE_BY_ID_SQL =
             "select id, start, first_team_id, second_team_id, result_type_id from `match` where id = ?";
@@ -84,7 +86,7 @@ public class MatchDaoImpl extends AbstractDao<Match> implements MatchDao {
     }
 
     @Override
-    protected ModelMapper<Match> retrieveModelMapper() {
+    public ModelMapper<Match> retrieveModelMapper() {
         return new MatchModelMapper();
     }
 }

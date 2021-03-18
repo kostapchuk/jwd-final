@@ -1,6 +1,6 @@
 package com.epam.jwd_final.web.dao.impl;
 
-import com.epam.jwd_final.web.dao.AbstractDao;
+import com.epam.jwd_final.web.dao.GeneralDao;
 import com.epam.jwd_final.web.dao.UserDao;
 import com.epam.jwd_final.web.domain.User;
 import com.epam.jwd_final.web.exception.DaoException;
@@ -13,7 +13,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class UserDaoImpl extends AbstractDao<User> implements UserDao {
+public enum UserDaoImpl implements GeneralDao<User>, UserDao {
+
+    INSTANCE;
 
     private static final String FIND_ALL_SQL =
             "select id, name, password, balance, role from user";
@@ -82,7 +84,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    protected ModelMapper<User> retrieveModelMapper() {
+    public ModelMapper<User> retrieveModelMapper() {
         return new UserModelMapper();
     }
 }

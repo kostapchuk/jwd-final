@@ -1,6 +1,6 @@
 package com.epam.jwd_final.web.dao.impl;
 
-import com.epam.jwd_final.web.dao.AbstractDao;
+import com.epam.jwd_final.web.dao.GeneralDao;
 import com.epam.jwd_final.web.dao.TeamDao;
 import com.epam.jwd_final.web.domain.Team;
 import com.epam.jwd_final.web.exception.DaoException;
@@ -11,7 +11,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class TeamDaoImpl extends AbstractDao<Team> implements TeamDao {
+public enum TeamDaoImpl implements GeneralDao<Team>, TeamDao {
+
+    INSTANCE;
 
     private static final String FIND_ONE_BY_ID_SQL =
             "select id, name from team where id = ?";
@@ -47,7 +49,7 @@ public class TeamDaoImpl extends AbstractDao<Team> implements TeamDao {
     }
 
     @Override
-    protected ModelMapper<Team> retrieveModelMapper() {
+    public ModelMapper<Team> retrieveModelMapper() {
         return new TeamModelMapper();
     }
 }

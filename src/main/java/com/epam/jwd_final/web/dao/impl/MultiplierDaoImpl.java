@@ -1,6 +1,6 @@
 package com.epam.jwd_final.web.dao.impl;
 
-import com.epam.jwd_final.web.dao.AbstractDao;
+import com.epam.jwd_final.web.dao.GeneralDao;
 import com.epam.jwd_final.web.dao.MultiplierDao;
 import com.epam.jwd_final.web.domain.Multiplier;
 import com.epam.jwd_final.web.exception.DaoException;
@@ -11,7 +11,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
-public class MultiplierDaoImpl extends AbstractDao<Multiplier> implements MultiplierDao {
+public enum MultiplierDaoImpl implements GeneralDao<Multiplier>, MultiplierDao {
+
+    INSTANCE;
 
     private static final String FIND_ONE_BY_ID_SQL =
             "select id, match_id, result_type_id, coefficient from multiplier where id = ?";
@@ -59,7 +61,7 @@ public class MultiplierDaoImpl extends AbstractDao<Multiplier> implements Multip
     }
 
     @Override
-    protected ModelMapper<Multiplier> retrieveModelMapper() {
+    public ModelMapper<Multiplier> retrieveModelMapper() {
         return new MultiplierModelMapper();
     }
 }

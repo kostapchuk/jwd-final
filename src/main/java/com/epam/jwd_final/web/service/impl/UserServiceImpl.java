@@ -35,9 +35,9 @@ public enum UserServiceImpl implements UserService {
     private final MultiplierDao multiplierDao;
 
     UserServiceImpl() {
-        this.userDao = new UserDaoImpl();
-        this.betDao = new BetDaoImpl();
-        this.multiplierDao = new MultiplierDaoImpl();
+        this.userDao = UserDaoImpl.INSTANCE;
+        this.betDao = BetDaoImpl.INSTANCE;
+        this.multiplierDao = MultiplierDaoImpl.INSTANCE;
     }
 
     @Override
