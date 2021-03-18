@@ -16,6 +16,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * EventServiceImpl.
+ *
+ * @author Ostapchuk Kirill
+ */
 public enum EventServiceImpl implements EventService {
 
     INSTANCE;

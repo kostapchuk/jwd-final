@@ -9,6 +9,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * EventService.
+ *
+ * @author Ostapchuk Kirill
+ */
 public interface EventService {
 
     boolean createEvent(LocalDateTime start, String firstTeam, String secondTeam, Map<Result, BigDecimal> coefficients)

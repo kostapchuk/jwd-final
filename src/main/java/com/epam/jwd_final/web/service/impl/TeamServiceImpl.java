@@ -10,6 +10,11 @@ import com.epam.jwd_final.web.service.TeamService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * TeamServiceImpl.
+ *
+ * @author Ostapchuk Kirill
+ */
 public enum TeamServiceImpl implements TeamService {
 
     INSTANCE;

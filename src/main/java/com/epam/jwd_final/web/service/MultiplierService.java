@@ -8,6 +8,11 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * MultiplierService.
+ *
+ * @author Ostapchuk Kirill
+ */
 public interface MultiplierService {
 
     Multiplier createMultiplier(int matchId, Result result, BigDecimal coefficient);

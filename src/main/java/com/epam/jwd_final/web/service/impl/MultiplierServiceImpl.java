@@ -13,6 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * MultiplierServiceImpl.
+ *
+ * @author Ostapchuk Kirill
+ */
 public enum MultiplierServiceImpl implements MultiplierService {
 
     INSTANCE;

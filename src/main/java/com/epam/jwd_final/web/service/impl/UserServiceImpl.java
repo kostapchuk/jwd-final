@@ -20,6 +20,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * UserServiceImpl.
+ *
+ * @author Ostapchuk Kirill
+ */
 public enum UserServiceImpl implements UserService {
 
     INSTANCE;

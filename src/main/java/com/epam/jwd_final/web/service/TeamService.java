@@ -4,6 +4,11 @@ import com.epam.jwd_final.web.exception.ServiceException;
 
 import java.util.List;
 
+/**
+ * TeamService.
+ *
+ * @author Ostapchuk Kirill
+ */
 public interface TeamService {
 
     List<String> findAll() throws ServiceException;

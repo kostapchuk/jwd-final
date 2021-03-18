@@ -8,6 +8,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * UserService.
+ *
+ * @author Ostapchuk Kirill
+ */
 public interface UserService {
 
     List<UserDto> findAll() throws ServiceException;

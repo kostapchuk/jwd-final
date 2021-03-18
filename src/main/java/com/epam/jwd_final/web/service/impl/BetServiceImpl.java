@@ -22,6 +22,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * BetServiceImpl.
+ *
+ * @author Ostapchuk Kirill
+ */
 public enum BetServiceImpl implements BetService {
 
     INSTANCE;
@@ -137,6 +142,7 @@ public enum BetServiceImpl implements BetService {
     @Override
     public void placeBet(int userId, int multiplierId, BigDecimal betMoney) throws ServiceException {
         try {
+            // TODO: move checking time and bet existing to command to give feedback to user
             if (LocalDateTime.now().isBefore(matchService.findById(multiplierService.findMatchIdByMultiplierId(multiplierId)).getStart())) {
                 if (!betDao.findOneByUserIdByMultiplierId(userId, multiplierId).isPresent()) {
                     final BigDecimal currentBalance = userService.findBalanceById(userId);
@@ -152,7 +158,6 @@ public enum BetServiceImpl implements BetService {
             throw new ServiceException(e.getMessage(), e.getCause());
         }
     }
-
 
     @Override
     public BigDecimal findBetMoneyById(int id) throws ServiceException {
@@ -190,7 +195,6 @@ public enum BetServiceImpl implements BetService {
         return Optional.empty();
     }
 
-
     private Optional<PreviousBetDto> createPreviousBetDto(int userId, int betId) throws ServiceException, DaoException {
         final int multiplierId = betDao.findOneById(betId).orElseThrow(ServiceException::new).getMultiplierId();
         final int matchId = multiplierService.findMatchIdByMultiplierId(multiplierId);
@@ -223,5 +227,4 @@ public enum BetServiceImpl implements BetService {
         }
         return result;
     }
-
 }

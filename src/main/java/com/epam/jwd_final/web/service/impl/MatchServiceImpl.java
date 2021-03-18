@@ -16,6 +16,11 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * MatchServiceImpl.
+ *
+ * @author Ostapchuk Kirill
+ */
 public enum MatchServiceImpl implements MatchService {
 
     INSTANCE;

@@ -60,6 +60,8 @@ public interface GeneralDao<T extends Entity> {
 
     ModelMapper<T> retrieveModelMapper();
 
+    // TODO: make transactional (wrap with threadlocal)
+
     default PreparedStatement makeStatementPrepared(String querySQL, List<Object> parameters)
             throws SQLException {
         final Connection connection = ConnectionPool.getInstance().retrieveConnection();
