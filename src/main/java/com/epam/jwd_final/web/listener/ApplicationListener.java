@@ -12,12 +12,13 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class ApplicationListener implements ServletContextListener {
 
-    public static Payout payout = new Payout();
+    public static Payout payout;
     private static final String WIN_USER_EVENT_TYPE = "winUser";
     private static final String CANCEL_MATCH_EVENT_TYPE = "cancelMatch";
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        payout = new Payout();
         ConnectionPool.getInstance();
         payout.events.subscribe(WIN_USER_EVENT_TYPE, new WinUserListener());
         payout.events.subscribe(CANCEL_MATCH_EVENT_TYPE, new CancelMatchListener());

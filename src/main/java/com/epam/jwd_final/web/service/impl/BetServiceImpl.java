@@ -85,7 +85,7 @@ public enum BetServiceImpl implements BetService {
     }
 
     @Override
-    public Bet createBet(int userId, int multiplierId, BigDecimal betMoney) {
+    public Bet create(int userId, int multiplierId, BigDecimal betMoney) {
         return new Bet(userId, multiplierId, betMoney);
     }
 
@@ -142,16 +142,12 @@ public enum BetServiceImpl implements BetService {
     @Override
     public void placeBet(int userId, int multiplierId, BigDecimal betMoney) throws ServiceException {
         try {
-            // TODO: move checking time and bet existing to command to give feedback to user
-            if (LocalDateTime.now().isBefore(matchService.findById(multiplierService.findMatchIdByMultiplierId(multiplierId)).getStart())) {
-                if (!betDao.findOneByUserIdByMultiplierId(userId, multiplierId).isPresent()) {
-                    final BigDecimal currentBalance = userService.findBalanceById(userId);
-                    final BigDecimal finalBalance = currentBalance.subtract(betMoney);
-
-                    if (finalBalance.compareTo(BigDecimal.ZERO) >= 0) {
-                        save(createBet(userId, multiplierId, betMoney));
-                        userService.decreaseBalance(userId, betMoney);
-                    }
+            if (!betDao.findOneByUserIdByMultiplierId(userId, multiplierId).isPresent()) {
+                final BigDecimal currentBalance = userService.findBalanceById(userId);
+                final BigDecimal finalBalance = currentBalance.subtract(betMoney);
+                if (finalBalance.compareTo(BigDecimal.ZERO) >= 0) {
+                    save(create(userId, multiplierId, betMoney));
+                    userService.decreaseBalance(userId, betMoney);
                 }
             }
         } catch (DaoException e) {

@@ -39,7 +39,7 @@ public interface BetService {
      * @param betMoney user's bet money
      * @return Bet
      */
-    Bet createBet(int userId, int multiplierId, BigDecimal betMoney);
+    Bet create(int userId, int multiplierId, BigDecimal betMoney);
 
     /**
      * Saves the bet.

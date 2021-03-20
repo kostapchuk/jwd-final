@@ -17,17 +17,16 @@
     <br>
 
     <div class="container-lg">
-<%--        <c:if test="${not empty requestScope.error}">--%>
-<%--            <div class="alert alert-danger" role="alert">--%>
-<%--                <c:out value="${requestScope.error}"/> DANGER--%>
-<%--            </div>--%>
-<%--        </c:if>--%>
+        <c:if test="${not empty requestScope.error}">
+            <div class="alert alert-danger" role="alert">
+                <c:out value="${requestScope.error}"/>
+            </div>
+        </c:if>
 <%--        <c:if test="${empty requestScope.error}">--%>
 <%--            <div class="alert alert-success" role="alert">--%>
 <%--                <c:out value="${requestScope.error}"/>empty--%>
 <%--            </div>--%>
 <%--        </c:if>--%>
-
         <c:if test="${not empty requestScope.events}">
             <div class="row">
                 <c:forEach var="event" items="${requestScope.events}">
