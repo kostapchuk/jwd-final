@@ -6,7 +6,9 @@
 
 <div class="container-lg">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <img src="./img/logo.png" width="111" height="70" alt="Tiger bet">
+        <a href="<c:url value="/controller?command=show_events_page"/>">
+            <img src="./img/logo.png" width="111" height="70" alt="Tiger bet">
+        </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

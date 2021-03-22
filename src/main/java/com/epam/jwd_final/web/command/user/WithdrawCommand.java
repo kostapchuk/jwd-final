@@ -38,7 +38,6 @@ public enum WithdrawCommand implements Command {
             final BigDecimal newBalance = previousBalance.subtract(toWithdrawAmount);
             if (newBalance.compareTo(BigDecimal.ZERO) >= 0) {
                 userService.decreaseBalance(userId, toWithdrawAmount);
-                req.setAttribute(Parameter.SUCCESS.getValue(), toWithdrawAmount.toString());
                 return ResponseContextResult.redirect(WITHDRAW_PAGE);
             } else {
                 req.setAttribute(Parameter.ERROR.getValue(), toWithdrawAmount.toString());

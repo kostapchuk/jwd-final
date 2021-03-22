@@ -24,11 +24,6 @@
                         You cannot withdraw <c:out value="${requestScope.error}"/> $
                     </div>
                 </c:if>
-                <c:if test="${not empty requestScope.success}">
-                    <div class="alert alert-success" role="alert">
-                        You successfully withdrew <c:out value="${requestScope.success}"/> $
-                    </div>
-                </c:if>
             </div>
             <button type="submit" class="btn btn-warning"><ut:locale_tag key="withdraw"/></button>
         </form>
