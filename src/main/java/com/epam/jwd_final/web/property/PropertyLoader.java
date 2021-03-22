@@ -21,6 +21,9 @@ public final class PropertyLoader {
 
     private static final String DATABASE_PROPERTY_FILE_NAME = "database.properties";
     private static final String CONNECTION_POOL_PROPERTY_FILE_NAME = "pool.properties";
+    
+    private static final String DB_ERROR_MSG = "Cannot load database property file";
+    private static final String POOL_ERROR_MSG = "Cannot load connection pool property file";
 
     private PropertyLoader() {
     }
@@ -30,7 +33,7 @@ public final class PropertyLoader {
                 .getResourceAsStream(DATABASE_PROPERTY_FILE_NAME)) {
             properties.load(inputStream);
         } catch (IOException e) {
-            throw new IllegalStateException("Cannot load database property file");
+            throw new IllegalStateException(DB_ERROR_MSG);
         }
         return new DatabaseProperty(
                 properties.getProperty(DB_URL_PROPERTY),
@@ -45,7 +48,7 @@ public final class PropertyLoader {
                 .getResourceAsStream(CONNECTION_POOL_PROPERTY_FILE_NAME)) {
             properties.load(inputStream);
         } catch (IOException e) {
-            throw new IllegalStateException("Cannot load connection pool property file");
+            throw new IllegalStateException(POOL_ERROR_MSG);
         }
         return new ConnectionPoolProperty(
                 Integer.parseInt(properties.getProperty(POOL_MAX_SIZE_PROPERTY)),
