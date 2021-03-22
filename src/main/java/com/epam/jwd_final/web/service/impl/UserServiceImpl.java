@@ -100,7 +100,6 @@ public enum UserServiceImpl implements UserService {
         return false;
     }
 
-    // TODO: verify userDao
     @Override
     public void updateRole(int id) throws ServiceException {
         try {
