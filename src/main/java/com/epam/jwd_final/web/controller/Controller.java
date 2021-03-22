@@ -6,21 +6,16 @@ import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.command.WrappingRequestContext;
 import com.epam.jwd_final.web.exception.CommandException;
-import com.epam.jwd_final.web.observer.CancelMatchListener;
-import com.epam.jwd_final.web.observer.Payout;
-import com.epam.jwd_final.web.observer.WinUserListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Locale;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {

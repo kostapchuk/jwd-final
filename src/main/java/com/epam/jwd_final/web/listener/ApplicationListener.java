@@ -1,9 +1,6 @@
 package com.epam.jwd_final.web.listener;
 
 import com.epam.jwd_final.web.connection.ConnectionPool;
-import com.epam.jwd_final.web.observer.CancelMatchListener;
-import com.epam.jwd_final.web.observer.Payout;
-import com.epam.jwd_final.web.observer.WinUserListener;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -20,14 +17,14 @@ public class ApplicationListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         payout = new Payout();
         ConnectionPool.getInstance();
-        payout.events.subscribe(WIN_USER_EVENT_TYPE, new WinUserListener());
-        payout.events.subscribe(CANCEL_MATCH_EVENT_TYPE, new CancelMatchListener());
+        payout.events.subscribe(WIN_USER_EVENT_TYPE, WinUserListener.INSTANCE);
+        payout.events.subscribe(CANCEL_MATCH_EVENT_TYPE, CancelMatchListener.INSTANCE);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         ConnectionPool.getInstance().destroy();
-        payout.events.unsubscribe(WIN_USER_EVENT_TYPE, new WinUserListener());
-        payout.events.unsubscribe(CANCEL_MATCH_EVENT_TYPE, new CancelMatchListener());
+        payout.events.unsubscribe(WIN_USER_EVENT_TYPE, WinUserListener.INSTANCE);
+        payout.events.unsubscribe(CANCEL_MATCH_EVENT_TYPE, CancelMatchListener.INSTANCE);
     }
 }

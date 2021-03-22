@@ -1,4 +1,4 @@
-package com.epam.jwd_final.web.observer;
+package com.epam.jwd_final.web.listener;
 
 import com.epam.jwd_final.web.exception.ListenerException;
 
