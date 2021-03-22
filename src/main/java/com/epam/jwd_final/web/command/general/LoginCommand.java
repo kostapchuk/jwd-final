@@ -42,7 +42,7 @@ public enum LoginCommand implements Command {
                 return ResponseContextResult.redirect(HOME_PAGE);
             } else {
                 req.setAttribute(Parameter.ERROR.getValue(), ERROR_MSG);
-                return ResponseContextResult.forward(Page.ERROR.getLink());
+                return ResponseContextResult.forward(HOME_PAGE);
             }
         } catch (ServiceException e) {
             throw new CommandException(e.getMessage(), e.getCause());

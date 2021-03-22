@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  */
 public enum UserServiceImpl implements UserService {
 
-    INSTANCE;
+    INSTANCE(UserDaoImpl.INSTANCE, BetDaoImpl.INSTANCE, MultiplierDaoImpl.INSTANCE);
 
     private static final int MIN_NAME_LENGTH = 4;
     private static final int MIN_PASSWORD_LENGTH = 6;
@@ -39,10 +39,10 @@ public enum UserServiceImpl implements UserService {
     private final BetDao betDao;
     private final MultiplierDao multiplierDao;
 
-    UserServiceImpl() {
-        this.userDao = UserDaoImpl.INSTANCE;
-        this.betDao = BetDaoImpl.INSTANCE;
-        this.multiplierDao = MultiplierDaoImpl.INSTANCE;
+    UserServiceImpl(UserDao userDao, BetDao betDao, MultiplierDao multiplierDao) {
+        this.userDao = userDao;
+        this.betDao = betDao;
+        this.multiplierDao = multiplierDao;
     }
 
     @Override

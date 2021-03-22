@@ -31,20 +31,21 @@ class UserServiceImplTest {
     @InjectMocks
     private final UserService userService = UserServiceImpl.INSTANCE;
 
-
+    @Mock
+    private UserDao userDao;
 
     private User user;
 
-//    @BeforeEach
-//    public void setUp() {
-//        MockitoAnnotations.initMocks(this);
-//    }
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     void saveTest() throws ServiceException, DaoException {
         user = new User(2, "Kirill", "123qwe123", new BigDecimal("110.90"), Role.ADMIN);
 
-        UserDao userDao = mock(UserDao.class);
+//        UserDao userDao = mock(UserDao.class);
 
         when(userDao.save(user)).thenReturn(true);
 
