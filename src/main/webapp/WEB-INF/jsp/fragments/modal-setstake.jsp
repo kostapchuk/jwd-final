@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="ut" uri="/WEB-INF/tag" %>
 
-<%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 
 <div class="modal fade" id="makeBet" tabindex="-1" role="dialog" aria-labelledby="makeBet" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
@@ -23,7 +23,8 @@
                     <span id="toReturn"></span>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success btn-block"><ut:locale_tag key="matches.place-bet"/></button>
+                    <button type="submit" class="btn btn-success btn-block"><ut:locale_tag
+                            key="matches.place-bet"/></button>
                 </div>
             </form>
         </div>

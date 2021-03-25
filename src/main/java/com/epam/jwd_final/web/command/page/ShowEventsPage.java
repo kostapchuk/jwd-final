@@ -11,7 +11,6 @@ import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;
 import com.epam.jwd_final.web.service.impl.EventServiceImpl;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

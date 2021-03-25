@@ -1,7 +1,6 @@
 package com.epam.jwd_final.web.domain.dto;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 public class UserDto {
 

@@ -5,7 +5,6 @@ import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;
 import com.epam.jwd_final.web.command.page.ShowBookmakerPage;
-import com.epam.jwd_final.web.command.page.ShowEventsPage;
 import com.epam.jwd_final.web.domain.Result;
 import com.epam.jwd_final.web.exception.CommandException;
 import com.epam.jwd_final.web.exception.ServiceException;

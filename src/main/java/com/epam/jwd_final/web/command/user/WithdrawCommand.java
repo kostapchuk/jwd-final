@@ -1,7 +1,6 @@
 package com.epam.jwd_final.web.command.user;
 
 import com.epam.jwd_final.web.command.Command;
-import com.epam.jwd_final.web.command.Page;
 import com.epam.jwd_final.web.command.Parameter;
 import com.epam.jwd_final.web.command.RequestContext;
 import com.epam.jwd_final.web.command.ResponseContext;

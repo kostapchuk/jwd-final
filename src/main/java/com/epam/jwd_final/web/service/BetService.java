@@ -34,9 +34,9 @@ public interface BetService {
     /**
      * Creates a bet.
      *
-     * @param userId user id
+     * @param userId       user id
      * @param multiplierId multiplier id
-     * @param betMoney user's bet money
+     * @param betMoney     user's bet money
      * @return Bet
      */
     Bet create(int userId, int multiplierId, BigDecimal betMoney);
@@ -79,7 +79,7 @@ public interface BetService {
     /**
      * Finds user's bet money by user id and multiplier id.
      *
-     * @param userId user it
+     * @param userId       user it
      * @param multiplierId multiplier it
      */
     BigDecimal findBetMoneyByUserIdByMultiplierId(int userId, int multiplierId) throws ServiceException;
@@ -87,9 +87,9 @@ public interface BetService {
     /**
      * Places bet.
      *
-     * @param userId user id
+     * @param userId       user id
      * @param multiplierId multiplier id
-     * @param betMoney bet money
+     * @param betMoney     bet money
      */
     void placeBet(int userId, int multiplierId, BigDecimal betMoney) throws ServiceException;
 }

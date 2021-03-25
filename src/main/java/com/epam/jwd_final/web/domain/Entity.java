@@ -8,7 +8,6 @@ import java.io.Serializable;
  */
 public interface Entity extends Serializable {
     /**
-     *
      * @return id value of entity;
      */
     Integer getId();

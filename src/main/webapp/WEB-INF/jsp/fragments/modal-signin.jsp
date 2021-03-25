@@ -2,9 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="ut" uri="/WEB-INF/tag" %>
 
-<%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -21,13 +22,15 @@
                         <label>
                             <ut:locale_tag key="name"/>
                         </label>
-                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="<ut:locale_tag key="enter-name"/>" name="userName" required>
+                        <input type="text" class="form-control" aria-describedby="emailHelp"
+                               placeholder="<ut:locale_tag key="enter-name"/>" name="userName" required>
                     </div>
                     <div class="form-group">
                         <label>
                             <ut:locale_tag key="password"/>
                         </label>
-                        <input type="password" class="form-control" placeholder="<ut:locale_tag key="enter-password"/>" name="userPassword" required>
+                        <input type="password" class="form-control" placeholder="<ut:locale_tag key="enter-password"/>"
+                               name="userPassword" required>
                     </div>
                     <button type="submit" class="btn btn-success btn-lg btn-block">
                         <ut:locale_tag key="modal.button.login"/>
@@ -35,7 +38,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-dark btn-lg btn-block" data-toggle="modal" data-target="#signUpModal" data-dismiss="modal">
+                <button type="submit" class="btn btn-dark btn-lg btn-block" data-toggle="modal"
+                        data-target="#signUpModal" data-dismiss="modal">
                     <ut:locale_tag key="modal.button.create-acc"/>
                 </button>
             </div>

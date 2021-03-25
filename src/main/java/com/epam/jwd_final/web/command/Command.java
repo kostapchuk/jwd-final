@@ -4,6 +4,7 @@ import com.epam.jwd_final.web.exception.CommandException;
 
 /**
  * Command.
+ *
  * @author Ostapchuk Kirill
  */
 public interface Command {

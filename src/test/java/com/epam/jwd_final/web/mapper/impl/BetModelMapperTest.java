@@ -1,7 +1,6 @@
 package com.epam.jwd_final.web.mapper.impl;
 
 import com.epam.jwd_final.web.domain.Bet;
-import com.epam.jwd_final.web.domain.Team;
 import com.epam.jwd_final.web.exception.ModelMapperException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +11,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
