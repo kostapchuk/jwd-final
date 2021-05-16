@@ -8,6 +8,7 @@ import com.epam.jwd_final.web.command.bookmaker.FinishEventCommand;
 import com.epam.jwd_final.web.command.general.LoginCommand;
 import com.epam.jwd_final.web.command.general.LogoutCommand;
 import com.epam.jwd_final.web.command.general.SignupCommand;
+import com.epam.jwd_final.web.command.page.ShowAdvertisementPage;
 import com.epam.jwd_final.web.command.page.ShowBetsPage;
 import com.epam.jwd_final.web.command.page.ShowBookmakerPage;
 import com.epam.jwd_final.web.command.page.ShowDepositPage;
@@ -41,7 +42,7 @@ public enum CommandManager {
     SHOW_BETS_PAGE(ShowBetsPage.INSTANCE),
     SHOW_EVENTS_PAGE(ShowEventsPage.INSTANCE),
     SHOW_ERROR_PAGE(ShowErrorPage.INSTANCE),
-    DEFAULT(ShowEventsPage.INSTANCE);
+    DEFAULT(ShowAdvertisementPage.INSTANCE);
 
     private final Command command;
 

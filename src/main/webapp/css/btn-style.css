@@ -1,0 +1,22 @@
+.btn {
+    position: absolute;
+    left: 960px;
+    top: 641px;
+    background-color: #EAE031;
+    border-radius: 30px;
+    display: inline-block;
+    cursor: pointer;
+    color: #000000;
+    font-family: Montserrat, serif;
+    font-size: 40px;
+    font-weight: bold;
+    padding: 30px 100px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    text-decoration: none;
+    color: #000000;
+}
+
+

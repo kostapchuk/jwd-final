@@ -8,7 +8,8 @@ public enum Page {
     WITHDRAW("/WEB-INF/jsp/withdraw.jsp"),
     EVENTS("/WEB-INF/jsp/events.jsp"),
     ERROR("/WEB-INF/jsp/error.jsp"),
-    USERS("/WEB-INF/jsp/users.jsp");
+    USERS("/WEB-INF/jsp/users.jsp"),
+    ADVERTISEMENT("/WEB-INF/jsp/advertisement.jsp");
 
     private final String link;
 
