@@ -6,6 +6,7 @@ import com.epam.jwd_final.web.exception.ServiceException;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 public interface EventService {
 
-    boolean createEvent(LocalDateTime start, String firstTeam, String secondTeam, Map<Result, BigDecimal> coefficients)
+    boolean createEvent(LocalDateTime start, String firstTeam, String secondTeam, EnumMap<Result, BigDecimal> coefficients)
             throws ServiceException;
 
     List<EventDto> findAllUnfinishedByDateBetween(LocalDateTime from, LocalDateTime to) throws ServiceException;

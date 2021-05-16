@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public enum EventServiceImpl implements EventService {
     }
 
     @Override
-    public boolean createEvent(LocalDateTime start, String firstTeam, String secondTeam, Map<Result, BigDecimal> coefficients)
+    public boolean createEvent(LocalDateTime start, String firstTeam, String secondTeam, EnumMap<Result, BigDecimal> coefficients)
             throws ServiceException {
         if (firstTeam.equals(secondTeam)) {
             return false;

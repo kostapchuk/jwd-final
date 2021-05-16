@@ -12,6 +12,7 @@ import com.epam.jwd_final.web.service.impl.EventServiceImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public enum CreateEventCommand implements Command {
             final String secondTeam = req.getStringParameter(Parameter.SECOND_TEAM.getValue());
             final LocalDateTime start = LocalDateTime.parse(req.getStringParameter(Parameter.START_TIME.getValue()));
 
-            Map<Result, BigDecimal> coefficients = createCoefficientsMap(
+            EnumMap<Result, BigDecimal> coefficients = createCoefficientsMap(
                     new BigDecimal(req.getStringParameter(Parameter.FIRST_TEAM_COEFFICIENT.getValue())),
                     new BigDecimal(req.getStringParameter(Parameter.SECOND_TEAM_COEFFICIENT.getValue())),
                     new BigDecimal(req.getStringParameter(Parameter.DRAW_COEFFICIENT.getValue()))
@@ -52,15 +53,15 @@ public enum CreateEventCommand implements Command {
         }
     }
 
-    Map<Result, BigDecimal> createCoefficientsMap(BigDecimal firstTeamCoefficient,
+    EnumMap<Result, BigDecimal> createCoefficientsMap(BigDecimal firstTeamCoefficient,
                                                   BigDecimal secondTeamCoefficient,
                                                   BigDecimal drawCoefficient) {
-        Map<Result, BigDecimal> coefficients = new HashMap<>();
+        EnumMap<Result, BigDecimal> resultBigDecimalEnumMap = new EnumMap<>(Result.class);
 
-        coefficients.put(Result.FIRST_TEAM, firstTeamCoefficient);
-        coefficients.put(Result.SECOND_TEAM, secondTeamCoefficient);
-        coefficients.put(Result.DRAW, drawCoefficient);
+        resultBigDecimalEnumMap.put(Result.FIRST_TEAM, firstTeamCoefficient);
+        resultBigDecimalEnumMap.put(Result.SECOND_TEAM, secondTeamCoefficient);
+        resultBigDecimalEnumMap.put(Result.DRAW, drawCoefficient);
 
-        return coefficients;
+        return resultBigDecimalEnumMap;
     }
 }
