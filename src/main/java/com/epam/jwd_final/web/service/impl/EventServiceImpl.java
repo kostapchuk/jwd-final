@@ -42,20 +42,12 @@ public enum EventServiceImpl implements EventService {
         if (firstTeam.equals(secondTeam)) {
             return false;
         }
-
         matchService.save(matchService.createMatch(start, firstTeam, secondTeam));
         createMultipliers(
                 coefficients,
                 matchService.findIdByStartByFirstTeamBySecondTeam(start, firstTeam, secondTeam)
         );
         return true;
-    }
-
-    void createMultipliers(Map<Result, BigDecimal> coefficients, int matchId) throws ServiceException {
-        for (Result result : coefficients.keySet()) {
-            multiplierService.saveMultiplier(
-                    multiplierService.createMultiplier(matchId, result, coefficients.get(result)));
-        }
     }
 
     @Override
@@ -81,5 +73,12 @@ public enum EventServiceImpl implements EventService {
             multiplierService.deleteById(multiplierId);
         }
         matchService.deleteById(id);
+    }
+
+    private void createMultipliers(EnumMap<Result, BigDecimal> coefficients, int matchId) throws ServiceException {
+        for (Result result : coefficients.keySet()) {
+            multiplierService.saveMultiplier(
+                    multiplierService.createMultiplier(matchId, result, coefficients.get(result)));
+        }
     }
 }
