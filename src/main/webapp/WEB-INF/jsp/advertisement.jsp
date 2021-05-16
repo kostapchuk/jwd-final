@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<img src="./img/adverb.jpg" class="img-fluid" alt="Advertisement">
+<img src="./img/advertisement.jpg" class="img-fluid" alt="Advertisement">
 
 <a class="btn" href="<c:url value="/controller?command=show_events_page"/>">Сделать ставку</a>
 
