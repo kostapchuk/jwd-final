@@ -3,7 +3,7 @@ package com.epam.jwd_final.web.util.impl;
 import com.epam.jwd_final.web.exception.EmailException;
 import com.epam.jwd_final.web.property.PropertyLoader;
 import com.epam.jwd_final.web.property.SmtpProperty;
-import com.epam.jwd_final.web.util.EmailUtils;
+import com.epam.jwd_final.web.util.Mail;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -16,7 +16,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public enum EmailUtilsImpl implements EmailUtils {
+public enum Email implements Mail {
 
     INSTANCE;
 
@@ -30,7 +30,7 @@ public enum EmailUtilsImpl implements EmailUtils {
 
     private final SmtpProperty smtpProperty = PropertyLoader.getInstance().loadSmtpProperties();
 
-    public void sendEmailTo(String to) throws EmailException {
+    public void send(String to) throws EmailException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
             Properties props = createProperties();

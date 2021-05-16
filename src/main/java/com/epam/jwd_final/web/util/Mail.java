@@ -2,7 +2,7 @@ package com.epam.jwd_final.web.util;
 
 import com.epam.jwd_final.web.exception.EmailException;
 
-public interface EmailUtils {
+public interface Mail {
 
-    void sendEmailTo(String to) throws EmailException;
+    void send(String to) throws EmailException;
 }
