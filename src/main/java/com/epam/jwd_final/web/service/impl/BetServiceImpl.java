@@ -56,9 +56,6 @@ public enum BetServiceImpl implements BetService {
                     activeBetDtos.add(createBetDto(userId, betId).get());
                 }
             }
-            if (activeBetDtos.isEmpty()) {
-                return Collections.emptyList();
-            }
             return activeBetDtos;
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e.getCause());
@@ -74,9 +71,6 @@ public enum BetServiceImpl implements BetService {
                 if (createPreviousBetDto(userId, betId).isPresent()) {
                     previousBetDtos.add(createPreviousBetDto(userId, betId).get());
                 }
-            }
-            if (previousBetDtos.isEmpty()) {
-                return Collections.emptyList();
             }
             return previousBetDtos;
         } catch (DaoException e) {

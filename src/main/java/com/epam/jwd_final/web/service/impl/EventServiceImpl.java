@@ -59,9 +59,6 @@ public enum EventServiceImpl implements EventService {
             final Map<Result, BigDecimal> coefficients = multiplierService.findCoefficientsByMatchId(matchDto.getId());
             eventDtos.add(new EventDto(matchDto, coefficients));
         }
-        if (eventDtos.isEmpty()) {
-            return Collections.emptyList();
-        }
         return eventDtos;
     }
 
