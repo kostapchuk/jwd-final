@@ -33,17 +33,7 @@ public enum Email implements Mail {
     public void send(String to) throws EmailException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            Properties props = createProperties();
-
-            Session session = Session.getInstance(props,
-                    new javax.mail.Authenticator() {
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(
-                                    smtpProperty.getSmtpUsername(), smtpProperty.getSmtpPassword()
-                            );
-                        }
-                    });
-
+            Session session = createSession();
             try {
                 Message message = prepareMessage(session, to);
                 Transport.send(message);
@@ -53,6 +43,18 @@ public enum Email implements Mail {
         };
         executor.execute(task);
         executor.shutdown();
+    }
+
+    private Session createSession() {
+        Properties props = createProperties();
+        return Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(
+                                smtpProperty.getSmtpUsername(), smtpProperty.getSmtpPassword()
+                        );
+                    }
+                });
     }
 
     private Message prepareMessage(Session session, String to) throws MessagingException {
