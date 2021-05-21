@@ -18,7 +18,7 @@ public enum LoginCommand implements Command {
     INSTANCE;
 
     private static final String ERROR_MSG = "Invalid credentials";
-    private static final String HOME_PAGE = "/controller?command=go_home_page";
+    private static final String HOME_PAGE = "/controller?command=show_events_page";
 
     private final UserService userService;
 
